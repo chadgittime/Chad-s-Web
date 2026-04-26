@@ -1,5 +1,435 @@
-<!DOCTYPE html>
-<html>
-<head><title>Seeim</title></head>
-<body><h1>你好👋</h1></body>
-</html>
+diff --git a/index.html b/index.html
+index bedced1659d8755123e97f70c2599b56c403a872..c5d5c894259ac0baafb4f797ded49c97eef29dd8 100644
+--- a/index.html
++++ b/index.html
+@@ -1,5 +1,426 @@
+-<!DOCTYPE html>
+-<html>
+-<head><title>Seeim</title></head>
+-<body><h1>你好👋</h1></body>
++<!doctype html>
++<html lang="zh-CN">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>Seeim · Personal Site</title>
++  <meta name="description" content="Seeim 的个人主页：展示项目、技能与联系方式。" />
++  <style>
++    :root {
++      --bg: #05070d;
++      --bg-soft: #0d1221;
++      --card: rgba(255, 255, 255, 0.06);
++      --card-strong: rgba(255, 255, 255, 0.1);
++      --text: #f3f7ff;
++      --muted: #96a5cb;
++      --line: rgba(255, 255, 255, 0.15);
++      --brand-a: #7dd3fc;
++      --brand-b: #818cf8;
++      --brand-c: #34d399;
++      --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
++      --radius: 20px;
++      --max-width: 1100px;
++    }
++
++    * { box-sizing: border-box; }
++
++    html, body {
++      margin: 0;
++      padding: 0;
++      color: var(--text);
++      background: var(--bg);
++      font-family: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
++      scroll-behavior: smooth;
++    }
++
++    body {
++      background-image:
++        radial-gradient(circle at 10% 0%, rgba(129,140,248,0.24), transparent 35%),
++        radial-gradient(circle at 90% 20%, rgba(125,211,252,0.2), transparent 30%),
++        radial-gradient(circle at 50% 90%, rgba(52,211,153,0.14), transparent 28%);
++      min-height: 100vh;
++    }
++
++    .container {
++      width: min(var(--max-width), calc(100% - 40px));
++      margin: 0 auto;
++    }
++
++    .nav {
++      position: sticky;
++      top: 0;
++      z-index: 20;
++      backdrop-filter: blur(12px);
++      background: rgba(5, 7, 13, 0.65);
++      border-bottom: 1px solid rgba(255,255,255,0.08);
++    }
++
++    .nav-inner {
++      display: flex;
++      align-items: center;
++      justify-content: space-between;
++      padding: 14px 0;
++    }
++
++    .logo {
++      display: inline-flex;
++      align-items: center;
++      gap: 10px;
++      font-weight: 700;
++      letter-spacing: 0.02em;
++    }
++
++    .logo-dot {
++      width: 11px;
++      height: 11px;
++      border-radius: 999px;
++      background: linear-gradient(135deg, var(--brand-a), var(--brand-c));
++      box-shadow: 0 0 16px rgba(125,211,252,.8);
++    }
++
++    .nav-links {
++      display: flex;
++      gap: 16px;
++      flex-wrap: wrap;
++    }
++
++    .nav-links a {
++      color: var(--muted);
++      text-decoration: none;
++      font-size: 0.95rem;
++      transition: color .2s ease;
++    }
++
++    .nav-links a:hover { color: var(--text); }
++
++    .hero {
++      padding: 72px 0 42px;
++      display: grid;
++      grid-template-columns: 1.2fr .8fr;
++      gap: 28px;
++      align-items: center;
++    }
++
++    .badge {
++      display: inline-flex;
++      padding: 8px 14px;
++      border-radius: 999px;
++      border: 1px solid rgba(125,211,252,0.45);
++      color: #bde9ff;
++      background: rgba(125,211,252,0.12);
++      font-size: .82rem;
++      letter-spacing: .06em;
++      text-transform: uppercase;
++      margin-bottom: 16px;
++    }
++
++    h1 {
++      margin: 0;
++      font-size: clamp(2rem, 5.5vw, 4rem);
++      line-height: 1.08;
++      letter-spacing: -0.02em;
++    }
++
++    .headline-gradient {
++      background: linear-gradient(95deg, var(--brand-a), #c7d2fe 55%, var(--brand-c));
++      -webkit-background-clip: text;
++      background-clip: text;
++      color: transparent;
++    }
++
++    .lead {
++      color: var(--muted);
++      margin: 18px 0 0;
++      max-width: 56ch;
++      line-height: 1.85;
++      font-size: 1.04rem;
++    }
++
++    .cta-group {
++      margin-top: 24px;
++      display: flex;
++      flex-wrap: wrap;
++      gap: 12px;
++    }
++
++    .btn {
++      display: inline-flex;
++      align-items: center;
++      justify-content: center;
++      gap: 8px;
++      text-decoration: none;
++      border-radius: 12px;
++      padding: 11px 18px;
++      font-weight: 600;
++      transition: .2s ease;
++      border: 1px solid transparent;
++    }
++
++    .btn-primary {
++      color: #031019;
++      background: linear-gradient(130deg, var(--brand-a), var(--brand-c));
++      box-shadow: 0 10px 28px rgba(52,211,153,.35);
++    }
++
++    .btn-primary:hover { transform: translateY(-2px); }
++
++    .btn-secondary {
++      color: var(--text);
++      border-color: var(--line);
++      background: rgba(255,255,255,0.03);
++    }
++
++    .btn-secondary:hover {
++      border-color: rgba(255,255,255,0.35);
++      background: rgba(255,255,255,0.07);
++    }
++
++    .hero-card {
++      border: 1px solid var(--line);
++      border-radius: var(--radius);
++      background: linear-gradient(155deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
++      box-shadow: var(--shadow);
++      padding: 22px;
++    }
++
++    .hero-card h2 {
++      margin: 0 0 10px;
++      font-size: 1rem;
++      color: #d5def7;
++      font-weight: 600;
++    }
++
++    .stat-grid {
++      display: grid;
++      grid-template-columns: repeat(2, minmax(0,1fr));
++      gap: 12px;
++      margin-top: 10px;
++    }
++
++    .stat-item {
++      padding: 12px;
++      border-radius: 12px;
++      background: var(--card);
++      border: 1px solid rgba(255,255,255,0.08);
++    }
++
++    .stat-item strong {
++      display: block;
++      font-size: 1.1rem;
++      margin-bottom: 4px;
++    }
++
++    .stat-item span {
++      color: var(--muted);
++      font-size: 0.88rem;
++    }
++
++    .section {
++      padding: 14px 0 36px;
++    }
++
++    .section h3 {
++      margin: 0 0 16px;
++      font-size: 1.18rem;
++      letter-spacing: .01em;
++    }
++
++    .cards {
++      display: grid;
++      grid-template-columns: repeat(3, minmax(0,1fr));
++      gap: 14px;
++    }
++
++    .card {
++      border-radius: 14px;
++      border: 1px solid var(--line);
++      background: var(--card);
++      padding: 16px;
++      transition: transform .2s ease, border-color .2s ease;
++    }
++
++    .card:hover {
++      transform: translateY(-2px);
++      border-color: rgba(125,211,252,.5);
++    }
++
++    .card p {
++      margin: 8px 0 0;
++      color: var(--muted);
++      line-height: 1.7;
++      font-size: 0.95rem;
++    }
++
++    .timeline {
++      display: grid;
++      gap: 10px;
++    }
++
++    .timeline-item {
++      border: 1px solid var(--line);
++      border-radius: 12px;
++      background: rgba(255,255,255,0.03);
++      padding: 13px 14px;
++      display: grid;
++      gap: 4px;
++    }
++
++    .timeline-item small {
++      color: #c3d0f3;
++      font-weight: 600;
++      letter-spacing: 0.02em;
++    }
++
++    .timeline-item span {
++      color: var(--muted);
++      font-size: 0.93rem;
++    }
++
++    footer {
++      padding: 26px 0 40px;
++      color: #8698c5;
++      text-align: center;
++      font-size: .9rem;
++    }
++
++    @media (max-width: 920px) {
++      .hero {
++        grid-template-columns: 1fr;
++        padding-top: 52px;
++      }
++
++      .cards {
++        grid-template-columns: repeat(2, minmax(0,1fr));
++      }
++    }
++
++    @media (max-width: 620px) {
++      .container {
++        width: min(var(--max-width), calc(100% - 28px));
++      }
++
++      .nav-inner {
++        align-items: flex-start;
++        gap: 10px;
++        flex-direction: column;
++      }
++
++      .cards {
++        grid-template-columns: 1fr;
++      }
++
++      .stat-grid {
++        grid-template-columns: 1fr;
++      }
++
++      .cta-group {
++        flex-direction: column;
++      }
++
++      .btn {
++        width: 100%;
++      }
++    }
++  </style>
++</head>
++<body>
++  <header class="nav">
++    <div class="container nav-inner">
++      <div class="logo" aria-label="Seeim 首页标识">
++        <span class="logo-dot" aria-hidden="true"></span>
++        <span>Seeim</span>
++      </div>
++      <nav class="nav-links" aria-label="站点导航">
++        <a href="#projects">项目</a>
++        <a href="#about">关于我</a>
++        <a href="#roadmap">路线图</a>
++        <a href="#contact">联系</a>
++      </nav>
++    </div>
++  </header>
++
++  <main class="container">
++    <section class="hero" id="about" aria-label="主页介绍">
++      <div>
++        <span class="badge">new domain · online</span>
++        <h1>你好，我是 <span class="headline-gradient">Seeim</span><br />
++          欢迎来到我的创意主页</h1>
++        <p class="lead">
++          这里是我的数字名片：记录我正在做的项目、学到的技能和接下来的计划。
++          我专注于用 Web、AI 与设计，把想法变成体验。
++        </p>
++        <div class="cta-group" id="contact">
++          <a class="btn btn-primary" href="mailto:hello@example.com">📮 邮件联系</a>
++          <a class="btn btn-secondary" href="#projects">✨ 查看项目</a>
++        </div>
++      </div>
++
++      <aside class="hero-card" aria-label="个人信息速览">
++        <h2>Quick Snapshot</h2>
++        <div class="stat-grid">
++          <div class="stat-item">
++            <strong>Web / AI</strong>
++            <span>主攻方向</span>
++          </div>
++          <div class="stat-item">
++            <strong>GMT+8</strong>
++            <span>当前时区</span>
++          </div>
++          <div class="stat-item">
++            <strong>3+</strong>
++            <span>今年计划上线项目</span>
++          </div>
++          <div class="stat-item">
++            <strong>长期主义</strong>
++            <span>工作风格</span>
++          </div>
++        </div>
++      </aside>
++    </section>
++
++    <section class="section" id="projects">
++      <h3>精选项目</h3>
++      <div class="cards">
++        <article class="card">
++          <strong>Project Nova</strong>
++          <p>一个极简效率工具，帮助你管理任务优先级并可视化每日进度。</p>
++        </article>
++        <article class="card">
++          <strong>AI Playground</strong>
++          <p>实验不同 AI 能力的小型作品集，持续迭代交互与提示词设计。</p>
++        </article>
++        <article class="card">
++          <strong>Visual Lab</strong>
++          <p>我的动效与 UI 练习空间，记录从灵感到落地的设计过程。</p>
++        </article>
++      </div>
++    </section>
++
++    <section class="section" id="roadmap">
++      <h3>接下来 90 天</h3>
++      <div class="timeline">
++        <article class="timeline-item">
++          <small>Phase 01 · Week 1-2</small>
++          <span>完善作品展示页与项目详情结构。</span>
++        </article>
++        <article class="timeline-item">
++          <small>Phase 02 · Week 3-6</small>
++          <span>发布第一版 AI 工具并收集反馈。</span>
++        </article>
++        <article class="timeline-item">
++          <small>Phase 03 · Week 7-12</small>
++          <span>打磨品牌视觉，完成移动端体验优化。</span>
++        </article>
++      </div>
++    </section>
++  </main>
++
++  <footer>
++    © <span id="year"></span> Seeim · Built with curiosity.
++  </footer>
++
++  <script>
++    document.getElementById('year').textContent = new Date().getFullYear();
++  </script>
++</body>
+ </html>

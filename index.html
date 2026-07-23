@@ -4,112 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>郭悦洋 — 作者与内容标准运营 · 内容策略</title>
-<meta name="description" content="郭悦洋的个人作品集，面向作者与内容标准运营岗位">
+<meta name="description" content="郭悦洋的个人作品集，面向作者与内容标准运营岗位。把内容判断，转化为可复用、可执行的标准。">
 <meta property="og:title" content="郭悦洋 — 作者与内容标准运营">
 <meta property="og:description" content="把内容判断，转化为可复用、可执行的标准">
-<meta property="og:url" content="https://weseeself.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-:root{--orange:#D4492C;--bg:#0a0a0a;--surface:#111;--text:#c4c4c4;--text-dim:#666;--white:#f0f0f0}
-body{background:var(--bg);color:var(--text);font-family:"Jost","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
-.content{max-width:1100px;margin:0 auto;padding:0 24px}
+:root{--o:#D4492C;--bg:#000;--s:#111;--t:#b0b0b0;--d:#555;--w:#f5f5f5}
+body{background:var(--bg);color:var(--t);font-family:"Jost","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.65;font-weight:400}
+.w{max-width:1040px;margin:0 auto;padding:0 28px}
 
-/* Nav */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,.92);backdrop-filter:blur(12px)}
-.nav-l{font-size:15px;color:var(--white);font-weight:500;letter-spacing:-.01em}
-.nav-r{display:flex;gap:24px;list-style:none}
-.nav-r a{font-size:13px;color:var(--text-dim);text-decoration:none;transition:color .2s}
-.nav-r a:hover{color:var(--orange)}
+/* PRELOADER */
+#preloader{position:fixed;inset:0;z-index:10000;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:transform .5s cubic-bezier(.77,0,.175,1),opacity .5s ease}
+#preloader.exit{transform:scaleX(1);transform-origin:right center;opacity:0;pointer-events:none}
+.pl-line{position:fixed;top:0;left:0;z-index:10001;width:100%;height:1px;background:rgba(255,255,255,.06);transform-origin:left}
+.pl-line-inner{width:100%;height:100%;background:#fff;transform-origin:left;transform:scaleX(0);transition:transform 1.8s cubic-bezier(.22,.61,.36,1)}
+.pl-counter{font-size:clamp(80px,20vw,260px);font-weight:600;color:#fff;letter-spacing:-.04em;display:flex;gap:0}
+.pl-counter span{display:inline-block;transition:transform .8s cubic-bezier(.55,.055,.675,.19),opacity .6s ease}
 
-/* Hero */
-.hero{padding:120px 0 80px}
-.hero-tag{display:inline-block;font-size:12px;letter-spacing:.15em;color:var(--orange);border:1px solid rgba(212,73,44,.25);padding:4px 14px;border-radius:4px;margin-bottom:24px}
-.hero-h1{font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--white);line-height:1.25;margin-bottom:12px;letter-spacing:-.01em}
-.hero-sub{font-size:clamp(15px,2vw,18px);color:var(--text);line-height:1.6;max-width:680px;margin-bottom:32px}
-.hero-nums{display:flex;gap:32px;flex-wrap:wrap;margin-bottom:36px}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.88);backdrop-filter:blur(16px);transform:translateY(-100%);transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.nav.show{transform:translateY(0)}
+.nav-l{font-size:15px;color:var(--w);font-weight:500;letter-spacing:-.01em;text-decoration:none}
+.nav-r{display:flex;gap:28px;list-style:none}
+.nav-r a{font-size:13px;color:var(--d);text-decoration:none;transition:color .25s;font-weight:400}
+.nav-r a:hover{color:var(--o)}
+
+/* HERO */
+.hero{padding:140px 0 80px}
+.hero-tag{display:inline-block;font-size:11px;letter-spacing:.18em;color:var(--o);border:1px solid rgba(212,73,44,.18);padding:5px 16px;border-radius:4px;margin-bottom:28px;font-weight:500}
+.hero-h1{font-size:clamp(30px,5.5vw,52px);font-weight:600;color:var(--w);line-height:1.22;margin-bottom:16px;letter-spacing:-.015em;max-width:720px}
+.hero-sub{font-size:clamp(15px,1.8vw,17px);color:var(--t);line-height:1.7;max-width:640px;margin-bottom:36px}
+.hero-nums{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:40px}
 .hero-num-item{text-align:left}
-.hero-num-val{font-size:28px;font-weight:700;color:var(--white)}
-.hero-num-label{font-size:11px;color:var(--text-dim);letter-spacing:.06em;margin-top:2px}
+.hero-num-val{font-size:30px;font-weight:600;color:var(--w);line-height:1}
+.hero-num-label{font-size:11px;color:var(--d);letter-spacing:.08em;margin-top:4px}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;padding:10px 20px;font-size:14px;border-radius:6px;text-decoration:none;font-weight:500;transition:all .2s;cursor:pointer}
-.btn-primary{background:var(--orange);color:#fff;border:none}
-.btn-primary:hover{background:#e05a3d}
-.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.12)}
-.btn-ghost:hover{border-color:var(--orange);color:var(--white)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;font-size:14px;border-radius:6px;text-decoration:none;font-weight:500;transition:all .25s;cursor:pointer;font-family:inherit}
+.btn-p{background:var(--o);color:#fff;border:none}
+.btn-p:hover{background:#e05a3d;transform:translateY(-1px)}
+.btn-g{background:transparent;color:var(--t);border:1px solid rgba(255,255,255,.1)}
+.btn-g:hover{border-color:var(--o);color:var(--w);transform:translateY(-1px)}
 
-/* Sections */
-.section{padding:64px 0}
-.section-label{font-size:11px;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:8px}
-.section-h2{font-size:clamp(22px,3vw,32px);color:var(--white);font-weight:600;margin-bottom:32px;letter-spacing:-.01em}
+/* SECTIONS */
+.sec{padding:80px 0}
+.sec-label{font-size:10px;letter-spacing:.18em;color:var(--o);margin-bottom:10px;font-weight:500}
+.sec-h2{font-size:clamp(24px,3.5vw,34px);color:var(--w);font-weight:600;margin-bottom:40px;letter-spacing:-.01em}
 
-/* Solutions */
-.solutions{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.sol-card{background:var(--surface);border-radius:8px;padding:28px;border:1px solid rgba(255,255,255,.04)}
-.sol-card h3{font-size:17px;color:var(--white);margin-bottom:8px;font-weight:600}
-.sol-card p{font-size:14px;color:var(--text);line-height:1.6}
+/* SOLUTIONS */
+.sols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.sol{background:var(--s);border-radius:10px;padding:32px;border:1px solid rgba(255,255,255,.04);transition:border-color .3s}
+.sol:hover{border-color:rgba(212,73,44,.25)}
+.sol h3{font-size:17px;color:var(--w);margin-bottom:10px;font-weight:500}
+.sol p{font-size:14px;color:var(--t);line-height:1.65}
 
-/* Cases */
-.case{border-bottom:1px solid rgba(255,255,255,.05);padding:36px 0}
+/* CASES */
+.case{padding:40px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .case:last-child{border:none}
-.case-header{display:flex;gap:12px;align-items:center;margin-bottom:12px}
-.case-num{font-size:32px;font-weight:700;color:var(--orange);opacity:.3;line-height:1}
-.case-h3{font-size:20px;color:var(--white);font-weight:600}
-.case-flow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.case-step{font-size:11px;padding:4px 10px;background:rgba(255,255,255,.04);border-radius:4px;color:var(--text-dim);letter-spacing:.04em}
-.case-content p{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:12px}
-.case-meta{display:flex;gap:24px;margin-top:8px}
-.case-meta-item{font-size:12px;color:var(--text-dim)}
-.case-meta-item strong{color:var(--orange);font-weight:600}
+.case-hd{display:flex;gap:16px;align-items:center;margin-bottom:16px}
+.case-num{font-size:36px;font-weight:700;color:var(--o);opacity:.2;line-height:1}
+.case-h3{font-size:20px;color:var(--w);font-weight:500}
+.case-flow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.case-step{font-size:10px;padding:4px 10px;background:rgba(255,255,255,.03);border-radius:4px;color:var(--d);letter-spacing:.06em;font-weight:400}
+.case-txt p{font-size:14px;color:var(--t);line-height:1.75;margin-bottom:14px}
+.case-meta{display:flex;gap:28px;margin-top:12px}
+.case-meta-item{font-size:12px;color:var(--d)}
+.case-meta-item strong{color:var(--o);font-weight:600}
 
-/* Works grid */
+/* WORKS */
 .works-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.work-card{aspect-ratio:16/10;background:var(--surface);border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.04);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;text-align:center;transition:border-color .2s}
-.work-card:hover{border-color:rgba(212,73,44,.3)}
-.work-card .w-icon{font-size:24px;margin-bottom:8px;color:var(--orange);opacity:.6}
-.work-card .w-title{font-size:13px;color:var(--white);font-weight:500}
-.work-card .w-desc{font-size:11px;color:var(--text-dim);margin-top:4px}
-.work-link{text-decoration:none}
+.work-card{aspect-ratio:16/10;background:var(--s);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.04);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center;text-decoration:none;transition:border-color .3s,transform .3s}
+.work-card:hover{border-color:rgba(212,73,44,.3);transform:translateY(-4px)}
+.work-card .wi{font-size:22px;margin-bottom:10px;color:var(--o);opacity:.5}
+.work-card .wt{font-size:13px;color:var(--w);font-weight:500}
+.work-card .wd{font-size:11px;color:var(--d);margin-top:4px}
 
-/* Timeline */
-.timeline-item{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.03);display:flex;gap:16px}
-.timeline-item:last-child{border:none}
-.tl-date{font-size:12px;color:var(--text-dim);min-width:120px;letter-spacing:.04em}
-.tl-content h4{font-size:16px;color:var(--white);font-weight:500;margin-bottom:2px}
-.tl-content h4 .tag{font-size:11px;color:var(--orange);border:1px solid rgba(212,73,44,.2);padding:1px 8px;border-radius:3px;margin-left:8px;vertical-align:middle;font-weight:400}
-.tl-content p{font-size:13px;color:var(--text);line-height:1.5;margin-top:4px}
+/* TIMELINE */
+.tl-item{padding:20px 0;border-bottom:1px solid rgba(255,255,255,.025);display:flex;gap:16px;transition:border-color .3s}
+.tl-item:last-child{border:none}
+.tl-item:hover{border-color:rgba(212,73,44,.1)}
+.tl-date{font-size:12px;color:var(--d);min-width:130px;letter-spacing:.06em;font-weight:400}
+.tl-body h4{font-size:16px;color:var(--w);font-weight:500;margin-bottom:4px}
+.tl-body h4 .tag{font-size:10px;color:var(--o);border:1px solid rgba(212,73,44,.18);padding:2px 8px;border-radius:3px;margin-left:8px;vertical-align:middle;font-weight:400}
+.tl-body p{font-size:13px;color:var(--t);line-height:1.6;margin-top:4px}
 
-/* Skills */
-.skills-list{display:flex;flex-wrap:wrap;gap:10px}
-.skill-tag{padding:6px 14px;font-size:13px;background:var(--surface);border-radius:6px;color:var(--text);border:1px solid rgba(255,255,255,.04)}
+/* SKILLS */
+.skills-list{display:flex;flex-wrap:wrap;gap:8px}
+.skill-tag{padding:7px 16px;font-size:13px;background:var(--s);border-radius:6px;color:var(--t);border:1px solid rgba(255,255,255,.04);transition:border-color .25s,color .25s;font-weight:400}
+.skill-tag:hover{border-color:rgba(212,73,44,.25);color:var(--w)}
 
-/* Contact */
-.contact-footer{padding:48px 0;border-top:1px solid rgba(255,255,255,.05)}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
-.contact-item h4{font-size:13px;color:var(--text-dim);margin-bottom:4px;letter-spacing:.04em}
-.contact-item a,.contact-item p{font-size:15px;color:var(--white);text-decoration:none}
-.contact-item a:hover{color:var(--orange)}
+/* CONTACT */
+.contact-footer{padding:48px 0 64px;border-top:1px solid rgba(255,255,255,.05)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px}
+.contact-item h4{font-size:11px;color:var(--d);margin-bottom:6px;letter-spacing:.08em;font-weight:500}
+.contact-item a,.contact-item p{font-size:15px;color:var(--w);text-decoration:none;transition:color .25s}
+.contact-item a:hover{color:var(--o)}
 
-/* Responsive */
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.05s}
+.delay-2{transition-delay:.1s}
+.delay-3{transition-delay:.15s}
+.delay-4{transition-delay:.2s}
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
 @media(max-width:768px){
   .nav-r{display:none}
-  .hero{padding:80px 0 40px}
+  .hero{padding:100px 0 48px}
   .hero-nums{gap:20px}
-  .hero-num-val{font-size:22px}
-  .section{padding:40px 0}
-  .timeline-item{flex-direction:column;gap:4px}
+  .hero-num-val{font-size:24px}
+  .sec{padding:48px 0}
+  .tl-item{flex-direction:column;gap:4px}
   .tl-date{min-width:auto}
 }
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal,.fade-up{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-l">郭悦洋</div>
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pl-line">
+    <div class="pl-line-inner" id="plLine"></div>
+  </div>
+  <div class="pl-counter" id="plCounter">
+    <span>0</span>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-l">郭悦洋</a>
   <ul class="nav-r">
     <li><a href="#cases">项目</a></li>
     <li><a href="#works">作品</a></li>
@@ -118,41 +151,41 @@ body{background:var(--bg);color:var(--text);font-family:"Jost","PingFang SC","Hi
   </ul>
 </nav>
 
-<main class="content">
+<main class="w">
 
 <!-- Hero -->
 <section class="hero">
-  <div class="hero-tag">作者与内容标准运营 · 内容策略 · AI 创意实践</div>
-  <h1 class="hero-h1">把内容判断，转化为可复用、可执行的标准。</h1>
-  <p class="hero-sub">郭悦洋，1 年+ 内容运营经验。现负责「北京朝阳」全媒体矩阵的选题排布、内容初审与发布协同。个人小红书账号 8300+ 粉丝，兼具内容供给端与创作者端视角。</p>
-  <div class="hero-nums">
+  <div class="hero-tag reveal">作者与内容标准运营 · 内容策略 · AI 创意实践</div>
+  <h1 class="hero-h1 reveal delay-1">把内容判断，转化为可复用、可执行的标准。</h1>
+  <p class="hero-sub reveal delay-2">郭悦洋，1 年+ 内容运营经验。现负责「北京朝阳」全媒体矩阵的选题排布、内容初审与发布协同。个人小红书账号 8300+ 粉丝，兼具内容供给端与创作者端视角。</p>
+  <div class="hero-nums reveal delay-3">
     <div class="hero-num-item"><div class="hero-num-val">500+</div><div class="hero-num-label">内容处理</div></div>
     <div class="hero-num-item"><div class="hero-num-val">8</div><div class="hero-num-label">平台及端口</div></div>
     <div class="hero-num-item"><div class="hero-num-val">22.6万</div><div class="hero-num-label">单篇最高阅读</div></div>
     <div class="hero-num-item"><div class="hero-num-val">8300+</div><div class="hero-num-label">小红书粉丝</div></div>
     <div class="hero-num-item"><div class="hero-num-val">8支</div><div class="hero-num-label">原创短视频</div></div>
   </div>
-  <div class="hero-btns">
-    <a href="#cases" class="btn btn-primary">查看项目案例</a>
-    <a href="#contact" class="btn btn-ghost">下载完整简历</a>
-    <a href="#contact" class="btn btn-ghost">联系我</a>
+  <div class="hero-btns reveal delay-4">
+    <a href="#cases" class="btn btn-p">查看项目案例</a>
+    <a href="#contact" class="btn btn-g">下载完整简历</a>
+    <a href="#contact" class="btn btn-g">联系我</a>
   </div>
 </section>
 
 <!-- Solutions -->
-<section class="section">
-  <div class="section-label">我能解决什么问题</div>
-  <h2 class="section-h2">内容判断 → 标准制定 → 策略执行</h2>
-  <div class="solutions">
-    <div class="sol-card">
+<section class="sec">
+  <div class="sec-label reveal">我能解决什么问题</div>
+  <h2 class="sec-h2 reveal">内容判断 → 标准制定 → 策略执行</h2>
+  <div class="sols">
+    <div class="sol reveal delay-1">
       <h3>内容识别与质量判断</h3>
       <p>从主题价值、内容完成度、传播潜力、平台适配性等维度判断内容质量，将主观判断转化为可验证的质量标准。</p>
     </div>
-    <div class="sol-card">
+    <div class="sol reveal delay-2">
       <h3>供给分层与策略匹配</h3>
       <p>根据不同稿源类型和内容表现数据，确定发布优先级、主渠道升级机会及差异化处理方式，实现精准的内容分发策略。</p>
     </div>
-    <div class="sol-card">
+    <div class="sol reveal delay-3">
       <h3>标准落地与协同执行</h3>
       <p>将判断转化为具体的修改要求、排期方案和跨团队协作动作，推动内容完成从策划到发布的完整闭环。</p>
     </div>
@@ -160,33 +193,30 @@ body{background:var(--bg);color:var(--text);font-family:"Jost","PingFang SC","Hi
 </section>
 
 <!-- Cases -->
-<section class="section" id="cases">
-  <div class="section-label">核心案例</div>
-  <h2 class="section-h2">三个项目，一种思维方式</h2>
+<section class="sec" id="cases">
+  <div class="sec-label reveal">核心案例</div>
+  <h2 class="sec-h2 reveal">三个项目，一种思维方式</h2>
 
-  <div class="case">
-    <div class="case-header">
-      <div class="case-num">01</div>
-      <h3 class="case-h3">多源内容供给的评估与优先级管理</h3>
+  <div class="case reveal">
+    <div class="case-hd"><div class="case-num">01</div><h3 class="case-h3">多源内容供给的评估与优先级管理</h3></div>
+    <div class="case-txt">
+      <p><strong>背景：</strong>日常面对街乡、委办局、媒体及网友等多类型稿源，每天需要处理和判断大量内容。</p>
+      <p><strong>我的判断框架：</strong>从题材价值、信息完整度、内容质量、时效性和传播潜力五个维度评估每条内容，决定发布优先级、端口选择和是否需要升级为主渠道推荐。</p>
+      <p><strong>实际动作：</strong>给出具体的修改意见和排期调整建议，将具备更高传播价值的街乡稿件推荐至主账号发布，将政务公告转化为大众化叙事风格。</p>
+      <p><strong>能力迁移：</strong>这套多源内容的分层判断方法论，可以直接迁移到「从海量创作者池中识别潜力作者、为不同作者制定差异化内容方向」的工作中。本质上，作者评估和内容评估的底层逻辑是一致的——都在判断「谁值得被看见」。</p>
     </div>
-    <p class="case-content"><p><strong>背景：</strong>日常面对街乡、委办局、媒体及网友等多类型稿源，每天需要处理和判断大量内容。</p><p><strong>我的判断框架：</strong>从题材价值、信息完整度、内容质量、时效性和传播潜力五个维度评估每条内容，决定发布优先级、端口选择和是否需要升级为主渠道推荐。</p><p><strong>实际动作：</strong>给出具体的修改意见和排期调整建议，将具备更高传播价值的街乡稿件推荐至主账号发布，将政务公告转化为大众化叙事风格。</p><p><strong>能力迁移：</strong>这套多源内容的分层判断方法论，可以直接迁移到「从海量创作者池中识别潜力作者、为不同作者制定差异化内容方向」的工作中。本质上，作者评估和内容评估的底层逻辑是一致的——都在判断「谁值得被看见」。</p></div>
   </div>
 
-  <div class="case">
-    <div class="case-header">
-      <div class="case-num">02</div>
-      <h3 class="case-h3">AI 创意视频工作流</h3>
-    </div>
+  <div class="case reveal">
+    <div class="case-hd"><div class="case-num">02</div><h3 class="case-h3">AI 创意视频工作流</h3></div>
     <div class="case-flow">
-      <span class="case-step">选题策划</span>
-      <span class="case-step">脚本</span>
-      <span class="case-step">分镜设计</span>
-      <span class="case-step">AI 图像/视频生成</span>
-      <span class="case-step">配音与剪辑</span>
-      <span class="case-step">内容审核</span>
-      <span class="case-step">发布与复盘</span>
+      <span class="case-step">选题策划</span><span class="case-step">脚本</span><span class="case-step">分镜设计</span><span class="case-step">AI 生成</span><span class="case-step">配音与剪辑</span><span class="case-step">审核</span><span class="case-step">发布与复盘</span>
     </div>
-    <p class="case-content"><p>将 AI 工具融入内容生产的完整流程，而不是作为单一出图工具使用。从选题和创意构思阶段即引入 AI 辅助，在分镜环节使用 AI 生成视觉参考，在后期通过 AI 配音和智能剪辑提效。</p><p><strong>已完成 8 支原创 AI 创意视频</strong>，覆盖城市形象宣传、政务活动回顾、节气海报动画等多种题材。每个项目都建立了从创意到发布再到数据复盘的完整记录。</p><p>这不是「我会用某几个 AI 工具」的展示，而是「我已经把 AI 作为稳定的内容生产方法」的证明——这正是作者运营岗位需要的「能从实操中提炼方法和标准」的能力。</p></div>
+    <div class="case-txt">
+      <p>将 AI 工具融入内容生产的完整流程，而不是作为单一出图工具使用。从选题和创意构思阶段即引入 AI 辅助，在分镜环节使用 AI 生成视觉参考，在后期通过 AI 配音和智能剪辑提效。</p>
+      <p><strong>已完成 8 支原创 AI 创意视频</strong>，覆盖城市形象宣传、政务活动回顾、节气海报动画等多种题材。每个项目都建立了从创意到发布再到数据复盘的完整记录。</p>
+      <p>这不是「我会用某几个 AI 工具」的展示，而是「我已经把 AI 作为稳定的内容生产方法」的证明——这正是作者运营岗位需要的「能从实操中提炼方法和标准」的能力。</p>
+    </div>
     <div class="case-meta">
       <div class="case-meta-item">已完成 <strong>8</strong> 支</div>
       <div class="case-meta-item">覆盖 <strong>5</strong> 种题材</div>
@@ -194,12 +224,13 @@ body{background:var(--bg);color:var(--text);font-family:"Jost","PingFang SC","Hi
     </div>
   </div>
 
-  <div class="case">
-    <div class="case-header">
-      <div class="case-num">03</div>
-      <h3 class="case-h3">小红书个人创作者实践</h3>
+  <div class="case reveal">
+    <div class="case-hd"><div class="case-num">03</div><h3 class="case-h3">小红书个人创作者实践</h3></div>
+    <div class="case-txt">
+      <p>个人运营小红书账号，<strong>8300+ 粉丝</strong>。从创作者的真实视角理解平台的内容生态、用户兴趣和分发逻辑。</p>
+      <p>亲自经历过选题、标题撰写、封面设计、发布节奏和互动反馈的完整循环，能够从创作者的角度理解内容压力、成长诉求和对平台规则的关注。</p>
+      <p>这种「既是内容供给方、也理解创作者端」的双重视角，让我在评估作者和制定内容标准时，能够更准确地判断什么样的策略对创作者是真正有效的、什么样的标准是可执行的。</p>
     </div>
-    <p class="case-content"><p>个人运营小红书账号，<strong>8300+ 粉丝</strong>。从创作者的真实视角理解平台的内容生态、用户兴趣和分发逻辑。</p><p>亲自经历过选题、标题撰写、封面设计、发布节奏和互动反馈的完整循环，能够从创作者的角度理解内容压力、成长诉求和对平台规则的关注。</p><p>这种「既是内容供给方、也理解创作者端」的双重视角，让我在评估作者和制定内容标准时，能够更准确地判断什么样的策略对创作者是真正有效的、什么样的标准是可执行的。</p></div>
     <div class="case-meta">
       <div class="case-meta-item">粉丝 <strong>8300+</strong></div>
       <div class="case-meta-item">完整创作视角</div>
@@ -208,105 +239,111 @@ body{background:var(--bg);color:var(--text);font-family:"Jost","PingFang SC","Hi
 </section>
 
 <!-- Works -->
-<section class="section" id="works">
-  <div class="section-label">精选作品</div>
-  <h2 class="section-h2">真实参与制作的内容</h2>
+<section class="sec" id="works">
+  <div class="sec-label reveal">精选作品</div>
+  <h2 class="sec-h2 reveal">真实参与制作的内容</h2>
   <div class="works-grid">
-    <a href="#" class="work-card work-link">
-      <div class="w-icon">🎬</div>
-      <div class="w-title">AI 创意视频系列</div>
-      <div class="w-desc">城市形象宣传 · 8 支</div>
-    </a>
-    <a href="#" class="work-card work-link">
-      <div class="w-icon">📱</div>
-      <div class="w-title">「北京朝阳」微信推送</div>
-      <div class="w-desc">全年独立编辑 118 篇</div>
-    </a>
-    <a href="#" class="work-card work-link">
-      <div class="w-icon">📊</div>
-      <div class="w-title">单条最高阅读 22.6 万</div>
-      <div class="w-desc">区域政务 × 网络热点策略</div>
-    </a>
-    <a href="#" class="work-card work-link">
-      <div class="w-icon">🎨</div>
-      <div class="w-title">海报 & 视觉系统</div>
-      <div class="w-desc">8 组系列 · AI 辅助设计</div>
-    </a>
+    <a href="#" class="work-card reveal delay-1"><div class="wi">🎬</div><div class="wt">AI 创意视频系列</div><div class="wd">城市形象宣传 · 8 支</div></a>
+    <a href="#" class="work-card reveal delay-2"><div class="wi">📱</div><div class="wt">「北京朝阳」微信推送</div><div class="wd">全年独立编辑 118 篇</div></a>
+    <a href="#" class="work-card reveal delay-3"><div class="wi">📊</div><div class="wt">单条最高阅读 22.6 万</div><div class="wd">区域政务 × 网络热点</div></a>
+    <a href="#" class="work-card reveal delay-4"><div class="wi">🎨</div><div class="wt">海报 & 视觉系统</div><div class="wd">8 组系列 · AI 辅助</div></a>
   </div>
 </section>
 
 <!-- Experience -->
-<section class="section" id="experience">
-  <div class="section-label">工作经历</div>
-  <h2 class="section-h2">内容运营与策略实践</h2>
-  <div class="timeline-item">
-    <div class="tl-date">2025.08 — 至今</div>
-    <div class="tl-content">
-      <h4>北京朝融文化传媒有限公司 <span class="tag">正式</span></h4>
-      <p>负责「北京朝阳」全媒体矩阵选题排布、内容初审与发布协同。日均处理多源内容供给，判断内容质量与传播价值，确定发布优先级和平台适配方案。独立完成原创短视频全流程制作。</p>
-    </div>
-  </div>
-  <div class="timeline-item">
-    <div class="tl-date">2025.03 — 2025.05</div>
-    <div class="tl-content">
-      <h4>北京朝融文化传媒有限公司 <span class="tag">实习</span></h4>
-      <p>内容运营实习，参与平台内容排期与基础编辑工作。</p>
-    </div>
-  </div>
-  <div class="timeline-item">
-    <div class="tl-date">2024.07 — 2024.12</div>
-    <div class="tl-content">
-      <h4>拜耳作物科学</h4>
-      <p>客户市场部实习，跨部门产品标签审核与知识库迁移项目。</p>
-    </div>
-  </div>
+<section class="sec" id="experience">
+  <div class="sec-label reveal">工作经历</div>
+  <h2 class="sec-h2 reveal">内容运营与策略实践</h2>
+  <div class="tl-item fade-up"><div class="tl-date">2025.08 — 至今</div><div class="tl-body"><h4>北京朝融文化传媒有限公司 <span class="tag">正式</span></h4><p>负责「北京朝阳」全媒体矩阵选题排布、内容初审与发布协同。日均处理多源内容供给，判断内容质量与传播价值，确定发布优先级和平台适配方案。独立完成原创短视频全流程制作。</p></div></div>
+  <div class="tl-item fade-up"><div class="tl-date">2025.03 — 2025.05</div><div class="tl-body"><h4>北京朝融文化传媒有限公司 <span class="tag">实习</span></h4><p>内容运营实习，参与平台内容排期与基础编辑工作。</p></div></div>
+  <div class="tl-item fade-up"><div class="tl-date">2024.07 — 2024.12</div><div class="tl-body"><h4>拜耳作物科学</h4><p>客户市场部实习，跨部门产品标签审核与知识库迁移项目。</p></div></div>
 </section>
 
-<!-- About & Skills -->
-<section class="section">
-  <div class="section-label">关于我 & 技能</div>
-  <h2 class="section-h2">围绕内容策略构建的能力体系</h2>
+<!-- Skills -->
+<section class="sec">
+  <div class="sec-label reveal">关于我 & 技能</div>
+  <h2 class="sec-h2 reveal">围绕内容策略构建的能力体系</h2>
   <div class="skills-list">
-    <span class="skill-tag">内容判断与审核</span>
-    <span class="skill-tag">选题策划与平台适配</span>
-    <span class="skill-tag">内容标准提炼</span>
-    <span class="skill-tag">数据复盘</span>
-    <span class="skill-tag">跨团队协作</span>
-    <span class="skill-tag">AI 辅助内容创作</span>
-    <span class="skill-tag">视频制作与视觉表达</span>
-    <span class="skill-tag">中英双语文案</span>
+    <span class="skill-tag reveal delay-1">内容判断与审核</span>
+    <span class="skill-tag reveal delay-1">选题策划与平台适配</span>
+    <span class="skill-tag reveal delay-2">内容标准提炼</span>
+    <span class="skill-tag reveal delay-2">数据复盘</span>
+    <span class="skill-tag reveal delay-3">跨团队协作</span>
+    <span class="skill-tag reveal delay-3">AI 辅助内容创作</span>
+    <span class="skill-tag reveal delay-4">视频制作与视觉表达</span>
+    <span class="skill-tag reveal delay-4">中英双语文案</span>
   </div>
-  <p style="margin-top:16px;font-size:13px;color:var(--text-dim)">工具：微信公众号 · 微博 · 小红书 · Python · Premiere Pro · Photoshop · 飞书 · SharePoint</p>
+  <p style="margin-top:18px;font-size:12px;color:var(--d)">工具：微信公众号 · 微博 · 小红书 · Python · Premiere Pro · Photoshop · 飞书 · SharePoint</p>
 </section>
 
 <!-- Contact -->
-<section class="section contact-footer" id="contact">
-  <div class="section-label">联系方式</div>
-  <h2 class="section-h2">期待与您沟通</h2>
+<section class="sec contact-footer" id="contact">
+  <div class="sec-label reveal">联系方式</div>
+  <h2 class="sec-h2 reveal">期待与您沟通</h2>
   <div class="contact-grid">
-    <div class="contact-item">
-      <h4>邮箱</h4>
-      <a href="mailto:eaat77@yeah.net">eaat77@yeah.net</a>
-    </div>
-    <div class="contact-item">
-      <h4>电话</h4>
-      <a href="tel:+8617718355095">+86 177 1835 5095</a>
-    </div>
-    <div class="contact-item">
-      <h4>小红书</h4>
-      <a href="#">@小红书账号</a>
-    </div>
-    <div class="contact-item">
-      <h4>个人网站</h4>
-      <a href="https://weseeself.com">weseeself.com</a>
-    </div>
+    <div class="contact-item reveal delay-1"><h4>邮箱</h4><a href="mailto:eaat77@yeah.net">eaat77@yeah.net</a></div>
+    <div class="contact-item reveal delay-2"><h4>电话</h4><a href="tel:+8617718355095">+86 177 1835 5095</a></div>
+    <div class="contact-item reveal delay-3"><h4>小红书</h4><a href="#">@小红书账号</a></div>
+    <div class="contact-item reveal delay-4"><h4>个人网站</h4><a href="https://weseeself.com">weseeself.com</a></div>
   </div>
-  <div class="hero-btns" style="margin-top:24px">
-    <a href="#contact" class="btn btn-primary">下载完整简历</a>
+  <div class="hero-btns reveal delay-4" style="margin-top:28px">
+    <a href="#contact" class="btn btn-p">下载完整简历</a>
   </div>
 </section>
 
 </main>
+
+<script>
+// === PRELOADER ===
+const preloader = document.getElementById('preloader');
+const plLine = document.getElementById('plLine');
+const plCounter = document.getElementById('plCounter');
+
+(function runPreloader() {
+  let count = 0;
+  const duration = 1800, interval = 36;
+  const totalTicks = duration / interval;
+  const inc = 100 / totalTicks;
+  
+  // Start line animation
+  requestAnimationFrame(() => { plLine.style.transform = 'scaleX(1)'; });
+  
+  const tick = () => {
+    count += inc;
+    if (count >= 100) {
+      count = 100;
+      plCounter.innerHTML = '<span>1</span><span>0</span><span>0</span>';
+      
+      setTimeout(() => {
+        preloader.classList.add('exit');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+          showPage();
+        }, 500);
+      }, 500);
+      return;
+    }
+    plCounter.innerHTML = '<span>' + Math.round(count) + '</span>';
+    setTimeout(tick, interval);
+  };
+  setTimeout(tick, 50);
+})();
+
+function showPage() {
+  document.getElementById('nav').classList.add('show');
+  
+  // Intersection Observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+  
+  document.querySelectorAll('.reveal, .fade-up').forEach(el => observer.observe(el));
+}
+</script>
 
 </body>
 </html>

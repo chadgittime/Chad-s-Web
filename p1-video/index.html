@@ -1006,6 +1006,8 @@ const works = [
   { date: "2026.08.03", dateLabel: "2026.08", title: "汛期安全小课堂", tag: "安全科普", duration: "00:41", format: "9:16", ratio: "portrait" },
 ];
 
+const MEDIA_BASE = "https://media.githubusercontent.com/media/chadgittime/Chad-s-Web/main/p1-video";
+
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 const assetNumber = (i) => String(i + 1).padStart(2, "0");
 
@@ -1053,7 +1055,7 @@ function buildCards() {
     // Preview video (hidden by default, created once)
     const video = document.createElement("video");
     video.className = "card-preview";
-    video.src = `./${num}.mp4`;
+    video.src = `${MEDIA_BASE}/${num}.mp4`;
     video.poster = `./${num}.jpg`;
     video.muted = true;
     video.playsInline = true;
@@ -1266,7 +1268,7 @@ function openModal(index) {
   const num = assetNumber(index);
 
   playerFrame.className = `player-frame ${work.ratio}`;
-  playerVideo.src = `./full/${num}.mp4`;
+  playerVideo.src = `${MEDIA_BASE}/full/${num}.mp4`;
   playerVideo.poster = `./${num}.jpg`;
   playerVideo.muted = false;
   playerMeta.textContent = `${work.date} · ${work.tag}`;

@@ -2011,7 +2011,12 @@
       const preloadCache = new Map();
 
       const pad = (number) => String(number).padStart(2, "0");
-      const getAssetPath = (project, file) => `${project.dir}/${file}`;
+      const LFS_BASE = "https://media.githubusercontent.com/media/chadgittime/Chad-s-Web/main/p2-poster";
+      const getAssetPath = (project, file) => {
+        const ext = (file.split(".").pop() || "").toLowerCase();
+        if (ext === "gif" || ext === "mp4") return `${LFS_BASE}/${project.dir}/${file}`;
+        return `${project.dir}/${file}`;
+      };
       const getExtension = (file) => (file.split(".").pop() || "FILE").toUpperCase();
 
       function escapeHtml(value) {

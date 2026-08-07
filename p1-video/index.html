@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUO YUEYANG — VIDEO ARCHIVE 2025—2026</title>
+<style>
+/* ===== RESET & ROOT ===== */
+:root {
+  --ink: #111315;
+  --panel: #f8f8f8;
+  --paper: #ffffff;
+  --muted: #5b6066;
+  --line: #e5e5e5;
+  --line-strong: #b8bbc0;
+  --signal: #e4002b;
+  --signal-light: #ffebef;
+  --scroll-progress: 0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--paper); scroll-behavior: auto; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Sans SC", Inter, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+button, a { font: inherit; color: inherit; }
+::selection { background: var(--signal); color: var(--paper); }
+
+/* ===== FILM SECTION ===== */
+.film-section {
+  position: relative;
+}
+
+.film-stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 720px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(17, 19, 21, 0.025) 1px, transparent 1px) 0 0 / 8.333333% 100%,
+    linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+}
+.film-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    radial-gradient(circle at 0 0, rgba(17, 19, 21, 0.07) 0 0.45px, transparent 0.7px),
+    radial-gradient(circle at 100% 100%, rgba(17, 19, 21, 0.045) 0 0.4px, transparent 0.65px);
+  background-size: 7px 9px, 11px 13px;
+  background-position: 0 0, 3px 5px;
+  mix-blend-mode: multiply;
+  z-index: 20;
+}
+
+/* ===== LETTER CASCADE BANNER ===== */
+.cascade-banner {
+  height: 186px;
+  padding: 20px clamp(24px, 4vw, 72px) 16px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) 1px;
+  gap: 12px;
+  position: relative;
+  z-index: 30;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.cascade-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  background: repeating-linear-gradient(0deg, rgba(17, 19, 21, 0.04) 0 1px, transparent 1px 4px);
+}
+.cascade-meta,
+.cascade-main,
+.cascade-rule { position: relative; z-index: 1; }
+.cascade-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font: 700 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.cascade-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+}
+.cascade-kicker::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--signal);
+  flex: 0 0 auto;
+}
+.cascade-meta-right {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 34px);
+}
+.cascade-meta-right b { color: var(--signal); font-weight: 700; }
+.cascade-main {
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(28px, 4vw, 72px);
+}
+.letter-cascade {
+  margin: 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--ink);
+  font-size: clamp(50px, 6.7vw, 98px);
+  font-weight: 780;
+  line-height: 0.84;
+  letter-spacing: -0.075em;
+  white-space: nowrap;
+  cursor: default;
+  outline: none;
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+.letter-cascade:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 8px;
+}
+.cascade-letter {
+  position: relative;
+  display: inline-grid;
+  place-items: end center;
+  white-space: pre;
+  perspective: 560px;
+  transform-style: preserve-3d;
+}
+.cascade-front,
+.cascade-echo {
+  grid-area: 1 / 1;
+  display: inline-block;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+.cascade-front {
+  color: var(--ink);
+  transform: translateY(0) rotateX(0deg);
+  transform-origin: bottom center;
+}
+.cascade-echo {
+  color: var(--signal);
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateY(0.08em) rotateX(-92deg) scale(0.82);
+  transform-origin: top center;
+}
+.letter-cascade.is-cascading .cascade-front {
+  animation: cascadeFront 760ms cubic-bezier(0.2, 0.78, 0.28, 1.08) both;
+  animation-delay: calc(var(--cascade-index) * 58ms);
+}
+.letter-cascade.is-cascading .cascade-echo {
+  animation: cascadeEcho 760ms cubic-bezier(0.2, 0.78, 0.28, 1.08) both;
+  animation-delay: calc(var(--cascade-index) * 58ms);
+}
+@keyframes cascadeFront {
+  0%, 8% { opacity: 1; filter: blur(0); transform: translateY(0) rotateX(0deg); }
+  43% { opacity: 0; filter: blur(4px); transform: translateY(-0.08em) rotateX(92deg); }
+  44%, 69% { opacity: 0; filter: blur(0); transform: translateY(0) rotateX(0deg); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) rotateX(0deg); }
+}
+@keyframes cascadeEcho {
+  0%, 13% { opacity: 0; filter: blur(4px); transform: translateY(0.08em) rotateX(-92deg) scale(0.82); }
+  48% { opacity: 1; filter: blur(0); transform: translateY(0) rotateX(8deg) scale(1.02); }
+  62% { opacity: 1; filter: blur(0); transform: translateY(0) rotateX(-4deg) scale(1); }
+  75%, 87% { opacity: 1; filter: blur(0); transform: translateY(0) rotateX(0deg) scale(1); }
+  100% { opacity: 0; filter: blur(1px); transform: translateY(-0.02em) rotateX(0deg) scale(1); }
+}
+.cascade-description {
+  flex: 0 0 auto;
+  max-width: 290px;
+  padding-bottom: 2px;
+  color: var(--muted);
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.cascade-description strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--signal);
+  font: 700 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.11em;
+}
+.cascade-rule {
+  width: 100%;
+  background: linear-gradient(90deg, var(--signal) 0 96px, var(--line) 96px 100%);
+}
+
+/* ===== FILM VIEWPORT ===== */
+.film-viewport {
+  position: relative;
+  height: calc(100vh - 370px);
+  min-height: 350px;
+  z-index: 21;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(248, 248, 248, 0.66);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+.scroll-spacer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 780vh;
+  pointer-events: none;
+}
+.track-shell {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.film-track {
+  height: 100%;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.2vw, 40px);
+  padding-inline: calc(50vw - clamp(120px, 10vw, 165px));
+  will-change: transform;
+}
+.mobile-scroll-hint {
+  display: none;
+}
+
+/* ===== CARDS ===== */
+.film-card {
+  position: relative;
+  flex: 0 0 auto;
+  height: calc(100% - 36px);
+  width: auto;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 0;
+  border: 1px solid var(--line-strong);
+  background: #111315;
+  box-shadow: 0 12px 30px rgba(17, 19, 21, 0.11);
+  cursor: pointer;
+  opacity: 0.38;
+  transform: scale(0.86);
+  transition: transform 420ms cubic-bezier(.22, 1, .36, 1), opacity 280ms ease, border-color 240ms ease;
+  outline: none;
+}
+.film-card.tall {
+  height: calc(100% - 36px);
+  width: auto;
+  aspect-ratio: 3 / 4;
+}
+.film-card.landscape {
+  height: min(72%, 360px);
+  width: auto;
+  aspect-ratio: 16 / 9;
+}
+.film-card.is-near {
+  opacity: 0.68;
+  transform: scale(0.93);
+}
+.film-card.is-active {
+  opacity: 1;
+  transform: scale(1);
+  border-color: var(--signal);
+  box-shadow: 0 0 0 1px var(--signal), 0 18px 42px rgba(17, 19, 21, 0.16);
+  z-index: 4;
+}
+.film-card.is-active.is-featured {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 2px var(--signal), 0 18px 42px rgba(17, 19, 21, 0.18);
+}
+.film-card:focus-visible {
+  box-shadow: 0 0 0 3px var(--signal-light), 0 0 0 5px var(--signal);
+}
+.film-card img,
+.card-preview {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.card-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  animation: previewIn 260ms ease-out both;
+}
+@keyframes previewIn {
+  from { opacity: 0; transform: scale(1.015); }
+  to { opacity: 1; transform: scale(1); }
+}
+.card-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,.18), transparent 48%, rgba(0,0,0,.82));
+  pointer-events: none;
+}
+.card-topline,
+.card-caption,
+.play-mark {
+  position: absolute;
+  z-index: 3;
+  color: #ffffff;
+}
+.film-card.is-active::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--signal);
+  pointer-events: none;
+}
+.card-topline {
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font: 700 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .06em;
+}
+.card-caption {
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 7px;
+}
+.card-caption span {
+  color: #ff3155;
+  font: 650 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .08em;
+}
+.card-caption strong {
+  font-size: clamp(16px, 1.25vw, 22px);
+  line-height: 1.16;
+  letter-spacing: -.025em;
+}
+.play-mark {
+  right: 13px;
+  bottom: 14px;
+  width: 66px;
+  height: 66px;
+  border-radius: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(9,11,13,.72);
+  border: 1px solid var(--signal);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: 180ms ease-out;
+}
+.film-card.is-active:hover .play-mark {
+  opacity: 1;
+  transform: translateY(0);
+}
+.film-card.landscape .card-caption {
+  max-width: 58%;
+}
+
+/* ===== CONSOLE ===== */
+.timeline-console {
+  height: 128px;
+  margin: 0 clamp(24px, 4vw, 72px);
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 120px minmax(280px, 1.2fr) minmax(300px, .9fr) auto;
+  align-items: center;
+  gap: clamp(18px, 2.5vw, 46px);
+  position: relative;
+  z-index: 22;
+  background: rgba(255, 255, 255, 0.72);
+}
+.active-number {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--signal);
+}
+.active-number span {
+  font-size: 54px;
+  line-height: 1;
+  letter-spacing: -.08em;
+}
+.active-number small { color: var(--muted); }
+.active-copy { min-width: 0; }
+.active-copy p {
+  margin: 0 0 8px;
+  color: var(--signal);
+  font: 650 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em;
+}
+.active-copy h2 {
+  margin: 0;
+  font-size: clamp(17px, 1.45vw, 25px);
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.active-stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.active-stats div {
+  padding: 3px 20px;
+  border-left: 1px solid var(--line);
+}
+.active-stats dt {
+  color: var(--muted);
+  font: 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.active-stats dd {
+  margin: 9px 0 0;
+  font: 17px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.transport button {
+  height: 42px;
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 0;
+  cursor: pointer;
+  transition: transform 140ms ease-out, border-color 140ms ease-out, background 140ms ease-out;
+}
+.transport button {
+  min-width: 42px;
+  padding: 0 14px;
+}
+.transport button:hover:not(:disabled) {
+  border-color: var(--ink);
+  background: var(--panel);
+}
+.transport button:active:not(:disabled) {
+  transform: scale(.97);
+}
+.transport button:disabled {
+  opacity: .25;
+  cursor: default;
+}
+.transport .play-button {
+  padding-inline: 20px;
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--paper);
+  font-weight: 720;
+}
+
+/* ===== PROGRESS RAIL ===== */
+.progress-rail {
+  height: 56px;
+  margin: 0 clamp(24px, 4vw, 72px);
+  position: relative;
+  z-index: 22;
+  border-top: 1px solid var(--line);
+}
+.progress-rail::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--line);
+}
+.progress-fill {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--signal);
+  transform: scaleX(var(--scroll-progress));
+  transform-origin: left;
+}
+.progress-cursor {
+  position: absolute;
+  top: -1px;
+  left: calc(var(--scroll-progress) * 100%);
+  width: 14px;
+  height: 14px;
+  border-radius: 0;
+  background: var(--signal);
+  border: 3px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--signal);
+  transform: translate(-50%, -50%);
+  transition: left 80ms linear;
+  z-index: 3;
+}
+.progress-cursor i {
+  position: absolute;
+  left: 50%;
+  bottom: 13px;
+  transform: translateX(-50%);
+  padding: 5px 7px;
+  border-radius: 0;
+  background: var(--signal);
+  color: var(--paper);
+  font: 700 8px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-style: normal;
+  white-space: nowrap;
+}
+.progress-labels {
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font: 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ===== MODAL / PLAYER ===== */
+.player-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 420px);
+  align-items: center;
+  gap: clamp(28px, 5vw, 90px);
+  padding: clamp(28px, 5vw, 80px);
+  background: rgba(17, 19, 21, .96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  animation: modalIn 240ms ease-out both;
+}
+.player-backdrop.is-open {
+  display: grid;
+}
+@keyframes modalIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-close {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  border: 0;
+  background: transparent;
+  color: #aeb1b5;
+  cursor: pointer;
+  font-size: 14px;
+}
+.modal-close:hover { color: #ffffff; }
+.player-frame {
+  justify-self: end;
+  height: min(76vh, 780px);
+  max-width: 64vw;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 0;
+  border: 1px solid rgba(255,255,255,.2);
+  background: #000;
+}
+.player-frame.tall {
+  aspect-ratio: 3 / 4;
+  width: min(62vw, 840px);
+  height: auto;
+}
+.player-frame.landscape {
+  aspect-ratio: 16 / 9;
+  width: min(64vw, 1050px);
+  height: auto;
+}
+.player-frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+.player-copy p {
+  margin: 0 0 14px;
+  color: #ff3155;
+  font: 700 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em;
+}
+.player-copy h2 {
+  margin: 0 0 22px;
+  font-size: clamp(30px, 3vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -.05em;
+  color: #ffffff;
+}
+.player-copy span {
+  color: #aeb1b5;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* ===== RESPONSIVE: Short screens ===== */
+@media (max-height: 820px) and (min-width: 761px) {
+  .cascade-banner { height: 164px; padding-top: 16px; gap: 9px; }
+  .letter-cascade { font-size: clamp(44px, 6vw, 78px); }
+  .film-viewport { height: calc(100vh - 328px); min-height: 320px; }
+  .timeline-console { height: 112px; }
+  .active-number span { font-size: 44px; }
+  .progress-rail { height: 50px; }
+}
+
+/* ===== RESPONSIVE: Medium screens ===== */
+@media (max-width: 1000px) and (min-width: 761px) {
+  .timeline-console { grid-template-columns: 88px minmax(220px, 1fr) auto; }
+  .active-stats { display: none; }
+  .active-number span { font-size: 44px; }
+}
+
+/* ===== RESPONSIVE: Mobile ===== */
+@media (max-width: 760px) {
+  .film-section { height: auto; }
+  .film-stage {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+    overflow: hidden;
+    padding-bottom: 28px;
+  }
+  .cascade-banner {
+    height: auto;
+    min-height: 190px;
+    padding: 20px 18px 18px;
+    gap: 16px;
+  }
+  .cascade-meta-right span { display: none; }
+  .cascade-main { display: block; }
+  .letter-cascade { font-size: clamp(46px, 14vw, 68px); }
+  .cascade-description {
+    max-width: none;
+    margin-top: 22px;
+    text-align: left;
+  }
+  .film-viewport { height: 54svh; min-height: 420px; }
+  .track-shell {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+  }
+  .track-shell::-webkit-scrollbar { display: none; }
+  .film-track {
+    transform: none !important;
+    gap: 15px;
+    padding: 20px 12vw 28px;
+  }
+  .mobile-scroll-hint {
+    display: block;
+    position: absolute;
+    z-index: 8;
+    top: -4px;
+    right: 18px;
+    color: var(--muted);
+    font: 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .08em;
+  }
+  .mobile-scroll-hint span { color: var(--signal); margin-left: 6px; }
+  .film-card,
+  .film-card.tall {
+    width: 64vw;
+    max-width: 290px;
+    height: calc(54svh - 60px);
+    aspect-ratio: auto;
+    scroll-snap-align: center;
+    transform: scale(.96);
+    opacity: .66;
+    border-radius: 0;
+  }
+  .film-card.landscape {
+    width: 82vw;
+    max-width: 520px;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .film-card.is-active,
+  .film-card.is-near {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .card-caption strong { font-size: 17px; }
+  .card-preview { display: none; }
+  .timeline-console {
+    height: auto;
+    margin: 0 18px;
+    padding: 22px 0 20px;
+    grid-template-columns: 64px 1fr auto;
+    gap: 14px;
+  }
+  .active-number span { font-size: 34px; }
+  .active-number small { font-size: 10px; }
+  .active-copy p { font-size: 8px; }
+  .active-copy h2 { font-size: 15px; }
+  .active-stats { display: none; }
+  .transport > button:first-child,
+  .transport > button:last-child {
+    display: none;
+  }
+  .transport .play-button {
+    min-width: 42px;
+    width: 42px;
+    padding: 0;
+    font-size: 0;
+  }
+  .transport .play-button::after {
+    content: "▶";
+    font-size: 12px;
+  }
+  .progress-rail { margin: 0 18px; height: 38px; }
+  .progress-labels { font-size: 7px; }
+  .player-backdrop {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 66px 18px 24px;
+    gap: 20px;
+    overflow-y: auto;
+  }
+  .player-backdrop.is-open { display: flex; }
+  .player-frame,
+  .player-frame.tall {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 64svh;
+    justify-self: auto;
+  }
+  .player-frame.landscape {
+    width: 100%;
+    max-width: 100%;
+  }
+  .player-copy h2 { font-size: 28px; margin-bottom: 12px; }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .letter-cascade.is-cascading .cascade-front,
+  .letter-cascade.is-cascading .cascade-echo { animation: none; }
+  .cascade-echo { display: none; }
+  .cascade-front { opacity: 1; filter: none; transform: none; }
+  .film-card { transition-duration: 180ms; transform: scale(.94); }
+  .film-card.is-near,
+  .film-card.is-active { transform: scale(1); }
+  .card-preview,
+  .player-backdrop { animation-duration: 100ms; }
+  .transport button { transition-duration: 100ms; }
+}
+</style>
+</head>
+<body>
+
+<main>
+  <!-- ===== FILM SECTION ===== -->
+  <section class="film-section" id="filmSection" aria-label="视频作品时间轴">
+    <div class="film-stage" id="filmStage">
+      <!-- Letter Cascade Banner -->
+      <section class="cascade-banner" id="top" data-letter-cascade aria-labelledby="videoBannerTitle">
+        <div class="cascade-meta" aria-hidden="true">
+          <p class="cascade-kicker">P1 / VIDEO ARCHIVE</p>
+          <p class="cascade-meta-right">
+            <span>13 WORKS / CHRONOLOGICAL CUT</span>
+            <b>2025—2026</b>
+          </p>
+        </div>
+        <div class="cascade-main">
+          <h1
+            class="letter-cascade"
+            id="videoBannerTitle"
+            data-cascade-text="我制作的视频"
+            tabindex="0"
+            role="button"
+            aria-label="我制作的视频"
+          >我制作的视频</h1>
+          <p class="cascade-description">
+            <strong>SCROLL / FOCUS / PREVIEW</strong>
+            向下滚动浏览时间线，进入焦点后自动播放 5 秒静音预览。
+          </p>
+        </div>
+      </section>
+
+      <!-- Film Viewport -->
+      <div class="film-viewport" id="filmViewport">
+        <div class="scroll-spacer"></div>
+        <div class="mobile-scroll-hint" aria-hidden="true">
+          左右滑动观看 <span>→</span>
+        </div>
+        <div class="track-shell" id="trackShell">
+          <div class="film-track" id="filmTrack">
+            <!-- Cards injected by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Console -->
+      <div class="timeline-console" id="timelineConsole">
+        <div class="active-number">
+          <span id="consoleNumber">01</span><small>/ 13</small>
+        </div>
+        <div class="active-copy" aria-live="polite">
+          <p id="consoleTag">自然叙事 · 2025.05</p>
+          <h2 id="consoleTitle">温榆河芸上梯田油菜花</h2>
+        </div>
+        <dl class="active-stats" id="consoleStats">
+          <div><dt>DURATION</dt><dd id="statDuration">00:43</dd></div>
+          <div><dt>FORMAT</dt><dd id="statFormat">9:16</dd></div>
+          <div><dt>PREVIEW</dt><dd>00:05</dd></div>
+        </dl>
+        <div class="transport">
+          <button id="btnPrev" aria-label="上一条作品">←</button>
+          <button class="play-button" id="btnPlay" aria-label="播放预览">播放预览</button>
+          <button id="btnNext" aria-label="下一条作品">→</button>
+        </div>
+      </div>
+
+      <!-- Progress Rail -->
+      <div class="progress-rail" aria-hidden="true">
+        <span class="progress-fill" id="progressFill"></span>
+        <span class="progress-cursor" id="progressCursor">
+          <i id="progressLabel">2025.05</i>
+        </span>
+        <div class="progress-labels">
+          <span>2025.05</span><span>2025.10</span><span>2026.03</span><span>2026.05</span><span>2026.08</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODAL PLAYER ===== -->
+  <div class="player-backdrop" id="playerBackdrop" role="dialog" aria-modal="true" aria-label="视频预览">
+    <button class="modal-close" id="modalClose" aria-label="关闭视频">关闭 ×</button>
+    <div class="player-frame" id="playerFrame">
+      <video id="playerVideo" controls playsInline></video>
+    </div>
+    <div class="player-copy">
+      <p id="playerMeta"></p>
+      <h2 id="playerTitle"></h2>
+    </div>
+  </div>
+</main>
+
+<script>
+// ===== LETTER CASCADE BANNER =====
+(function initLetterCascade() {
+  "use strict";
+
+  var banner = document.querySelector("[data-letter-cascade]");
+  if (!banner) return;
+
+  var cascade = banner.querySelector(".letter-cascade");
+  if (!cascade) return;
+
+  var text = cascade.getAttribute("data-cascade-text") || cascade.textContent || "";
+  var letters = Array.from(text);
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var running = false;
+  var autoPlayed = false;
+  var resetTimer = 0;
+  var animationDuration = 760;
+  var staggerDuration = 58;
+
+  cascade.textContent = "";
+  letters.forEach(function(letter, index) {
+    var wrapper = document.createElement("span");
+    wrapper.className = "cascade-letter";
+    wrapper.style.setProperty("--cascade-index", index);
+    wrapper.setAttribute("aria-hidden", "true");
+
+    var front = document.createElement("span");
+    front.className = "cascade-front";
+    front.textContent = letter;
+
+    var echo = document.createElement("span");
+    echo.className = "cascade-echo";
+    echo.textContent = letter;
+
+    wrapper.appendChild(front);
+    wrapper.appendChild(echo);
+    cascade.appendChild(wrapper);
+  });
+
+  function playCascade() {
+    if (running || reducedMotion.matches) return;
+    running = true;
+    window.clearTimeout(resetTimer);
+    cascade.classList.remove("is-cascading");
+    void cascade.offsetWidth;
+    cascade.classList.add("is-cascading");
+
+    var totalDuration = animationDuration + Math.max(0, letters.length - 1) * staggerDuration + 80;
+    resetTimer = window.setTimeout(function() {
+      cascade.classList.remove("is-cascading");
+      running = false;
+    }, totalDuration);
+  }
+
+  function playOnce() {
+    if (autoPlayed) return;
+    autoPlayed = true;
+    playCascade();
+  }
+
+  cascade.addEventListener("pointerenter", playCascade);
+  cascade.addEventListener("focus", playCascade);
+  cascade.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      playCascade();
+    }
+  });
+
+  if (reducedMotion.matches) {
+    autoPlayed = true;
+    return;
+  }
+
+  var observingFrame = false;
+  try {
+    var frameElement = window.frameElement;
+    if (frameElement && window.parent !== window && window.parent.IntersectionObserver) {
+      var frameObserver = new window.parent.IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.24) {
+            playOnce();
+            frameObserver.disconnect();
+          }
+        });
+      }, { threshold: [0, 0.24, 0.5] });
+      frameObserver.observe(frameElement);
+      observingFrame = true;
+    }
+  } catch (error) {
+    observingFrame = false;
+  }
+
+  if (!observingFrame && "IntersectionObserver" in window) {
+    var bannerObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
+          playOnce();
+          bannerObserver.disconnect();
+        }
+      });
+    }, { threshold: [0, 0.45, 0.75] });
+    bannerObserver.observe(banner);
+  } else if (!observingFrame) {
+    window.setTimeout(playOnce, 120);
+  }
+})();
+
+// ===== DATA =====
+const works = [
+  { date: "2025.05.07", dateLabel: "2025.05", title: "温榆河芸上梯田油菜花", tag: "自然叙事", duration: "00:43", format: "9:16", ratio: "portrait" },
+  { date: "2025.09.29", dateLabel: "2025.09", title: "来朝阳，“花”点时间", tag: "城市生活", duration: "01:33", format: "9:16", ratio: "portrait" },
+  { date: "2025.10.17", dateLabel: "2025.10", title: "2025北京朝阳国际灯光消费季", tag: "城市活动", duration: "01:32", format: "9:16", ratio: "portrait", featured: true },
+  { date: "2026.02.12", dateLabel: "2026.02", title: "来北京朝阳找熊猫", tag: "节庆创意", duration: "00:32", format: "9:16", ratio: "portrait" },
+  { date: "2026.03.03", dateLabel: "2026.03", title: "当元宵节遇上波普艺术", tag: "视觉创意", duration: "00:24", format: "9:16", ratio: "portrait" },
+  { date: "2026.05.02", dateLabel: "2026.05", title: "这个“五一”就来巨C汉堡节", tag: "节日活动", duration: "00:30", format: "9:16", ratio: "portrait" },
+  { date: "2026.05.09", dateLabel: "2026.05", title: "Labubu飞到朝阳公园", tag: "潮流IP", duration: "00:47", format: "3:4", ratio: "tall" },
+  { date: "2026.05.18", dateLabel: "2026.05", title: "重生在首届中国新文创市集", tag: "潮玩活动", duration: "01:32", format: "9:16", ratio: "portrait", featured: true },
+  { date: "2026.06.18", dateLabel: "2026.06", title: "端午安康", tag: "节气表达", duration: "00:31", format: "9:16", ratio: "portrait" },
+  { date: "2026.06.23", dateLabel: "2026.06", title: "全球首家机器人潮饮店限定开业", tag: "科技潮流", duration: "00:55", format: "9:16", ratio: "portrait" },
+  { date: "2026.07.01", dateLabel: "2026.07", title: "中国儿童百科全书：植物之最", tag: "知识科普", duration: "01:15", format: "9:16", ratio: "portrait", featured: true },
+  { date: "2026.07.09", dateLabel: "2026.07", title: "防汛无小事，安全记心间", tag: "公共传播", duration: "00:46", format: "9:16", ratio: "portrait" },
+  { date: "2026.08.03", dateLabel: "2026.08", title: "汛期安全小课堂", tag: "安全科普", duration: "00:41", format: "9:16", ratio: "portrait" },
+];
+
+const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+const assetNumber = (i) => String(i + 1).padStart(2, "0");
+
+// ===== DOM REFS =====
+const filmSection = document.getElementById("filmSection");
+const filmStage = document.getElementById("filmStage");
+const filmViewport = document.getElementById("filmViewport");
+const filmTrack = document.getElementById("filmTrack");
+const trackShell = document.getElementById("trackShell");
+const progressFill = document.getElementById("progressFill");
+const progressCursor = document.getElementById("progressCursor");
+const progressLabel = document.getElementById("progressLabel");
+const playerBackdrop = document.getElementById("playerBackdrop");
+const playerFrame = document.getElementById("playerFrame");
+const playerVideo = document.getElementById("playerVideo");
+const playerMeta = document.getElementById("playerMeta");
+const playerTitle = document.getElementById("playerTitle");
+
+// ===== STATE =====
+let activeIndex = 0;
+let isMobile = window.innerWidth <= 760;
+let cards = [];
+let previewTimer = null;
+
+// ===== BUILD CARDS =====
+function buildCards() {
+  filmTrack.innerHTML = "";
+  cards = [];
+  works.forEach((work, index) => {
+    const num = assetNumber(index);
+    const article = document.createElement("article");
+    article.className = `film-card ${work.ratio}${work.featured ? " is-featured" : ""}`;
+    article.setAttribute("tabindex", "0");
+    article.setAttribute("role", "button");
+    article.setAttribute("aria-label", `${work.title}，${work.date}`);
+    article.dataset.index = index;
+
+    // Poster image
+    const img = document.createElement("img");
+    img.src = `./${num}.jpg`;
+    img.alt = work.title;
+    img.loading = "lazy";
+    article.appendChild(img);
+
+    // Preview video (hidden by default, created once)
+    const video = document.createElement("video");
+    video.className = "card-preview";
+    video.src = `./${num}.mp4`;
+    video.poster = `./${num}.jpg`;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.style.display = "none";
+    video.dataset.previewIndex = index;
+    video.addEventListener("timeupdate", function() {
+      if (this.currentTime >= 5) this.pause();
+    });
+    video.addEventListener("ended", function() {
+      this.style.display = "none";
+    });
+    article.appendChild(video);
+
+    // Shade
+    const shade = document.createElement("div");
+    shade.className = "card-shade";
+    article.appendChild(shade);
+
+    // Topline
+    const topline = document.createElement("div");
+    topline.className = "card-topline";
+    topline.innerHTML = `<span>${num} / 13</span>`;
+    article.appendChild(topline);
+
+    // Caption
+    const caption = document.createElement("div");
+    caption.className = "card-caption";
+    caption.innerHTML = `<span>${work.date}</span><strong>${work.title}</strong>`;
+    article.appendChild(caption);
+
+    // Play mark
+    const playMark = document.createElement("span");
+    playMark.className = "play-mark";
+    playMark.textContent = "点击播放";
+    article.appendChild(playMark);
+
+    // Click handler
+    article.addEventListener("click", () => {
+      if (parseInt(article.dataset.index) === activeIndex) {
+        openModal(activeIndex);
+      } else {
+        goToIndex(parseInt(article.dataset.index));
+      }
+    });
+
+    // Keyboard handler
+    article.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (parseInt(article.dataset.index) === activeIndex) {
+          openModal(activeIndex);
+        } else {
+          goToIndex(parseInt(article.dataset.index));
+        }
+      }
+    });
+
+    filmTrack.appendChild(article);
+    cards.push(article);
+  });
+}
+
+// ===== ACTIVE INDEX =====
+function setActiveSafely(index) {
+  if (activeIndex === index) return;
+  const prev = activeIndex;
+  activeIndex = index;
+  updateCardStates();
+  updatePreview(prev, index);
+  updateConsole();
+  updateProgress();
+}
+
+function updateCardStates() {
+  cards.forEach((card, i) => {
+    const dist = Math.abs(i - activeIndex);
+    card.classList.remove("is-active", "is-near", "is-past");
+    if (i === activeIndex) card.classList.add("is-active");
+    if (dist === 1) card.classList.add("is-near");
+    if (i < activeIndex) card.classList.add("is-past");
+  });
+}
+
+// ===== PREVIEW MANAGEMENT =====
+function updatePreview(prevIndex, newIndex) {
+  // Stop previous preview
+  if (cards[prevIndex]) {
+    const prevVideo = cards[prevIndex].querySelector(".card-preview");
+    if (prevVideo) {
+      prevVideo.pause();
+      prevVideo.currentTime = 0;
+      prevVideo.style.display = "none";
+    }
+  }
+  // Start new preview (only on desktop)
+  if (!isMobile && cards[newIndex]) {
+    const newVideo = cards[newIndex].querySelector(".card-preview");
+    if (newVideo) {
+      newVideo.style.display = "block";
+      newVideo.currentTime = 0;
+      newVideo.play().catch(() => {}); // Autoplay may be blocked
+    }
+  }
+}
+
+// ===== CONSOLE =====
+function updateConsole() {
+  const work = works[activeIndex];
+  document.getElementById("consoleNumber").textContent = assetNumber(activeIndex);
+  document.getElementById("consoleTag").textContent = `${work.tag} · ${work.dateLabel}`;
+  document.getElementById("consoleTitle").textContent = work.title;
+  document.getElementById("statDuration").textContent = work.duration;
+  document.getElementById("statFormat").textContent = work.format;
+  document.getElementById("btnPrev").disabled = activeIndex === 0;
+  document.getElementById("btnNext").disabled = activeIndex === works.length - 1;
+}
+
+// ===== PROGRESS =====
+function updateProgress() {
+  const progress = clamp(activeIndex / (works.length - 1), 0, 1);
+  filmStage.style.setProperty("--scroll-progress", progress);
+  document.getElementById("progressLabel").textContent = works[activeIndex].dateLabel;
+}
+
+// ===== NAVIGATION =====
+function goToIndex(index) {
+  const next = clamp(index, 0, works.length - 1);
+  if (next === activeIndex) return;
+
+  if (isMobile) {
+    const card = cards[next];
+    if (card && trackShell) {
+      trackShell.scrollTo({
+        left: card.offsetLeft + card.offsetWidth / 2 - trackShell.clientWidth / 2,
+        behavior: "smooth",
+      });
+    }
+    setActiveSafely(next);
+    return;
+  }
+
+  // Desktop: scroll the filmViewport to bring the card into view
+  var card = cards[next];
+  if (!card || !filmViewport || !filmTrack) return;
+  var maxX = Math.max(1, filmTrack.scrollWidth - filmViewport.clientWidth);
+  var wantedX = clamp(
+    card.offsetLeft + card.offsetWidth / 2 - filmViewport.clientWidth / 2,
+    0,
+    maxX
+  );
+  var progress = wantedX / maxX;
+  var maxScroll = Math.max(1, filmViewport.scrollHeight - filmViewport.clientHeight);
+  filmViewport.scrollTo({ top: maxScroll * progress, behavior: "smooth" });
+}
+
+// ===== DESKTOP SCROLL (filmViewport 内独立滚动容器) =====
+function updateDesktopTrack() {
+  if (isMobile || !filmViewport || !filmTrack) return;
+
+  var maxScroll = Math.max(1, filmViewport.scrollHeight - filmViewport.clientHeight);
+  var progress = clamp(filmViewport.scrollTop / maxScroll, 0, 1);
+  var maxX = Math.max(0, filmTrack.scrollWidth - filmViewport.clientWidth);
+  var x = progress * maxX;
+
+  filmTrack.style.transform = `translate3d(${-x}px, 0, 0)`;
+  filmStage.style.setProperty("--scroll-progress", progress);
+
+  // Find nearest card to viewport center
+  var center = filmViewport.clientWidth / 2;
+  var nearest = 0;
+  var nearestDist = Infinity;
+  cards.forEach(function(card, i) {
+    if (!card) return;
+    var cardCenter = card.offsetLeft + card.offsetWidth / 2 - x;
+    var dist = Math.abs(cardCenter - center);
+    if (dist < nearestDist) {
+      nearest = i;
+      nearestDist = dist;
+    }
+  });
+  setActiveSafely(nearest);
+}
+
+// ===== MOBILE SCROLL =====
+function onMobileScroll() {
+  if (!isMobile || !trackShell || !filmSection) return;
+
+  const span = Math.max(1, trackShell.scrollWidth - trackShell.clientWidth);
+  const progress = clamp(trackShell.scrollLeft / span, 0, 1);
+  filmStage.style.setProperty("--scroll-progress", progress);
+
+  const center = trackShell.scrollLeft + trackShell.clientWidth / 2;
+  let nearest = 0;
+  let nearestDist = Infinity;
+  cards.forEach((card, i) => {
+    if (!card) return;
+    const dist = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
+    if (dist < nearestDist) {
+      nearest = i;
+      nearestDist = dist;
+    }
+  });
+  setActiveSafely(nearest);
+}
+
+// ===== MODAL =====
+function openModal(index) {
+  const work = works[index];
+  const num = assetNumber(index);
+
+  playerFrame.className = `player-frame ${work.ratio}`;
+  playerVideo.src = `./full/${num}.mp4`;
+  playerVideo.poster = `./${num}.jpg`;
+  playerVideo.muted = false;
+  playerMeta.textContent = `${work.date} · ${work.tag}`;
+  playerTitle.textContent = work.title;
+  playerBackdrop.classList.add("is-open");
+  playerBackdrop.setAttribute("aria-label", `${work.title} 视频预览`);
+  playerVideo.play().catch(() => {});
+}
+
+function closeModal() {
+  playerBackdrop.classList.remove("is-open");
+  playerVideo.pause();
+  playerVideo.src = "";
+}
+
+// ===== MODE SWITCH =====
+function updateMode() {
+  const wasMobile = isMobile;
+  isMobile = window.innerWidth <= 760;
+
+  if (wasMobile !== isMobile) {
+    // Reset track transform when switching modes
+    if (!isMobile) {
+      filmTrack.style.transform = "translate3d(0px, 0, 0)";
+      // Re-enable previews
+      updatePreview(activeIndex, activeIndex);
+    } else {
+      // On mobile, hide previews
+      cards.forEach(card => {
+        const v = card.querySelector(".card-preview");
+        if (v) { v.pause(); v.style.display = "none"; }
+      });
+    }
+    // Re-initialize scroll position
+    updateDesktopTrack();
+  }
+}
+
+// ===== EVENT LISTENERS =====
+var rafId = 0;
+function queueDesktopUpdate() {
+  cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(updateDesktopTrack);
+}
+
+filmViewport.addEventListener("scroll", function() {
+  if (!isMobile) queueDesktopUpdate();
+}, { passive: true });
+
+window.addEventListener("resize", updateMode);
+
+trackShell.addEventListener("scroll", onMobileScroll, { passive: true });
+
+// Transport buttons
+document.getElementById("btnPrev").addEventListener("click", () => goToIndex(activeIndex - 1));
+document.getElementById("btnNext").addEventListener("click", () => goToIndex(activeIndex + 1));
+document.getElementById("btnPlay").addEventListener("click", () => openModal(activeIndex));
+
+// Modal
+document.getElementById("modalClose").addEventListener("click", closeModal);
+playerBackdrop.addEventListener("click", (e) => {
+  if (e.target === playerBackdrop) closeModal();
+});
+
+// Keyboard
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (playerBackdrop.classList.contains("is-open")) {
+      closeModal();
+      return;
+    }
+  }
+  if (playerBackdrop.classList.contains("is-open")) return;
+  if (e.key === "ArrowRight") goToIndex(activeIndex + 1);
+  if (e.key === "ArrowLeft") goToIndex(activeIndex - 1);
+});
+
+// ===== INIT =====
+buildCards();
+updateMode();
+setActiveSafely(0);
+// Set initial card state
+updateCardStates();
+// Force initial preview on desktop
+if (!isMobile) {
+  const firstVideo = cards[0].querySelector(".card-preview");
+  if (firstVideo) {
+    firstVideo.style.display = "block";
+    firstVideo.currentTime = 0;
+    firstVideo.play().catch(() => {});
+  }
+}
+updateConsole();
+updateProgress();
+</script>
+
+</body>
+</html>

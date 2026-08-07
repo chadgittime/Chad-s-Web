@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P3 推送与内容供给判断 — 郭悦洋作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+SC:wght@300;400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<script>
+/* 嵌入主作品集时使用自然文档流；单独打开本页时保留原滚动叙事。 */
+if (window.self !== window.top) document.documentElement.classList.add('is-embedded-flat');
+</script>
+<style>
+:root {
+  --white: #ffffff;
+  --near-black: #111315;
+  --aux: #5b6066;
+  --red: #e4002b;
+  --red-light: #ffebef;
+  --border: #e5e5e5;
+  --bg-light: #f8f8f8;
+  --grid: 12;
+  --baseline: 8px;
+  --margin: 72px;
+  font-family: 'Noto Sans SC', 'Inter', sans-serif;
+  color: var(--near-black);
+  background: var(--white);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { max-width: 100%; overflow-x: clip; }
+body { line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.num { font-family: 'Inter', 'Space Mono', monospace; font-feature-settings: 'tnum'; }
+.mono { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--aux); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Letter Cascade banner */
+.cascade-banner {
+  position: relative;
+  width: 100%;
+  min-height: clamp(172px, 19vw, 248px);
+  padding: 28px var(--margin) 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--near-black);
+  background-color: var(--white);
+  background-image:
+    linear-gradient(rgba(17,19,21,.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,19,21,.026) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+.cascade-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--margin);
+  width: 96px;
+  height: 4px;
+  background: var(--red);
+}
+.cascade-kicker,
+.cascade-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--aux);
+  font: 700 10px/1.4 'Space Mono', monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.cascade-kicker strong { color: var(--red); font: inherit; }
+.letter-cascade {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  max-width: 100%;
+  color: var(--near-black);
+  font: 700 clamp(46px, 7.6vw, 118px)/.94 'Noto Sans SC', 'Inter', sans-serif;
+  letter-spacing: -.065em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+.letter-cascade:focus-visible { outline: 2px solid var(--red); outline-offset: 8px; }
+.cascade-letter { position: relative; display: inline-flex; white-space: pre; perspective: 520px; }
+.cascade-front,
+.cascade-echo {
+  display: inline-block;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+.cascade-front { transform-origin: bottom center; }
+.cascade-echo {
+  position: absolute;
+  inset: 0;
+  color: var(--red);
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateY(7px) rotateX(-90deg) scale(.82);
+  transform-origin: top center;
+}
+.cascade-footer span:last-child { color: var(--red); }
+
+/* Page sections */
+.page {
+  max-width: 1200px; margin: 0 auto;
+  padding: 80px var(--margin) 64px;
+}
+.page-full { max-width: none; padding: 80px var(--margin) 64px; }
+section[id] { scroll-margin-top: 72px; }
+
+.section-divider {
+  height: 2px; background: var(--red); width: 100%;
+  margin: 0 auto; max-width: 1200px;
+}
+
+/* Typography */
+h1 { font-size: 48px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+h2 { font-size: 32px; font-weight: 600; line-height: 1.25; }
+h3 { font-size: 20px; font-weight: 600; }
+p, li { font-size: 16px; color: var(--near-black); }
+.aux-text { font-size: 14px; color: var(--aux); }
+.footnote { font-size: 12px; color: var(--aux); font-style: italic; margin-top: 8px; }
+.tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 11px; padding: 2px 8px; border: 1px solid var(--border); border-radius: 2px; color: var(--aux); }
+
+/* KPI */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 48px 0; }
+.kpi-item { text-align: left; }
+.kpi-num { font-family: 'Inter', sans-serif; font-size: 64px; font-weight: 700; color: var(--near-black); line-height: 1; letter-spacing: -0.03em; }
+.kpi-num.red { color: var(--red); }
+.kpi-label { font-size: 14px; color: var(--aux); margin-top: 8px; }
+
+/* Two column */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+/* Highlights */
+.highlight-box {
+  background: var(--red-light); border-left: 2px solid var(--red);
+  padding: 16px 20px; margin: 24px 0;
+}
+.highlight-box p { font-size: 15px; margin: 0; }
+
+/* Declaration */
+.declaration { font-size: 32px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 12px; }
+.declaration-sub { font-size: 18px; color: var(--aux); font-weight: 400; margin-bottom: 40px; }
+.quick-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.quick-links a { color: var(--near-black); text-decoration: none; font-size: 13px; padding: 7px 11px; border: 1px solid var(--border); }
+.quick-links a:hover { border-color: var(--red); color: var(--red); }
+
+/* Calendar */
+#calendar-container { position: relative; }
+.calendar-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 48px; align-items: start; }
+.calendar-controls { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.calendar-controls button {
+  padding: 6px 16px; border: 1px solid var(--border); background: var(--white);
+  font-size: 13px; cursor: pointer; font-family: inherit; border-radius: 2px;
+}
+.calendar-controls button.active { background: var(--near-black); color: var(--white); border-color: var(--near-black); }
+.calendar-controls select { padding: 6px 12px; border: 1px solid var(--border); font-size: 13px; font-family: inherit; background: var(--white); }
+.calendar-year-summary { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; margin-bottom: 16px; }
+.year-month { min-width: 0; padding: 7px 2px 6px; border: 1px solid var(--border); background: var(--white); text-align: center; cursor: pointer; }
+.year-month:hover, .year-month.active { border-color: var(--near-black); }
+.year-month.active { background: var(--near-black); color: var(--white); }
+.year-month.no-record { color: #a8aaad; background: var(--bg-light); }
+.year-month .ym-label { display: block; font: 10px 'Space Mono', monospace; }
+.year-month .ym-count { display: block; font: 600 12px 'Inter', sans-serif; margin-top: 2px; }
+#calendar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 16px; align-items: start; }
+#calendar-grid.single-month { grid-template-columns: minmax(0, 1fr); }
+.cal-month { border-top: 2px solid var(--near-black); padding-top: 8px; min-width: 0; }
+.cal-month-header { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.cal-month-title { font-size: 16px; font-weight: 600; }
+.cal-month-stat { font: 10px 'Space Mono', monospace; color: var(--aux); }
+.cal-month-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.cal-weekday { font: 9px 'Space Mono', monospace; color: var(--aux); text-align: center; padding: 2px 0 4px; }
+.cal-day { aspect-ratio: 1.35; min-height: 0; padding: 3px 4px; border: 0; border-radius: 1px; cursor: pointer; transition: opacity 0.15s; position: relative; min-width: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 2px; font-family: inherit; }
+.cal-day:hover { opacity: 0.76; outline: 1px solid var(--near-black); }
+.cal-day.peak { outline: 2px solid var(--red); outline-offset: -1px; }
+.cal-day.no-record { background: #f4f4f4 !important; color: var(--aux); }
+.cal-day.placeholder { background: transparent; cursor: default; }
+.cal-day.placeholder:hover { opacity: 1; outline: none; }
+.cal-date-num { font: 600 clamp(8px, 0.72vw, 11px) 'Inter', sans-serif; line-height: 1; }
+.cal-count { font: 700 clamp(7px, 0.6vw, 9px) 'Space Mono', monospace; line-height: 1; }
+.cal-day.dark { color: var(--white); }
+#day-detail { background: var(--bg-light); padding: 20px; margin-top: 16px; min-height: 60px; border-radius: 2px; }
+#day-detail h3 { font-size: 16px; margin-bottom: 12px; }
+#day-detail .day-item { font-size: 14px; padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; }
+.day-item .item-source { color: var(--aux); font-size: 12px; font-family: 'Space Mono', monospace; white-space: nowrap; }
+
+/* Insight panel */
+.insight-panel { background: var(--bg-light); padding: 24px; border-radius: 2px; }
+.insight-panel h3 { font-size: 15px; margin-bottom: 12px; }
+.insight-panel ul { padding-left: 20px; }
+.insight-panel li { font-size: 14px; color: var(--aux); margin-bottom: 6px; }
+
+/* Bar chart */
+.bar-chart { display: flex; flex-direction: column; gap: 8px; margin: 24px 0; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label { width: 160px; font-size: 14px; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; height: 28px; background: #f0f0f0; position: relative; }
+.bar-fill { height: 100%; transition: width 0.4s; }
+.bar-fill.red { background: var(--red); }
+.bar-fill.gray { background: #d0d0d0; }
+.bar-val { font-size: 13px; font-family: 'Space Mono', monospace; color: var(--aux); width: 90px; flex-shrink: 0; }
+
+/* Column chart */
+.col-chart { display: block; height: auto; min-width: 0; margin: 24px 0; }
+.month-year-group { border-top: 2px solid var(--near-black); padding-top: 8px; margin-bottom: 24px; }
+.month-year-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.month-year-name { font: 700 16px 'Inter', sans-serif; }
+.month-year-total { font: 10px 'Space Mono', monospace; color: var(--aux); }
+.month-bars { display: grid; align-items: end; gap: clamp(2px, 0.45vw, 7px); height: 148px; min-width: 0; }
+.col-item { min-width: 0; height: 100%; display: grid; grid-template-rows: 18px 1fr 16px; align-items: end; justify-items: center; gap: 2px; }
+.col-bar { width: 100%; max-width: 38px; background: #c9cacc; transition: height 0.3s; min-height: 2px; }
+.col-bar.red { background: var(--red); }
+.col-label { font-size: 9px; color: var(--aux); font-family: 'Space Mono', monospace; white-space: nowrap; }
+.col-val { font-size: 9px; font-family: 'Space Mono', monospace; }
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.data-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--near-black); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Space Mono', monospace; position: sticky; top: 0; background: var(--white); z-index: 10; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.data-table tr:hover td { background: var(--bg-light); }
+.table-controls { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.table-controls input, .table-controls select { padding: 8px 12px; border: 1px solid var(--border); font-size: 13px; font-family: inherit; }
+.table-controls input { flex: 1; min-width: 200px; }
+.table-stats { font-size: 13px; color: var(--aux); margin-bottom: 12px; }
+
+/* Source list */
+.source-list { columns: 2; column-gap: 24px; }
+.source-item { font-size: 14px; padding: 4px 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; break-inside: avoid; }
+.source-item > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.source-item .count { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--aux); text-align: right; }
+
+/* Framework */
+.framework-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; }
+.fw-card { border: 1px solid var(--border); padding: 20px; }
+.fw-card h4 { font-size: 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.fw-num { font-family: 'Space Mono', monospace; font-size: 14px; color: var(--red); }
+.fw-card p { font-size: 14px; color: var(--aux); }
+.method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+.method-item { border-top: 1px solid var(--border); padding-top: 8px; }
+.method-item strong { display: block; font-size: 13px; margin-bottom: 3px; }
+.method-item span { display: block; font-size: 12px; color: var(--aux); }
+
+/* Strategy table */
+.strat-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+.strat-table th { text-align: left; padding: 10px 12px; background: var(--near-black); color: var(--white); font-size: 12px; font-family: 'Space Mono', monospace; font-weight: 400; }
+.strat-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.strat-table tr:nth-child(even) td { background: var(--bg-light); }
+
+/* Flow */
+.flow-box { background: var(--bg-light); padding: 24px; margin: 24px 0; border-radius: 2px; }
+.flow-box h4 { font-size: 15px; margin-bottom: 12px; }
+.flow-steps { display: flex; flex-wrap: wrap; gap: 0; align-items: center; font-size: 13px; }
+.flow-step { padding: 8px 16px; background: var(--white); border: 1px solid var(--border); }
+.flow-arrow { padding: 0 8px; color: var(--red); font-weight: 700; }
+
+/* Case study */
+.case-item { border-left: 2px solid var(--border); padding: 0 0 24px 24px; margin-bottom: 8px; position: relative; }
+.case-item:before { content: ''; width: 10px; height: 10px; background: var(--red); border-radius: 50%; position: absolute; left: -6px; top: 4px; }
+.case-item h4 { font-size: 17px; margin-bottom: 12px; }
+.case-field { font-size: 14px; margin-bottom: 6px; display: flex; gap: 8px; }
+.case-field .cf-label { color: var(--aux); font-size: 12px; font-family: 'Space Mono', monospace; min-width: 80px; text-transform: uppercase; }
+
+/* Mapping table */
+.map-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+.map-table th { text-align: left; padding: 12px 16px; border-bottom: 2px solid var(--near-black); font-size: 12px; font-family: 'Space Mono', monospace; }
+.map-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.map-table tr:last-child td { border-bottom: none; }
+
+/* Collapsible */
+.collapsible { border: 1px solid var(--border); margin-bottom: 8px; }
+.collapsible-header { padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; }
+.collapsible-header:hover { background: var(--bg-light); }
+.collapsible-arrow { transition: transform 0.2s; }
+.collapsible.open .collapsible-arrow { transform: rotate(180deg); }
+.collapsible-body { display: none; padding: 0 20px 20px; }
+.collapsible.open .collapsible-body { display: block; }
+
+/* Footer */
+footer { text-align: center; padding: 48px var(--margin); border-top: 1px solid var(--border); color: var(--aux); font-size: 13px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  :root { --margin: 20px; }
+  .cascade-banner { min-height: 188px; padding-top: 22px; padding-bottom: 22px; gap: 18px; }
+  .letter-cascade { font-size: clamp(43px, 13.2vw, 68px); }
+  .cascade-footer span:first-child { display: none; }
+  .cascade-footer { justify-content: flex-end; }
+  .page, .page-full { padding: 80px var(--margin) 40px; }
+  h1 { font-size: 32px; }
+  .declaration { font-size: 24px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .kpi-num { font-size: 48px; }
+  .two-col { grid-template-columns: 1fr; gap: 24px; }
+  .calendar-layout { grid-template-columns: 1fr; gap: 24px; }
+  .framework-grid { grid-template-columns: 1fr; }
+  .method-grid { grid-template-columns: 1fr 1fr; }
+  .bar-label { width: 100px; font-size: 12px; }
+  .source-list { columns: 1; }
+  .calendar-year-summary { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .month-bars { height: 132px; }
+  .col-label, .col-val { font-size: 8px; }
+  .bar-row { gap: 7px; }
+  .bar-val { width: 74px; font-size: 11px; }
+  #day-detail .day-item { flex-wrap: wrap; }
+  .day-item .item-source { white-space: normal; }
+}
+@media (max-width: 375px) {
+  :root { --margin: 12px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .kpi-num { font-size: 36px; }
+  .declaration { font-size: 20px; }
+  .method-grid { grid-template-columns: 1fr; }
+  .bar-label { width: 84px; }
+  .bar-val { width: 68px; }
+}
+
+/* Print */
+@media print {
+  .page { break-inside: avoid; padding: 24px 0; }
+  .section-divider { margin: 16px auto; }
+  body { font-size: 12px; }
+}
+
+/* Grid overlay (press G) */
+#grid-overlay {
+  display: none; position: fixed; top: 0; left: 50%; bottom: 0; width: min(1200px, calc(100% - 2 * var(--margin))); transform: translateX(-50%); z-index: 9999; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to bottom, rgba(228,0,43,0.08) 0, rgba(228,0,43,0.08) 1px, transparent 1px, transparent 8px),
+    repeating-linear-gradient(90deg, rgba(17,19,21,0.04) 0, rgba(17,19,21,0.04) calc(100%/12 - 1px), rgba(228,0,43,0.2) calc(100%/12 - 1px), rgba(228,0,43,0.2) calc(100%/12));
+}
+#grid-overlay.show { display: block; }
+
+/* ── 2026 portfolio motion layer ───────────────────────────── */
+:root {
+  --signal-blue: #1f77b4;
+  --page-max: 1456px;
+  --ease-editorial: cubic-bezier(.22, 1, .36, 1);
+  --soft-gray: #f3f4f5;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--white); }
+::selection { background: var(--red); color: var(--white); }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+#reading-progress {
+  position: fixed; top: 0; left: 0; z-index: 130; height: 2px;
+  width: 0; background: var(--red); transform-origin: left center;
+  pointer-events: none;
+}
+#p1 {
+  min-height: calc(100svh - 56px); display: flex; flex-direction: column;
+  justify-content: center; padding-top: 128px; padding-bottom: 96px;
+}
+#p1 .declaration { font-size: clamp(48px, 5.2vw, 76px); max-width: 930px; }
+#p1 .declaration-sub { max-width: 760px; }
+.kpi-grid { border-top: 1px solid var(--near-black); padding-top: 24px; }
+.kpi-item { min-width: 0; }
+.kpi-num { font-variant-numeric: tabular-nums; }
+.quick-links a, .calendar-controls button, .calendar-controls select,
+.table-controls input, .table-controls select { border-radius: 0; }
+.quick-links a { transition: color .16s ease-out, border-color .16s ease-out, transform .16s ease-out; }
+.quick-links a:active { transform: scale(.98); }
+.page > .declaration, .page-full .declaration { text-wrap: balance; }
+.section-divider { max-width: min(1200px, calc(100% - 2 * var(--margin))); }
+.insight-panel, .highlight-box, #day-detail, .flow-box { border-radius: 0; }
+.highlight-box { background: #fff5f6; }
+.fw-card { transition: border-color .18s ease-out, transform .18s ease-out; }
+.fw-card:hover { border-color: var(--near-black); transform: translateY(-2px); }
+.chart-source {
+  margin-top: 12px; color: var(--aux); font: 10px 'Space Mono', monospace;
+  letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* Shared scroll-story frame */
+.scroll-story { position: relative; height: 220vh; background: var(--white); }
+.scroll-story[data-kind="workload"] { height: 190vh; }
+.scroll-story[data-kind="title"] { height: 175vh; }
+.scroll-story[data-kind="source"] { height: 215vh; }
+.story-sticky {
+  position: sticky; top: 56px; min-height: calc(100svh - 56px); overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(28px, 4vh, 56px) var(--margin);
+}
+.story-shell { width: min(var(--page-max), 100%); margin: 0 auto; }
+.story-ruler { height: 4px; background: var(--red); margin-bottom: 24px; }
+.story-meta {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  margin-bottom: 14px; color: var(--aux); font: 10px 'Space Mono', monospace;
+  letter-spacing: .14em; text-transform: uppercase;
+}
+.story-progress { width: 220px; height: 2px; background: var(--border); position: relative; }
+.story-progress > i {
+  position: absolute; inset: 0; width: 100%; background: var(--red); display: block;
+  transform: scaleX(var(--progress, 0)); transform-origin: left center;
+}
+.story-title {
+  max-width: 1120px; font-size: clamp(34px, 4.2vw, 62px); line-height: 1.08;
+  letter-spacing: -.035em; margin-bottom: 10px; text-wrap: balance;
+}
+.story-subtitle { color: var(--aux); font-size: 15px; margin-bottom: 24px; }
+.story-stage {
+  position: relative; min-height: clamp(430px, 54vh, 560px);
+  border-top: 1.5px solid var(--near-black); border-bottom: 1.5px solid var(--near-black);
+}
+.story-pane { min-width: 0; padding: 20px 24px; border-right: 1px solid var(--border); }
+.story-pane:last-child { border-right: 0; }
+.story-kicker {
+  color: var(--aux); font: 10px 'Space Mono', monospace; letter-spacing: .14em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.story-pane h3 { font-size: clamp(19px, 1.75vw, 27px); margin-bottom: 18px; }
+.story-foot {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; align-items: end;
+  margin-top: 18px; border-top: 1px solid var(--border); padding-top: 12px;
+}
+.story-foot span { color: var(--aux); font: 10px 'Space Mono', monospace; }
+.story-foot span.is-active { color: var(--red); }
+.story-foot strong { display: block; color: var(--near-black); font: 600 13px 'Noto Sans SC', sans-serif; margin-top: 5px; }
+
+/* 01 · Dispatch */
+.dispatch-stage { display: grid; grid-template-columns: 28% 29% 43%; }
+.inbox-card { padding: 14px 16px; margin-bottom: 12px; background: var(--soft-gray); border-left: 6px solid transparent; }
+.inbox-card strong { display: block; font-size: 15px; line-height: 1.45; margin: 6px 0; }
+.inbox-card small { color: var(--aux); font: 9px 'Space Mono', monospace; }
+.inbox-card.is-origin { border: 2px solid var(--red); border-left-width: 6px; background: var(--white); }
+.judgment-row { margin-bottom: 18px; }
+.judgment-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 650; margin-bottom: 7px; }
+.judgment-label span { color: var(--aux); font: 10px 'Space Mono', monospace; }
+.judgment-track { height: 4px; background: #e6e8ea; }
+.judgment-track i { display: block; width: var(--score); height: 100%; background: var(--near-black); transform-origin: left; }
+.judgment-row:first-of-type .judgment-track i { background: var(--signal-blue); }
+.decision-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 28px; }
+.decision-strip span { padding: 9px 4px; background: var(--soft-gray); color: var(--aux); font-size: 12px; text-align: center; }
+.decision-strip span.is-active { background: var(--near-black); color: var(--white); }
+.week-head, .week-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); }
+.week-head span { color: var(--aux); font: 9px 'Space Mono', monospace; padding: 0 6px 9px; }
+.week-head span:nth-child(3) { color: var(--red); }
+.week-grid { border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+.week-slot { min-height: 68px; padding: 8px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.week-slot b { display: block; padding: 8px; background: var(--soft-gray); font-size: 11px; }
+.week-slot small { color: var(--aux); font: 8px 'Space Mono', monospace; }
+.week-slot.is-target { outline: 2px dashed transparent; outline-offset: -7px; transition: outline-color .18s ease-out; }
+.week-slot.is-target.is-ready { outline-color: var(--red); }
+.week-slot .landed-copy { opacity: 0; color: var(--red); font: 600 10px 'Noto Sans SC', sans-serif; }
+.week-slot.is-landed .landed-copy { opacity: 1; }
+.flying-push {
+  position: absolute; z-index: 8; left: 24px; top: 145px; width: min(300px, 25%);
+  padding: 16px 18px; background: var(--white); border: 2px solid var(--near-black);
+  border-top: 5px solid var(--red); box-shadow: 14px 16px 0 rgba(17,19,21,.08);
+  transform: translate3d(var(--fly-x,0),var(--fly-y,0),0) scale(var(--fly-scale,1));
+  transform-origin: top left; will-change: transform, opacity; pointer-events: none;
+}
+.flying-push small { color: var(--red); font: 9px 'Space Mono', monospace; }
+.flying-push strong { display: block; font-size: 16px; line-height: 1.45; margin: 10px 0; }
+.flying-push em { color: var(--aux); font: normal 9px 'Space Mono', monospace; }
+.dispatch-path { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* 02 · Workload drill-down */
+.workload-board { display: grid; grid-template-columns: .84fr 1.2fr 1.05fr; }
+.workload-board .story-pane { transition: opacity .24s ease-out, transform .28s var(--ease-editorial); }
+.year-row { display: grid; grid-template-columns: 28px 1fr 30px; gap: 8px; align-items: center; margin-bottom: 10px; }
+.year-row label, .year-row output { color: var(--aux); font: 9px 'Space Mono', monospace; }
+.year-row-track { height: 22px; background: #eef0f1; }
+.year-row-track i { display: block; height: 100%; width: var(--value); background: #c8cbce; }
+.year-row.is-peak label, .year-row.is-peak output { color: var(--red); }
+.year-row.is-peak .year-row-track i { background: var(--red); }
+.story-calendar-week, .story-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 2px; }
+.story-calendar-week span { text-align: center; color: var(--aux); font: 8px 'Space Mono', monospace; }
+.story-day { aspect-ratio: 1.25; padding: 5px; background: #f0f1f2; border: 1px solid #e5e6e7; font: 9px 'Space Mono', monospace; }
+.story-day.has-record { background: #686d72; color: var(--white); }
+.story-day.is-peak { outline: 3px solid var(--red); outline-offset: -2px; color: var(--red); font-size: 15px; font-weight: 700; }
+.peak-list { display: flex; flex-direction: column; }
+.peak-list-item { display: grid; grid-template-columns: 34px 52px 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+.peak-list-item span { color: var(--aux); font: 8px 'Space Mono', monospace; }
+.peak-list-item b { font-size: 10px; font-weight: 600; line-height: 1.35; }
+.peak-list-item.is-alert span { color: var(--red); }
+.scroll-story[data-kind="workload"][data-phase="0"] .workload-board .story-pane:not(:nth-child(1)),
+.scroll-story[data-kind="workload"][data-phase="1"] .workload-board .story-pane:not(:nth-child(2)),
+.scroll-story[data-kind="workload"][data-phase="2"] .workload-board .story-pane:not(:nth-child(3)) { opacity: .3; transform: scale(.985); }
+
+/* 03 · Title transformation */
+.title-board { display: grid; grid-template-columns: 1.05fr .8fr 1.2fr; }
+.raw-copy { background: var(--soft-gray); padding: 22px; min-height: 240px; }
+.raw-copy small { color: var(--aux); font: 9px 'Space Mono', monospace; }
+.raw-copy strong { display: block; margin: 24px 0; font-size: 18px; line-height: 1.55; }
+.raw-copy p { color: var(--aux); font-size: 14px; }
+.edit-question { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.edit-question b { display: block; font-size: 13px; }
+.edit-question span { display: block; margin-top: 4px; color: var(--aux); font: 9px 'Space Mono', monospace; text-align: right; }
+.edit-question.is-key span { color: var(--red); }
+.final-title-card { border: 2px solid var(--near-black); border-top: 5px solid var(--red); padding: 24px; min-height: 240px; }
+.final-title-card small { color: var(--red); font: 9px 'Space Mono', monospace; }
+.final-title-card strong { display: block; margin: 34px 0 22px; font-size: clamp(25px, 2.4vw, 38px); line-height: 1.32; }
+.final-title-card i { display: block; width: 50%; height: 2px; background: var(--red); transform-origin: left; }
+.final-title-card p { margin-top: 20px; color: var(--aux); font: 9px 'Space Mono', monospace; }
+.title-board .story-pane { transition: opacity .2s ease-out, transform .25s var(--ease-editorial); }
+.scroll-story[data-kind="title"][data-phase="0"] .title-board .story-pane:not(:nth-child(1)),
+.scroll-story[data-kind="title"][data-phase="1"] .title-board .story-pane:nth-child(3),
+.scroll-story[data-kind="title"][data-phase="2"] .title-board .story-pane:nth-child(1) { opacity: .32; transform: translateY(8px); }
+
+/* 04 · Source typing and decision */
+.source-board { display: grid; grid-template-columns: .72fr .88fr 1.42fr; }
+.source-tags { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.source-tag { padding: 10px 12px; background: var(--soft-gray); font-size: 12px; font-weight: 650; }
+.source-tag.is-selected { background: var(--white); color: var(--red); border: 2px solid var(--red); }
+.source-lane { padding: 14px 16px; margin-bottom: 10px; background: var(--soft-gray); }
+.source-lane b { display: block; font-size: 14px; }
+.source-lane span { display: block; margin-top: 4px; color: var(--aux); font: 9px 'Space Mono', monospace; }
+.source-lane.is-selected { background: var(--near-black); color: var(--white); }
+.source-lane.is-selected span { color: #d7dadd; }
+.source-lane.is-selected em { color: var(--red); float: right; font: normal 10px 'Space Mono', monospace; }
+.decision-card { border: 2px solid var(--red); padding: 14px 16px; margin-bottom: 18px; }
+.decision-card small { color: var(--red); font: 9px 'Space Mono', monospace; }
+.decision-card strong { display: block; margin-top: 8px; font-size: 16px; }
+.metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 22px; }
+.metric b { display: flex; justify-content: space-between; font-size: 12px; }
+.metric b span { color: var(--aux); font: 9px 'Space Mono', monospace; }
+.metric div { height: 4px; margin-top: 7px; background: #e6e8ea; }
+.metric i { display: block; height: 100%; width: var(--score); background: var(--near-black); transform-origin: left; }
+.metric:first-child i { background: var(--red); }
+.output-states { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-top: 26px; border-top: 1px solid var(--border); padding-top: 20px; }
+.output-states span { padding: 10px 4px; background: var(--soft-gray); color: var(--aux); text-align: center; font-size: 12px; font-weight: 650; }
+.output-states span.is-active { background: var(--red); color: var(--white); }
+.source-board .story-pane { transition: opacity .2s ease-out, transform .25s var(--ease-editorial); }
+.scroll-story[data-kind="source"][data-phase="0"] .source-board .story-pane:not(:nth-child(1)),
+.scroll-story[data-kind="source"][data-phase="1"] .source-board .story-pane:not(:nth-child(2)),
+.scroll-story[data-kind="source"][data-phase="2"] .source-board .story-pane:not(:nth-child(3)) { opacity: .3; transform: scale(.985); }
+
+/* 05 · Evidence review */
+.case-review-layout { display: grid; grid-template-columns: minmax(0,.9fr) minmax(340px,1.1fr); gap: 48px; align-items: start; }
+.case-list { min-width: 0; }
+.case-item { min-height: 230px; padding-top: 4px; opacity: .46; transition: opacity .22s ease-out; }
+.case-item.is-active { opacity: 1; border-left-color: var(--red); }
+.case-item.is-active:before { transform: scale(1.35); }
+.case-sticky {
+  position: sticky; top: 96px; min-height: 480px; background: var(--near-black); color: var(--white);
+  padding: 30px; border-top: 5px solid var(--red);
+}
+.case-sticky .case-count { color: var(--red); font: 700 12px 'Space Mono', monospace; }
+.case-sticky h3 { margin: 18px 0 22px; color: var(--white); font-size: 27px; line-height: 1.3; }
+.case-sticky .case-evidence { color: #d2d5d7; font: 10px 'Space Mono', monospace; line-height: 1.7; }
+.case-sticky blockquote { margin: 22px 0; padding: 18px 0; border-top: 1px solid #4b4f52; border-bottom: 1px solid #4b4f52; font-size: 17px; font-weight: 650; line-height: 1.55; }
+.case-sticky-grid { display: grid; gap: 15px; }
+.case-sticky-row span { display: block; color: var(--red); font: 9px 'Space Mono', monospace; letter-spacing: .12em; }
+.case-sticky-row p { margin-top: 5px; color: #e6e8e9; font-size: 13px; line-height: 1.55; }
+
+/* 主作品集嵌入模式：所有看过的内容留在正常文档流中，随外层页面向上滚动。 */
+html.is-embedded-flat { scroll-behavior: auto; }
+html.is-embedded-flat body { overflow: visible; }
+html.is-embedded-flat #reading-progress { display: none; }
+html.is-embedded-flat #p1 { min-height: auto; }
+html.is-embedded-flat .scroll-story,
+html.is-embedded-flat .scroll-story[data-kind] { height: auto; }
+html.is-embedded-flat .story-sticky {
+  position: relative;
+  top: auto;
+  min-height: auto;
+  overflow: visible;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+html.is-embedded-flat .flying-push,
+html.is-embedded-flat .dispatch-path,
+html.is-embedded-flat .story-foot { display: none; }
+html.is-embedded-flat .workload-board .story-pane,
+html.is-embedded-flat .title-board .story-pane,
+html.is-embedded-flat .source-board .story-pane {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html.is-embedded-flat .case-review-layout { grid-template-columns: 1fr; }
+html.is-embedded-flat .case-sticky {
+  position: relative;
+  top: auto;
+  min-height: 0;
+  order: -1;
+}
+html.is-embedded-flat .case-item { min-height: 0; opacity: 1; }
+
+@media (max-width: 980px) {
+  .scroll-story, .scroll-story[data-kind] { height: auto; }
+  .story-sticky { position: relative; top: auto; min-height: auto; padding-top: 64px; padding-bottom: 64px; overflow: visible; }
+  .dispatch-stage, .workload-board, .title-board, .source-board { grid-template-columns: 1fr; }
+  .story-pane { border-right: 0; border-bottom: 1px solid var(--border); }
+  .story-pane:last-child { border-bottom: 0; }
+  .flying-push, .dispatch-path, .story-foot { display: none; }
+  .workload-board .story-pane, .title-board .story-pane, .source-board .story-pane { opacity: 1 !important; transform: none !important; }
+  .case-review-layout { grid-template-columns: 1fr; }
+  .case-sticky { position: relative; top: auto; min-height: 0; order: -1; }
+  .case-item { min-height: 0; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  .scroll-story, .scroll-story[data-kind] { height: auto; }
+  .story-sticky { position: relative; top: auto; min-height: auto; overflow: visible; }
+  .flying-push, .dispatch-path, .story-foot { display: none; }
+  .workload-board .story-pane, .title-board .story-pane, .source-board .story-pane { opacity: 1 !important; transform: none !important; }
+  .cascade-front, .cascade-echo { will-change: auto; }
+}
+@media print {
+  #reading-progress { display: none; }
+  .scroll-story, .scroll-story[data-kind] { height: auto !important; break-inside: avoid; }
+  .story-sticky { position: static !important; min-height: 0 !important; overflow: visible !important; }
+  .flying-push, .dispatch-path, .story-foot { display: none !important; }
+  .workload-board .story-pane, .title-board .story-pane, .source-board .story-pane { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="grid-overlay"></div>
+<div id="reading-progress" aria-hidden="true"></div>
+
+<div class="section-divider"></div>
+
+<!-- PAGE 4: Content & Title Styles -->
+<section class="page" id="p4">
+<div class="declaration">同一个官方账号里，我需要不断切换内容语言。</div>
+
+<!-- SCROLL STORY 03: Facts to user-facing title -->
+<section class="scroll-story" data-motion-scene="title" data-kind="title" aria-label="从事实要素提炼用户标题的滚动演示">
+<div class="story-sticky" style="padding-left:0;padding-right:0">
+<div class="story-shell">
+<div class="story-meta"><span>TITLE TRANSFORMATION / VERIFIED RECORD</span><span class="story-progress"><i></i></span></div>
+<h2 class="story-title">同一组事实，需要换一种语言抵达用户。</h2>
+<p class="story-subtitle">不虚构原稿，只展示可核验的事实要素如何被提炼成已记录标题。</p>
+<div class="story-stage title-board" data-phase="0">
+  <div class="story-pane"><div class="story-kicker">01 / FACTS</div><h3>事实要素</h3><div class="raw-copy"><small>2026-07-06 · 朝阳区商务局</small><strong>新增 3 家<br>累计 180 家<br>跨国公司地区总部</strong><p>三个事实都正确，但标题需要先决定信息顺序。</p></div></div>
+  <div class="story-pane"><div class="story-kicker">02 / EDITORIAL CUT</div><h3>编辑切口</h3><div class="edit-question is-key"><b>什么是增量？</b><span>+3</span></div><div class="edit-question"><b>什么证明规模？</b><span>累计180家</span></div><div class="edit-question"><b>背景是否进入标题？</b><span>只保留必要对象</span></div><div class="edit-question"><b>信息顺序</b><span>增量 → 总量</span></div></div>
+  <div class="story-pane"><div class="story-kicker">03 / RECORDED TITLE</div><h3>面向用户的表达</h3><div class="final-title-card"><small>WECHAT PUSH / FINAL</small><strong>朝阳跨国公司地区总部+3，<br>累计180家！</strong><i></i><p>数字重点 / 信息直给 / 增量优先</p></div></div>
+</div>
+<div class="story-foot"><span class="is-active">00<strong>读取事实</strong></span><span>01<strong>识别增量</strong></span><span>02<strong>确定顺序</strong></span><span>03<strong>形成标题</strong></span><span>04<strong>进入风格数据</strong></span></div>
+</div>
+</div>
+</section>
+
+<div class="two-col">
+<div>
+<h3>标题风格分布（多标签）</h3>
+<div class="bar-chart" id="style-chart"></div>
+<div class="footnote">一条标题可具有多个标签。依据下方公开口径生成，并对代表性样本人工复核。</div>
+</div>
+<div>
+<h3>已标注类别</h3>
+<div class="bar-chart" id="category-chart"></div>
+<div class="footnote">类别分析范围：原表中单独标注类别的记录。</div>
+</div>
+</div>
+
+<div style="margin-top:32px">
+<h3>风格示例</h3>
+<div class="framework-grid" id="style-examples"></div>
+</div>
+
+<div class="insight-panel" style="margin-top:24px">
+<h3>标题风格分类口径</h3>
+<p class="aux-text">这是依据标题可见特征生成的启发式多标签，不是内容质量评分；日期数字会先被剔除，避免把“6月1日开始招生”误判成成果表达。</p>
+<div class="method-grid">
+<div class="method-item"><strong>数字/量化表达</strong><span>金额、数量、比例、等级或明确成果；不含纯日期。</span></div>
+<div class="method-item"><strong>行动召唤</strong><span>请注意、快来、收藏、报名、参与等明确动作。</span></div>
+<div class="method-item"><strong>生活方式场景</strong><span>逛、吃、玩、展览、市集、周末、亲子等场景词。</span></div>
+<div class="method-item"><strong>疑问/悬念</strong><span>问号、为何、如何、到底、就在——等结构。</span></div>
+<div class="method-item"><strong>清单/攻略</strong><span>指南、攻略、路线、清单、一图读懂等工具型表达。</span></div>
+<div class="method-item"><strong>会议/政务表达</strong><span>召开、部署、调研、强调、全会等正式议程词。</span></div>
+</div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- PAGE 5: Multi-source Supply -->
+<section class="page" id="p5">
+<div class="declaration">51个已标注来源种类，构成了一个高度异质的内容供给池。</div>
+
+<div class="two-col">
+<div>
+<h3>来源类型分布</h3>
+<div class="bar-chart" id="source-type-chart"></div>
+<div class="footnote">来源分析范围：原表中单独标注来源的记录。</div>
+</div>
+<div>
+<h3>代表性来源（已标注）</h3>
+<div class="source-list" id="source-list"></div>
+<div class="footnote">按已标注记录量排序，展示前12个来源。</div>
+</div>
+</div>
+
+<div class="highlight-box" style="margin-top:32px">
+<p>不同来源具有不同的专业程度、用户距离、信息结构、审核复杂度和内容潜力。</p>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- PAGE 6: Differentiated Framework (MOST IMPORTANT) -->
+<section class="page" id="p6" style="position:relative">
+<div style="position:absolute;top:80px;left:var(--margin);width:2px;height:60px;background:var(--red)"></div>
+<div class="declaration">不同来源，不应该使用同一套内容处理方式。</div>
+<div class="declaration-sub">六个判断维度 · 六类差异化策略 · 一条决策流程</div>
+
+<!-- SCROLL STORY 04: Source typing to decision -->
+<section class="scroll-story" data-motion-scene="source" data-kind="source" aria-label="多来源内容经过分型与六项判断进入处理状态的滚动演示">
+<div class="story-sticky" style="padding-left:0;padding-right:0">
+<div class="story-shell">
+<div class="story-meta"><span>SOURCE TYPING &amp; DECISION</span><span class="story-progress"><i></i></span></div>
+<h2 class="story-title">来源不同，判断标准不能相同。</h2>
+<p class="story-subtitle">先把多来源供给归入不同轨道，再让一条示例内容通过六项定性判断并进入明确状态；这里不是量化评分。</p>
+<div class="story-stage source-board" data-phase="0">
+  <div class="story-pane"><div class="story-kicker">01 / HETEROGENEOUS SUPPLY</div><h3>51种来源</h3><div class="source-tags"><span class="source-tag is-selected">商务局 15</span><span class="source-tag">文旅局 12</span><span class="source-tag">科信局 11</span><span class="source-tag">文旅集团 7</span><span class="source-tag">发改委 7</span><span class="source-tag">东坝乡 6</span><span class="source-tag">CBD管委会 6</span><span class="source-tag">教委 5</span><span class="source-tag">组织部 5</span><span class="source-tag">水务局 4</span><span class="source-tag">联合来源 11</span><span class="source-tag">温榆河 1</span></div><div class="chart-source">147条已标注来源记录</div></div>
+  <div class="story-pane"><div class="story-kicker">02 / SOURCE TYPING</div><h3>四条供给轨道</h3><div class="source-lane is-selected"><em>104条</em><b>区级机关 / 专业部门</b><span>专业校验优先</span></div><div class="source-lane"><b>街乡 / 基层</b><span>人物与生活场景 · 23条</span></div><div class="source-lane"><b>联合来源</b><span>先统一责任边界 · 11条</span></div><div class="source-lane"><b>企业 / 项目机构</b><span>弱化宣传表达 · 9条</span></div></div>
+  <div class="story-pane"><div class="story-kicker">03 / JUDGMENT &amp; DECISION</div><h3>选中一条，逐项判断</h3><div class="decision-card"><small>朝阳区商务局 / MOTION DEMO</small><strong>最高奖励500万！朝阳支持“一人公司”</strong></div><div class="metric-grid"><div class="metric"><b>权威性 <span>高</span></b><div><i style="--score:92%"></i></div></div><div class="metric"><b>用户价值 <span>较高</span></b><div><i style="--score:78%"></i></div></div><div class="metric"><b>时效 <span>中</span></b><div><i style="--score:64%"></i></div></div><div class="metric"><b>完整度 <span>较高</span></b><div><i style="--score:82%"></i></div></div><div class="metric"><b>风险 <span>低</span></b><div><i style="--score:30%"></i></div></div><div class="metric"><b>转化成本 <span>中</span></b><div><i style="--score:48%"></i></div></div></div><div class="output-states"><span>发布</span><span class="is-active">改写</span><span>核实</span><span>延后</span><span>替换</span></div></div>
+</div>
+<div class="story-foot"><span class="is-active">00<strong>来源进入</strong></span><span>01<strong>归入四类</strong></span><span>02<strong>选中一条</strong></span><span>03<strong>完成判断</strong></span><span>04<strong>输出状态</strong></span></div>
+</div>
+</div>
+</section>
+
+<div class="framework-grid">
+<div class="fw-card"><h4><span class="fw-num">01</span> 信息权威性</h4><p>判断内容来源的官方权威程度与信息可验证性</p></div>
+<div class="fw-card"><h4><span class="fw-num">02</span> 用户相关性</h4><p>评估内容与目标受众日常生活的关联度</p></div>
+<div class="fw-card"><h4><span class="fw-num">03</span> 内容时效性</h4><p>确定信息的有效期和最佳发布窗口</p></div>
+<div class="fw-card"><h4><span class="fw-num">04</span> 信息完整度</h4><p>检查关键信息（时间、地点、方式）是否齐全</p></div>
+<div class="fw-card"><h4><span class="fw-num">05</span> 舆情与事实风险</h4><p>评估政治敏感度、数据准确性和公众情绪风险</p></div>
+<div class="fw-card"><h4><span class="fw-num">06</span> 编辑转化成本</h4><p>估算从原始素材到可发布内容的工作量</p></div>
+</div>
+
+<h3 style="margin-top:40px">差异化处理策略</h3>
+<table class="strat-table">
+<tr><th style="width:22%">来源/内容类型</th><th style="width:30%">主要特点或问题</th><th>处理方式</th></tr>
+<tr><td>区级机关/专业部门</td><td>专业术语多、用户距离较远</td><td>专业部门确认事实，编辑负责大众化翻译</td></tr>
+<tr><td>街乡/基层</td><td>内容贴近日常生活，原始表达质量不一</td><td>优先寻找人物、场景和具体服务价值</td></tr>
+<tr><td>商业文旅活动</td><td>用户兴趣高，但活动细节可能反复变化</td><td>强化场景表达，同时核实时间、地点和参与方式</td></tr>
+<tr><td>区属企业/项目机构</td><td>容易出现宣传式表达</td><td>转化为"去哪儿、怎么玩、值不值"</td></tr>
+<tr><td>联合来源</td><td>口径复杂、责任边界分散</td><td>先统一主线，再协调审核和发布节奏</td></tr>
+<tr><td>时效性民生内容</td><td>准确与速度优先</td><td>使用信息直给标题，减少不必要的悬念包装</td></tr>
+</table>
+
+<div class="flow-box">
+<h4>决策流程</h4>
+<div class="flow-steps">
+<span class="flow-step">进入内容池</span><span class="flow-arrow">→</span>
+<span class="flow-step">判断权威性与用户价值</span><span class="flow-arrow">→</span>
+<span class="flow-step">判断时效、风险和信息完整度</span><span class="flow-arrow">→</span>
+<span class="flow-step">决定：发布 / 改写 / 核实 / 延后 / 替换</span><span class="flow-arrow">→</span>
+<span class="flow-step">跨部门审核</span><span class="flow-arrow">→</span>
+<span class="flow-step">上线并反馈</span>
+</div>
+</div>
+
+<div class="highlight-box">
+<p>这不是作者等级体系，但它体现了建立分类标准、识别差异和制定差异化策略的能力。</p>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- PAGE 7: Evidence-grounded work method review -->
+<section class="page" id="p7">
+<div class="declaration">让判断回到记录：我如何阅读不同内容供给。</div>
+<div class="declaration-sub">以下样本均可在Excel中按日期与标题复核；“处理原则”是对日常工作方法的总结，不虚构传播结果。</div>
+
+<div class="case-review-layout">
+<div class="case-list">
+
+<div class="case-item" data-case-index="0">
+<h4>记录一：把专业数据转成用户能迅速读懂的重点</h4>
+<div class="case-field"><span class="cf-label">记录证据</span>2026-07-06 · 朝阳区商务局</div>
+<div class="case-field"><span class="cf-label">标题样本</span>“朝阳跨国公司地区总部+3，累计180家！”</div>
+<div class="case-field"><span class="cf-label">判断重点</span>哪些数字是结论，哪些背景信息不必挤进标题</div>
+<div class="case-field"><span class="cf-label">处理原则</span>专业口径交由来源确认；编辑优先提炼用户可理解的增量与总量</div>
+<div class="case-field"><span class="cf-label">岗位迁移</span>识别信息型作者的专业优势，同时诊断可读性短板</div>
+</div>
+
+<div class="case-item" data-case-index="1">
+<h4>记录二：活动内容先判断场景吸引力，再检查信息完整度</h4>
+<div class="case-field"><span class="cf-label">记录证据</span>2026-05-29 · 朝阳文旅集团</div>
+<div class="case-field"><span class="cf-label">标题样本</span>“马术+卡丁车+网球+桨板！这个周末来温榆河撒个欢～”</div>
+<div class="case-field"><span class="cf-label">判断重点</span>场景足够具体，但时间、地点、参与方式仍决定能否发布</div>
+<div class="case-field"><span class="cf-label">处理原则</span>可以强化体验感，不能用情绪表达代替关键活动信息</div>
+<div class="case-field"><span class="cf-label">岗位迁移</span>判断生活方式作者的场景能力与信息完整度</div>
+</div>
+
+<div class="case-item" data-case-index="2">
+<h4>记录三：联合来源先拆分信息责任，再统一叙事主线</h4>
+<div class="case-field"><span class="cf-label">记录证据</span>2026-04-03 · 园林绿化局、北京公交集团、朝阳文旅集团</div>
+<div class="case-field"><span class="cf-label">标题样本</span>“免费！朝阳花园节接驳巴士发车喽——”</div>
+<div class="case-field"><span class="cf-label">判断重点</span>活动体验、交通信息与公共服务分别由谁确认</div>
+<div class="case-field"><span class="cf-label">处理原则</span>先确定用户主线，再按信息责任边界逐项核对，最终合并为一个发布口径</div>
+<div class="case-field"><span class="cf-label">岗位迁移</span>协调多角色作者或业务方时，建立清晰的反馈边界</div>
+</div>
+
+<div class="case-item" data-case-index="3">
+<h4>记录四：民生预警优先让用户在标题里拿到行动信息</h4>
+<div class="case-field"><span class="cf-label">记录证据</span>2026-06-08 · 民生提示</div>
+<div class="case-field"><span class="cf-label">标题样本</span>“雷电黄警+7级大风＋冰雹！这个时段出行请注意——”</div>
+<div class="case-field"><span class="cf-label">判断重点</span>预警等级、风险类型、影响时段和用户动作是否足够清楚</div>
+<div class="case-field"><span class="cf-label">处理原则</span>准确性与时效性优先，创意表达不能遮挡行动信息</div>
+<div class="case-field"><span class="cf-label">岗位迁移</span>在高风险内容中识别“表达好看”与“信息有效”的差别</div>
+</div>
+
+<div class="case-item" data-case-index="4">
+<h4>记录五：峰值日考验的不是“多发”，而是优先级管理</h4>
+<div class="case-field"><span class="cf-label">记录证据</span>2026-06-18 · 单日10条已记录内容</div>
+<div class="case-field"><span class="cf-label">判断重点</span>时效、风险、审核完成度与内容重复度同时进入排序</div>
+<div class="case-field"><span class="cf-label">处理原则</span>优先保障高时效、高公共价值内容；待核实内容不以赶节点为由强行上线</div>
+<div class="case-field"><span class="cf-label">调度机制</span>发布 / 改写 / 核实 / 延后 / 替换五种状态并行管理</div>
+<div class="case-field"><span class="cf-label">岗位迁移</span>在大规模供给中识别潜力内容并分配运营注意力</div>
+</div>
+</div>
+<aside class="case-sticky" data-case-summary aria-label="当前案例判断摘要">
+<div class="case-count">CASE 01 / 05</div>
+<h3 data-case-heading>把专业数据转成用户能迅速读懂的重点</h3>
+<div class="case-evidence" data-case-evidence>2026-07-06 · 朝阳区商务局</div>
+<blockquote data-case-title>“朝阳跨国公司地区总部+3，累计180家！”</blockquote>
+<div class="case-sticky-grid">
+<div class="case-sticky-row"><span>JUDGMENT</span><p data-case-judgment>哪些数字是结论，哪些背景信息不必挤进标题</p></div>
+<div class="case-sticky-row"><span>PROCESS</span><p data-case-process>专业口径交由来源确认；编辑优先提炼用户可理解的增量与总量</p></div>
+<div class="case-sticky-row"><span>TRANSFER</span><p data-case-transfer>识别信息型作者的专业优势，同时诊断可读性短板</p></div>
+</div>
+</aside>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- PAGE 8: Migration to XHS -->
+<section class="page" id="p8">
+<div class="declaration">我没有直接做过作者分层，但已经在做相邻的内容判断。</div>
+
+<table class="map-table">
+<tr><th>真实工作证据</th><th>抽象能力</th><th>岗位关联</th></tr>
+<tr><td>多来源稿件进入同一发布端</td><td>供给分型</td><td>作者分层标准</td></tr>
+<tr><td>标题、封面、表达尺度逐条初审</td><td>质量诊断</td><td>差异化内容建议</td></tr>
+<tr><td>排布顺序、临时替换、进度判断</td><td>供给调度</td><td>潜力内容与作者识别</td></tr>
+<tr><td>第三方、部门、多级审核协同</td><td>策略落地</td><td>作者策略运营闭环</td></tr>
+</table>
+
+<div class="two-col" style="margin-top:32px">
+<div>
+<h3>已有能力</h3>
+<ul style="padding-left:20px">
+<li>内容质量判断</li>
+<li>内容供给分类</li>
+<li>差异化修改建议</li>
+<li>跨团队策略推进</li>
+<li>高压环境下的执行</li>
+</ul>
+</div>
+<div>
+<h3>进入小红书后需要新增的维度</h3>
+<ul style="padding-left:20px">
+<li>作者数据表现</li>
+<li>作者生命周期划分</li>
+<li>创作者激励与扶持机制</li>
+<li>投稿、互动、留存和增长指标</li>
+<li>主流短视频平台创作者机制</li>
+</ul>
+</div>
+</div>
+
+<div class="highlight-box" style="margin-top:32px">
+<p style="font-size:17px;font-weight:500">这组内容不是我最炫目的作品。但它证明，我能够把复杂、异质、不断变化的内容供给，转化成可判断、可执行、可落地的标准。</p>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- APPENDIX -->
+<section class="page" id="appendix">
+<div class="collapsible">
+<div class="collapsible-header" onclick="this.parentElement.classList.toggle('open')">
+<span>数据附录：全部已记录内容搜索表格</span>
+<span class="collapsible-arrow">▼</span>
+</div>
+<div class="collapsible-body">
+<div class="table-controls">
+<input type="text" id="table-search" placeholder="搜索标题...">
+<select id="table-source-filter" onchange="filterTable()"><option value="">所有来源</option></select>
+<select id="table-category-filter" onchange="filterTable()"><option value="">所有类别</option></select>
+<select id="table-style-filter" onchange="filterTable()"><option value="">所有标题风格</option></select>
+<select id="table-year-filter" onchange="filterTable()"><option value="">所有年份</option></select>
+</div>
+<div class="table-stats" id="table-stats"></div>
+<div style="overflow-x:auto;max-height:70vh;overflow-y:auto">
+<table class="data-table" id="data-table">
+<thead><tr><th>#</th><th>日期</th><th>标题</th><th>来源</th><th>类别</th><th>风格</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+<div class="footnote" style="margin-top:16px">
+数据来源：报审汇总.xlsx ｜ 工作表：推文总览 ｜ 未单独标注来源或类别的记录在表格中保持空白。<br>
+标题风格依据标题可见特征生成启发式多标签，需抽样人工复核；它不用于评价内容质量。分类口径详见“内容风格”页。<br>
+数据最后更新时间：2026年8月4日。
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<p>郭悦洋 · 求职作品集 P3 模块 · 推送与内容供给判断</p>
+<p style="font-size:11px">目标岗位：小红书「内容策略运营」 · 视觉规范：Swiss Editorial Data</p>
+</footer>
+
+<script>
+// Embedded data
+var D = {"totalRecords": 498, "uniqueDays": 178, "uniqueSources": 51, "uniqueTitles": 497, "peakCount": 10, "peakDay": "2026-01-16", "avgPerDay": 2.8, "dateStart": "2025-03-15", "dateEnd": "2026-08-04", "dailyCounts": {"2026-05-29": 5, "2026-05-28": 6, "2026-05-27": 4, "2026-05-23": 6, "2026-05-22": 7, "2026-05-21": 6, "2026-05-18": 3, "2026-05-17": 5, "2026-05-16": 1, "2026-05-15": 7, "2026-05-14": 1, "2026-05-13": 5, "2026-05-12": 6, "2026-05-11": 3, "2026-05-07": 1, "2026-05-06": 6, "2026-05-05": 2, "2026-05-04": 2, "2026-04-30": 1, "2026-04-29": 8, "2026-04-24": 2, "2026-04-23": 3, "2026-04-19": 1, "2026-04-18": 2, "2026-04-17": 7, "2026-04-11": 4, "2026-04-10": 7, "2026-04-04": 1, "2026-04-03": 7, "2026-03-26": 5, "2026-03-25": 3, "2026-03-22": 1, "2026-03-21": 4, "2026-03-20": 4, "2026-03-13": 4, "2026-03-07": 3, "2026-03-06": 6, "2026-03-03": 2, "2026-03-02": 1, "2026-03-01": 1, "2026-02-28": 5, "2026-02-27": 1, "2026-02-21": 2, "2026-02-20": 5, "2026-02-19": 3, "2026-02-15": 1, "2026-02-14": 9, "2026-02-13": 7, "2026-02-09": 1, "2026-02-07": 1, "2026-02-06": 6, "2026-02-01": 1, "2026-01-31": 4, "2026-01-30": 6, "2026-01-22": 1, "2026-01-21": 7, "2026-01-18": 1, "2026-01-17": 5, "2026-01-16": 10, "2026-01-02": 1, "2025-12-31": 1, "2025-12-30": 3, "2025-12-29": 1, "2025-12-27": 1, "2025-12-26": 2, "2025-12-22": 1, "2025-12-21": 2, "2025-12-20": 3, "2025-12-19": 5, "2025-12-18": 2, "2025-12-13": 2, "2025-12-12": 4, "2025-12-11": 5, "2025-12-10": 2, "2025-12-04": 1, "2025-11-29": 3, "2025-11-28": 1, "2025-11-22": 1, "2025-11-21": 2, "2025-11-20": 1, "2025-11-15": 5, "2025-11-14": 4, "2025-11-07": 1, "2025-10-06": 1, "2025-10-05": 1, "2025-09-30": 1, "2025-09-29": 1, "2025-09-26": 1, "2025-09-24": 1, "2025-09-23": 1, "2025-09-22": 1, "2025-09-20": 3, "2025-09-19": 1, "2025-09-18": 1, "2025-09-17": 3, "2025-09-16": 2, "2025-09-12": 2, "2025-09-11": 2, "2025-09-10": 1, "2025-09-08": 1, "2025-09-07": 2, "2025-09-06": 3, "2025-09-05": 2, "2025-09-02": 1, "2025-08-28": 2, "2025-08-27": 1, "2025-08-26": 2, "2025-08-22": 1, "2025-08-21": 1, "2025-08-20": 1, "2025-08-19": 1, "2025-08-17": 2, "2025-08-16": 1, "2025-08-14": 2, "2025-08-11": 1, "2025-08-09": 1, "2025-08-08": 4, "2025-07-13": 1, "2025-05-30": 1, "2025-05-27": 1, "2025-05-14": 1, "2025-05-04": 2, "2025-05-03": 1, "2025-04-30": 2, "2025-04-29": 2, "2025-04-28": 1, "2025-04-25": 1, "2025-04-24": 1, "2025-04-22": 1, "2025-04-18": 1, "2025-03-15": 1, "2026-05-30": 1, "2026-05-31": 2, "2026-06-01": 5, "2026-06-02": 7, "2026-06-03": 1, "2026-06-04": 1, "2026-06-06": 2, "2026-06-07": 1, "2026-06-08": 5, "2026-06-09": 4, "2026-06-10": 6, "2026-06-11": 1, "2026-06-13": 5, "2026-06-14": 1, "2026-06-16": 6, "2026-06-17": 1, "2026-06-18": 10, "2026-06-19": 4, "2026-06-20": 1, "2026-06-21": 1, "2026-06-22": 5, "2026-06-23": 2, "2026-06-24": 5, "2026-06-25": 1, "2026-06-28": 3, "2026-06-29": 1, "2026-06-30": 4, "2026-07-01": 2, "2026-07-02": 3, "2026-07-03": 1, "2026-07-06": 6, "2026-07-07": 5, "2026-07-11": 5, "2026-07-12": 1, "2026-07-13": 5, "2026-07-14": 2, "2026-07-16": 3, "2026-07-17": 1, "2026-07-19": 4, "2026-07-20": 2, "2026-07-22": 3, "2026-07-23": 4, "2026-07-25": 2, "2026-07-26": 2, "2026-07-27": 3, "2026-08-03": 4, "2026-08-04": 2}, "calendarData": {"2026": {"5": {"29": 5, "28": 6, "27": 4, "23": 6, "22": 7, "21": 6, "18": 3, "17": 5, "16": 1, "15": 7, "14": 1, "13": 5, "12": 6, "11": 3, "7": 1, "6": 6, "5": 2, "4": 2, "30": 1, "31": 2}, "4": {"30": 1, "29": 8, "24": 2, "23": 3, "19": 1, "18": 2, "17": 7, "11": 4, "10": 7, "4": 1, "3": 7}, "3": {"26": 5, "25": 3, "22": 1, "21": 4, "20": 4, "13": 4, "7": 3, "6": 6, "3": 2, "2": 1, "1": 1}, "2": {"28": 5, "27": 1, "21": 2, "20": 5, "19": 3, "15": 1, "14": 9, "13": 7, "9": 1, "7": 1, "6": 6, "1": 1}, "1": {"31": 4, "30": 6, "22": 1, "21": 7, "18": 1, "17": 5, "16": 10, "2": 1}, "6": {"1": 5, "2": 7, "3": 1, "4": 1, "6": 2, "7": 1, "8": 5, "9": 4, "10": 6, "11": 1, "13": 5, "14": 1, "16": 6, "17": 1, "18": 10, "19": 4, "20": 1, "21": 1, "22": 5, "23": 2, "24": 5, "25": 1, "28": 3, "29": 1, "30": 4}, "7": {"1": 2, "2": 3, "3": 1, "6": 6, "7": 5, "11": 5, "12": 1, "13": 5, "14": 2, "16": 3, "17": 1, "19": 4, "20": 2, "22": 3, "23": 4, "25": 2, "26": 2, "27": 3}, "8": {"3": 4, "4": 2}}, "2025": {"12": {"31": 1, "30": 3, "29": 1, "27": 1, "26": 2, "22": 1, "21": 2, "20": 3, "19": 5, "18": 2, "13": 2, "12": 4, "11": 5, "10": 2, "4": 1}, "11": {"29": 3, "28": 1, "22": 1, "21": 2, "20": 1, "15": 5, "14": 4, "7": 1}, "10": {"6": 1, "5": 1}, "9": {"30": 1, "29": 1, "26": 1, "24": 1, "23": 1, "22": 1, "20": 3, "19": 1, "18": 1, "17": 3, "16": 2, "12": 2, "11": 2, "10": 1, "8": 1, "7": 2, "6": 3, "5": 2, "2": 1}, "8": {"28": 2, "27": 1, "26": 2, "22": 1, "21": 1, "20": 1, "19": 1, "17": 2, "16": 1, "14": 2, "11": 1, "9": 1, "8": 4}, "7": {"13": 1}, "5": {"30": 1, "27": 1, "14": 1, "4": 2, "3": 1}, "4": {"30": 2, "29": 2, "28": 1, "25": 1, "24": 1, "22": 1, "18": 1}, "3": {"15": 1}}}, "sourceCounts": {"朝阳文旅集团": 7, "朝阳区教委": 5, "朝阳区水务局": 4, "朝阳区投资促进服务中心": 2, "朝阳区外办": 4, "朝阳区卫健委": 2, "朝阳区文旅局": 12, "朝阳区常营乡": 1, "朝阳区王四营乡": 3, "朝阳区人才工作局": 2, "朝阳区黑庄户乡": 1, "朝阳区东坝乡": 6, "朝阳区民政局": 2, "商务中心区管委会": 6, "朝阳区园林绿化局": 2, "朝阳区委组织部": 5, "朝阳区商务局": 15, "朝阳区房屋管理局": 2, "朝阳区社会工作部": 4, "朝阳区发改委": 7, "朝阳区统计局": 2, "朝阳区首都机场街道": 1, "朝阳区文旅局, 朝阳区商务局": 1, "中关村朝阳园管委会（区科信局）": 11, "朝阳区园林绿化局, 朝阳文旅集团": 1, "朝阳区崔各庄乡": 2, "朝阳区体育局": 3, "朝阳区建外街道": 1, "朝阳区园林绿化局, 北京公交集团, 朝阳文旅集团": 1, "朝阳区左家庄街道": 1, "朝阳区医保局": 1, "朝阳区发改委, 朝阳区投资促进服务中心": 1, "国家文创实验区管委会": 2, "朝阳区房屋管理局, 朝阳区城市管理指挥中心": 4, "朝阳区精神文明建设委员会办公室": 3, "奥林匹克中心区管委会": 2, "朝阳区三里屯街道": 1, "朝阳区安贞街道": 1, "温榆河": 1, "朝阳区城管委": 3, "朝阳区人社局": 1, "朝阳科技集团": 1, "朝阳区南磨房乡": 2, "朝阳区委政法委, 朝阳区司法局": 1, "朝阳区园林绿化局, 朝阳区双井街道": 1, "朝阳区商务局, 朝阳区王四营乡": 1, "朝阳团区委": 1, "朝阳区八里庄街道": 1, "朝阳区农业农村局": 1, "朝阳区望京街道": 1, "朝阳区香河园街道": 1}, "sourceTypes": {"区级机关/专业部门": {"count": 105, "sources": 27}, "街乡/基层": {"count": 23, "sources": 14}, "跨部门/联合来源": {"count": 11, "sources": 8}, "区属企业/项目机构": {"count": 8, "sources": 2}}, "sourceTypeSources": {"区级机关/专业部门": ["朝阳区教委", "朝阳区水务局", "朝阳区投资促进服务中心", "朝阳区外办", "朝阳区卫健委", "朝阳区文旅局", "朝阳区人才工作局", "朝阳区民政局", "商务中心区管委会", "朝阳区园林绿化局", "朝阳区委组织部", "朝阳区商务局", "朝阳区房屋管理局", "朝阳区社会工作部", "朝阳区发改委", "朝阳区统计局", "中关村朝阳园管委会（区科信局）", "朝阳区体育局", "朝阳区医保局", "国家文创实验区管委会", "朝阳区精神文明建设委员会办公室", "奥林匹克中心区管委会", "温榆河", "朝阳区城管委", "朝阳区人社局", "朝阳团区委", "朝阳区农业农村局"], "街乡/基层": ["朝阳区常营乡", "朝阳区王四营乡", "朝阳区黑庄户乡", "朝阳区东坝乡", "朝阳区首都机场街道", "朝阳区崔各庄乡", "朝阳区建外街道", "朝阳区左家庄街道", "朝阳区三里屯街道", "朝阳区安贞街道", "朝阳区南磨房乡", "朝阳区八里庄街道", "朝阳区望京街道", "朝阳区香河园街道"], "跨部门/联合来源": ["朝阳区文旅局, 朝阳区商务局", "朝阳区园林绿化局, 朝阳文旅集团", "朝阳区园林绿化局, 北京公交集团, 朝阳文旅集团", "朝阳区发改委, 朝阳区投资促进服务中心", "朝阳区房屋管理局, 朝阳区城市管理指挥中心", "朝阳区委政法委, 朝阳区司法局", "朝阳区园林绿化局, 朝阳区双井街道", "朝阳区商务局, 朝阳区王四营乡"], "区属企业/项目机构": ["朝阳文旅集团", "朝阳科技集团"]}, "topSources": [{"name": "朝阳区商务局", "count": 15}, {"name": "朝阳区文旅局", "count": 12}, {"name": "中关村朝阳园管委会（区科信局）", "count": 11}, {"name": "朝阳文旅集团", "count": 7}, {"name": "朝阳区发改委", "count": 7}, {"name": "朝阳区东坝乡", "count": 6}, {"name": "商务中心区管委会", "count": 6}, {"name": "朝阳区教委", "count": 5}, {"name": "朝阳区委组织部", "count": 5}, {"name": "朝阳区水务局", "count": 4}, {"name": "朝阳区外办", "count": 4}, {"name": "朝阳区社会工作部", "count": 4}, {"name": "朝阳区房屋管理局, 朝阳区城市管理指挥中心", "count": 4}, {"name": "朝阳区王四营乡", "count": 3}, {"name": "朝阳区体育局", "count": 3}, {"name": "朝阳区精神文明建设委员会办公室", "count": 3}, {"name": "朝阳区城管委", "count": 3}, {"name": "朝阳区投资促进服务中心", "count": 2}, {"name": "朝阳区卫健委", "count": 2}, {"name": "朝阳区人才工作局", "count": 2}], "styleData": [{"name": "口语化/情绪表达", "count": 283, "pct": 56.8}, {"name": "数字/成果表达", "count": 126, "pct": 25.3}, {"name": "生活方式场景", "count": 84, "pct": 16.9}, {"name": "行动召唤", "count": 133, "pct": 26.7}, {"name": "疑问/设问", "count": 56, "pct": 11.2}, {"name": "悬念/反转", "count": 6, "pct": 1.2}, {"name": "清单/攻略", "count": 41, "pct": 8.2}, {"name": "会议/政务表达", "count": 32, "pct": 6.4}, {"name": "信息直给", "count": 86, "pct": 17.3}], "monthlyData": [{"month": "2025-03", "count": 1}, {"month": "2025-04", "count": 9}, {"month": "2025-05", "count": 6}, {"month": "2025-07", "count": 1}, {"month": "2025-08", "count": 20}, {"month": "2025-09", "count": 30}, {"month": "2025-10", "count": 2}, {"month": "2025-11", "count": 18}, {"month": "2025-12", "count": 35}, {"month": "2026-01", "count": 35}, {"month": "2026-02", "count": 42}, {"month": "2026-03", "count": 34}, {"month": "2026-04", "count": 43}, {"month": "2026-05", "count": 79}, {"month": "2026-06", "count": 83}, {"month": "2026-07", "count": 54}, {"month": "2026-08", "count": 6}], "weekdayData": [{"name": "周一", "count": 54}, {"name": "周二", "count": 57}, {"name": "周三", "count": 64}, {"name": "周四", "count": 68}, {"name": "周五", "count": 131}, {"name": "周六", "count": 88}, {"name": "周日", "count": 36}], "categoryData": [{"name": "民生提示", "count": 67}, {"name": "时政", "count": 52}, {"name": "活动综合", "count": 33}, {"name": "海报统筹", "count": 14}, {"name": "物业红黑榜", "count": 4}, {"name": "新展在朝阳", "count": 2}, {"name": "活动综合, 抽奖", "count": 2}, {"name": "抽奖", "count": 2}, {"name": "活动综合, 抽奖, 新展在朝阳", "count": 2}, {"name": "活动综合, 新展在朝阳", "count": 1}, {"name": "抽奖, 海报统筹", "count": 1}], "records": [{"title": "亮马东院“上线”！从早到晚浪漫不打烊", "source": "朝阳文旅集团", "category": "", "date": "2026-05-29", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "6月1日，朝阳区2026年幼儿园招生工作开始", "source": "朝阳区教委", "category": "民生提示", "date": "2026-05-29", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "北京致谢全体市民！", "source": "", "category": "", "date": "2026-05-29", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "马术+卡丁车+网球+桨板！这个周末来温榆河撒个欢～", "source": "朝阳文旅集团", "category": "", "date": "2026-05-29", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "逛完这个逛那个，别急都有份！接下来的朝阳太好逛啦🤩", "source": "", "category": "活动综合", "date": "2026-05-29", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "获37项大奖！它为何能让联合国点赞？", "source": "朝阳区水务局", "category": "", "date": "2026-05-28", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "疑问/设问"]}, {"title": "香港商会代表眼中的朝阳，是这样的——", "source": "朝阳区投资促进服务中心", "category": "", "date": "2026-05-28", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["信息直给"]}, {"title": "🥳“泰”期待辣！北京泰国风情节嗨翻周末", "source": "朝阳区外办", "category": "", "date": "2026-05-28", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "垂杨柳医院潘家园院区开诊试运行", "source": "朝阳区卫健委", "category": "民生提示", "date": "2026-05-28", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["信息直给"]}, {"title": "汛期将至，北京召开全市防汛工作动员部署会，尹力划出今年防汛重点", "source": "", "category": "时政", "date": "2026-05-28", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "朝阳区召开2026年防汛工作动员部署会", "source": "", "category": "时政", "date": "2026-05-28", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "最高奖励500万！朝阳出手支持“一人公司”", "source": "", "category": "", "date": "2026-05-27", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "北京朝阳这条30年的老渠“苏醒”了——", "source": "朝阳区水务局", "category": "", "date": "2026-05-27", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "朝阳夏日展厅里藏着多少惊喜？快来！", "source": "朝阳区文旅局", "category": "新展在朝阳", "date": "2026-05-27", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤", "疑问/设问", "悬念/反转"]}, {"title": "朝阳医院常营院区周边交通优化升级", "source": "朝阳区常营乡", "category": "民生提示", "date": "2026-05-27", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "全国首个新文创市集，“新”在哪？", "source": "", "category": "", "date": "2026-05-23", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["疑问/设问"]}, {"title": "博物馆+1！朝阳区石刻博物馆携首展来啦，就在——", "source": "朝阳区王四营乡", "category": "", "date": "2026-05-23", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "一场市集看文旅交融之美", "source": "", "category": "", "date": "2026-05-23", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "最后两天！来“潮”有趣野餐派对，把非遗美食吃个够", "source": "", "category": "", "date": "2026-05-23", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "5月24日最后1天扫货！快来朝阳公园中国新文创市集", "source": "", "category": "", "date": "2026-05-23", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "新文创市集，到底有什么“潮能力”？", "source": "", "category": "", "date": "2026-05-23", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["疑问/设问"]}, {"title": "北京朝阳，为何让年轻人不愿离开", "source": "", "category": "", "date": "2026-05-22", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["疑问/设问"]}, {"title": "86个奖项、5000万+总奖金！ITEC2026全新启程", "source": "朝阳区人才工作局", "category": "", "date": "2026-05-22", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "啥？驻华使节在朝阳公园新文创市集“上头”了？", "source": "朝阳区外办", "category": "", "date": "2026-05-22", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["疑问/设问"]}, {"title": "串联CBD核心区！22号线（平谷线）红庙至平谷段年底开通", "source": "", "category": "民生提示", "date": "2026-05-22", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "全国文创大集合！一次逛遍，根本停不下来🥳", "source": "", "category": "", "date": "2026-05-22", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "最后两天！这个周末来朝阳，赴一场全国文创“顶流局”——", "source": "", "category": "活动综合", "date": "2026-05-22", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "5月23日锁定朝阳公园新文创市集！最后2天，错过等1年", "source": "", "category": "", "date": "2026-05-22", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "玩转文创市集！拍照点位速码，秒出大片🤩", "source": "", "category": "", "date": "2026-05-21", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "2026北京国际音乐生活周开幕，吴小杰出席开幕式", "source": "", "category": "时政", "date": "2026-05-21", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "今夜，北京新一轮降水来袭，预计可达中雨！明天带伞", "source": "", "category": "民生提示", "date": "2026-05-21", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "京港双向赋能，朝阳向全球发出合作邀约", "source": "朝阳区投资促进服务中心", "category": "", "date": "2026-05-21", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["信息直给"]}, {"title": "竖起耳朵，顶级音乐盛宴开始啦——", "source": "朝阳区黑庄户乡", "category": "", "date": "2026-05-21", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "5月22日“城市潮玩野餐派对”开席！中国新文创市集舌尖狂欢来袭！", "source": "", "category": "", "date": "2026-05-21", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "一座城，如何将灵感变成IP？", "source": "", "category": "", "date": "2026-05-18", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["疑问/设问"]}, {"title": "国际博物馆日｜朝阳的“探秘官”们，快来寻宝啦！", "source": "", "category": "", "date": "2026-05-18", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "一站集齐全国热门博物馆文创产品，来这儿就对了——", "source": "", "category": "", "date": "2026-05-18", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["行动召唤"]}, {"title": "第二届“坝超”来了！看29支球队同场竞技——", "source": "朝阳区东坝乡", "category": "", "date": "2026-05-17", "month": "2026-05", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "午后，北京降雨将再次加强！降雨最大时段→", "source": "", "category": "民生提示", "date": "2026-05-17", "month": "2026-05", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "“公园文创天团”集结朝阳公园，近200种“公园礼物”一站集齐", "source": "", "category": "", "date": "2026-05-17", "month": "2026-05", "weekday": "周日", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "明天北京早高峰路面湿滑、交通压力大！建议优先选择公共交通", "source": "", "category": "民生提示", "date": "2026-05-17", "month": "2026-05", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "5月18日 最火拉丁裁判团空降朝阳公园新文创市集", "source": "", "category": "", "date": "2026-05-17", "month": "2026-05", "weekday": "周日", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "潮玩游园会怎么玩？出行、打卡、逛吃一站式攻略——", "source": "", "category": "", "date": "2026-05-16", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["生活方式场景", "疑问/设问", "清单/攻略"]}, {"title": "保姆级攻略速收藏，一册通关偶遇文创天团——", "source": "", "category": "", "date": "2026-05-15", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "重磅，事关养老→", "source": "朝阳区民政局", "category": "", "date": "2026-05-15", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "傍晚有雨！16日至18日多阴雨天气——", "source": "", "category": "民生提示", "date": "2026-05-15", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "首个国家级文创市集，在北京朝阳开幕！", "source": "", "category": "", "date": "2026-05-15", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "五月最热闹的周末来了！", "source": "", "category": "活动综合", "date": "2026-05-15", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "首届中国新文创市集暨潮玩游园会开幕", "source": "", "category": "时政", "date": "2026-05-15", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "今日逛中国新文创市集温馨提示", "source": "", "category": "民生提示", "date": "2026-05-15", "month": "2026-05", "weekday": "周五", "year": 2026, "styles": ["生活方式场景"]}, {"title": "进度条▓▓▓▓▓▓▓▓▓ 99%", "source": "", "category": "", "date": "2026-05-14", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "来朝阳“蝶”Buff啦！朝阳推出五条潮玩主题文旅线路等你打卡", "source": "朝阳区文旅局", "category": "", "date": "2026-05-13", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "1+6+4+N！2026北京CBD论坛来了", "source": "商务中心区管委会", "category": "", "date": "2026-05-13", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "朝阳区“教改”成果来了——", "source": "朝阳区教委", "category": "", "date": "2026-05-13", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["行动召唤"]}, {"title": "谁懂啊！这种被“天目琼花”包围的感觉🥰", "source": "朝阳区园林绿化局", "category": "", "date": "2026-05-13", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "疑问/设问"]}, {"title": "寻找城市主理人：用你的热爱，点亮这座城", "source": "朝阳区委组织部", "category": "", "date": "2026-05-13", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "朝阳，向“新”而行", "source": "", "category": "", "date": "2026-05-12", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "致全区护理工作者的感谢信", "source": "", "category": "", "date": "2026-05-12", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "锚定目标！2026年朝阳区“两区”建设这么干→", "source": "朝阳区商务局", "category": "", "date": "2026-05-12", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "听说，这些“天团”，都来北京朝阳了——", "source": "", "category": "", "date": "2026-05-12", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["行动召唤"]}, {"title": "367套！租金减免还有补助，毕业生租房“朝”这看→", "source": "朝阳区房屋管理局", "category": "", "date": "2026-05-12", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "多个“首个”突破，成本时间大幅压减！数据出境朝阳区放大招", "source": "", "category": "", "date": "2026-05-12", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "首个国家级文创市集多潮多好玩？必看———", "source": "", "category": "", "date": "2026-05-11", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["疑问/设问"]}, {"title": "全国首个新就业群体“家园社区”落地朝阳", "source": "朝阳区社会工作部", "category": "", "date": "2026-05-11", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["信息直给"]}, {"title": "热҈热҈热҈，不如来这里清凉一“夏”🤩", "source": "", "category": "", "date": "2026-05-11", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "建设超大城市现代化治理典范区！朝阳“十五五”规划纲要城市治理蓝图发布", "source": "朝阳区发改委", "category": "", "date": "2026-05-07", "month": "2026-05", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "34家首店入驻！", "source": "", "category": "", "date": "2026-05-06", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "41.64亿元，396.4万人次！", "source": "", "category": "", "date": "2026-05-06", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "朝阳这两条“断堵头路”通车！今年还将打通7条断头路", "source": "", "category": "", "date": "2026-05-06", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "北京向全市单位和市民朋友们发出防灾减灾宣传周倡议书", "source": "", "category": "民生提示", "date": "2026-05-06", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "朝阳区委理论学习中心组学习暨树立和践行正确政绩观学习教育5月份交流研讨会议召开", "source": "", "category": "时政", "date": "2026-05-06", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "今日份晚霞🤩，你拍了吗？", "source": "", "category": "", "date": "2026-05-06", "month": "2026-05", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "疑问/设问"]}, {"title": "朝阳有“花”说", "source": "", "category": "", "date": "2026-05-05", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "夏始清和，万物繁茂", "source": "", "category": "", "date": "2026-05-05", "month": "2026-05", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "解锁假日新玩法，演唱会、艺术节、文化节一站式打卡——", "source": "朝阳区文旅局", "category": "活动综合", "date": "2026-05-04", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["生活方式场景", "行动召唤"]}, {"title": "今明16时到18时，返程高峰！北京交警发布高速进京绕行指南", "source": "", "category": "民生提示", "date": "2026-05-04", "month": "2026-05", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "建设首都文化创新引领区！朝阳“十五五”规划纲要文化蓝图发布", "source": "朝阳区发改委", "category": "", "date": "2026-04-30", "month": "2026-04", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "国内首个！鸟巢电竞开幕式斩获国际“互联网奥斯卡”大奖", "source": "", "category": "", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "蒙医正骨来朝阳了！专家定期坐诊——", "source": "", "category": "", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "朝阳区举办2026年庆祝“五一”国际劳动节主题活动", "source": "", "category": "时政", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "北京市委决定：李晓波任朝阳区委常委", "source": "", "category": "时政", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "“五一”假期来朝阳！解锁最“香”的打开方式🤩", "source": "", "category": "活动综合", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "区委常委会召开会议，研究近期生态环境保护重点工作", "source": "", "category": "时政", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "区委教育科技人才工作领导小组第一次会议召开", "source": "", "category": "时政", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "这个“五一”，来朝阳品茶喽！", "source": "朝阳文旅集团", "category": "", "date": "2026-04-29", "month": "2026-04", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "再致五迷：好久不见", "source": "", "category": "", "date": "2026-04-24", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "GDP达2389.7亿元、增速5.0%！朝阳区一季度经济数据公布", "source": "朝阳区统计局", "category": "", "date": "2026-04-24", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "直通大厂+外交现场！朝阳这波干部培训实战拉满", "source": "朝阳区委组织部", "category": "", "date": "2026-04-23", "month": "2026-04", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "在“起飞”与“降落”间，还藏着这些惊喜——", "source": "朝阳区首都机场街道", "category": "", "date": "2026-04-23", "month": "2026-04", "weekday": "周四", "year": 2026, "styles": ["悬念/反转"]}, {"title": "朝阳这个创业园在海外引热议，凭的是→", "source": "朝阳区人才工作局", "category": "", "date": "2026-04-23", "month": "2026-04", "weekday": "周四", "year": 2026, "styles": ["信息直给"]}, {"title": "春日共读，阅见朝阳！来赴一场书香之约——", "source": "", "category": "", "date": "2026-04-19", "month": "2026-04", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "一张票根解锁200+项福利？最全攻略来了！", "source": "朝阳区文旅局, 朝阳区商务局", "category": "", "date": "2026-04-18", "month": "2026-04", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "疑问/设问", "清单/攻略"]}, {"title": "走，去朝阳公园“捞”绝版书！2026书市指南来了→", "source": "", "category": "", "date": "2026-04-18", "month": "2026-04", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "吴小杰在区委理论学习中心组学习暨树立和践行正确政绩观学习教育交流研讨会上强调，以正确政绩观引领朝阳“十五五”开好局起好步", "source": "", "category": "时政", "date": "2026-04-17", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "本周末，北京四元桥施工进入第二阶段！绕行路线图公布", "source": "", "category": "民生提示", "date": "2026-04-17", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "全市第一！“畅游北京”扫街榜上线，宝藏店铺全在这——", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-04-17", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "区委常委会召开会议，传达学习习近平总书记重要指示精神", "source": "", "category": "时政", "date": "2026-04-17", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "最新校历发布！2027年寒暑假时间确定", "source": "", "category": "民生提示", "date": "2026-04-17", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "2026北京书市要来啦！来朝阳，还有更多购书好礼🤩", "source": "", "category": "", "date": "2026-04-17", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "好听！好看！好逛！这个周末玩转朝阳", "source": "", "category": "活动综合", "date": "2026-04-17", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "逛北小河，看这一条就够了！周末出发——", "source": "朝阳区园林绿化局, 朝阳文旅集团", "category": "", "date": "2026-04-11", "month": "2026-04", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "来崔各庄，薅一波朝阳春天的羊毛！", "source": "朝阳区崔各庄乡", "category": "", "date": "2026-04-11", "month": "2026-04", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "区四套班子领导参加义务植树活动", "source": "", "category": "时政", "date": "2026-04-11", "month": "2026-04", "weekday": "周六", "year": 2026, "styles": ["行动召唤"]}, {"title": "北京超级周末！来朝阳解锁超有氛围感的体育 Color Walk", "source": "朝阳区体育局", "category": "", "date": "2026-04-11", "month": "2026-04", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "健康第一！朝阳区发布中小学生身心健康发展三年行动计划", "source": "朝阳区教委", "category": "", "date": "2026-04-10", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "逛吃赏景，北小河五大商圈攻略来啦！", "source": "朝阳区商务局", "category": "", "date": "2026-04-10", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "北影节9场露天放映！蓝港打卡全攻略——", "source": "", "category": "", "date": "2026-04-10", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "清单/攻略"]}, {"title": "四元立交桥系修复工程明日启动，本周末绕行路线公布", "source": "", "category": "民生提示", "date": "2026-04-10", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["生活方式场景", "清单/攻略"]}, {"title": "全市首批！共享单车也能反诈了——", "source": "朝阳区建外街道", "category": "", "date": "2026-04-10", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "“这个超级周末，来朝阳玩得尽兴！”", "source": "", "category": "活动综合", "date": "2026-04-10", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "吴小杰调研北京服装学院时强调，深化区校战略合作，以“科技+时尚”赋能区域高质量发展", "source": "", "category": "时政", "date": "2026-04-10", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "春天在哪里？🤔就在朝阳的——", "source": "", "category": "", "date": "2026-04-04", "month": "2026-04", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "疑问/设问"]}, {"title": "开幕！北京朝阳花园节邀您沉浸式赏春——", "source": "朝阳区园林绿化局", "category": "", "date": "2026-04-03", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "免费！朝阳花园节接驳巴士发车喽——", "source": "朝阳区园林绿化局, 北京公交集团, 朝阳文旅集团", "category": "", "date": "2026-04-03", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "假期3天不收费、今日晚高峰提前……北京交警发布出行提示——", "source": "", "category": "民生提示", "date": "2026-04-03", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达", "生活方式场景"]}, {"title": "这个小长假，这些地点必打卡🤩", "source": "", "category": "活动综合", "date": "2026-04-03", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "花开北京·2026京津冀全民赏花季在朝阳启幕，2026北京朝阳花园节暨醒春启航活动举办", "source": "", "category": "时政", "date": "2026-04-03", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "从“蓝图”到“四街三园”，左家庄正在悄然生长", "source": "朝阳区左家庄街道", "category": "", "date": "2026-04-03", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "降级发布大风蓝警！这一时段出行请注意——", "source": "", "category": "民生提示", "date": "2026-04-03", "month": "2026-04", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "一河春水映山桃，快来坝河打卡这份春日浪漫🤩", "source": "", "category": "", "date": "2026-03-26", "month": "2026-03", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "超500万平方米！北京CBD“含绿量”再升级", "source": "商务中心区管委会", "category": "", "date": "2026-03-26", "month": "2026-03", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "28项业务“一站式”办结，朝阳首家“医医合作”医保服务驿站启用", "source": "朝阳区医保局", "category": "", "date": "2026-03-26", "month": "2026-03", "weekday": "周四", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "这些“未来黑科技”，都是朝阳造！", "source": "", "category": "", "date": "2026-03-26", "month": "2026-03", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "聂杰英参加区政府办公室党总支第一支部组织生活会时强调，聚焦“能力、活力、合力”建设，为提升“五区”功能、建好“五宜”朝阳贡献力量", "source": "", "category": "时政", "date": "2026-03-26", "month": "2026-03", "weekday": "周四", "year": 2026, "styles": ["行动召唤", "会议/政务表达"]}, {"title": "国际电子竞技委员会落地朝阳，构建中欧双总部格局", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-03-25", "month": "2026-03", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "🥰CBD玉兰火了！更多赏花攻略——", "source": "", "category": "", "date": "2026-03-25", "month": "2026-03", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "水立方宠粉空间，免费为歌迷开放！", "source": "", "category": "", "date": "2026-03-25", "month": "2026-03", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "Colorwalk在朝阳，用镜头收集一整个春天！", "source": "", "category": "海报统筹", "date": "2026-03-22", "month": "2026-03", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "朝阳的花花，你最AI哪一朵？", "source": "", "category": "海报统筹", "date": "2026-03-21", "month": "2026-03", "weekday": "周六", "year": 2026, "styles": ["疑问/设问"]}, {"title": "四得公园梅花盛放，一园一品填春色", "source": "", "category": "", "date": "2026-03-21", "month": "2026-03", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "谢霆锋、张杰、光良……一大波演唱会要来朝阳啦~", "source": "朝阳区商务局", "category": "", "date": "2026-03-21", "month": "2026-03", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "朝阳“小大使”走进哈萨克斯坦文化中心专场活动", "source": "", "category": "", "date": "2026-03-21", "month": "2026-03", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "北京向全体市民发出倡议书", "source": "", "category": "民生提示", "date": "2026-03-20", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "在北京亮马河 ，春天是从上船那一刻开始的——", "source": "", "category": "", "date": "2026-03-20", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "下周临时通车！安德大街跨坝河桥迎来新进展", "source": "朝阳区东坝乡", "category": "民生提示", "date": "2026-03-20", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "赏花逛市集！快来朝阳邂逅春天🤩", "source": "", "category": "活动综合", "date": "2026-03-20", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "跟着《旅游》杂志，游朝阳", "source": "朝阳区文旅局", "category": "海报统筹", "date": "2026-03-13", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "北京市首单“一登双证”！就在——", "source": "", "category": "", "date": "2026-03-13", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "这群“朝阳群众”，有点不一样", "source": "", "category": "", "date": "2026-03-13", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "春暖花开，赏花 、看展、听音乐！", "source": "", "category": "活动综合", "date": "2026-03-13", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "朝阳春日赏花日历上线，错过等一年ꕥꕥꕥ", "source": "", "category": "", "date": "2026-03-07", "month": "2026-03", "weekday": "周六", "year": 2026, "styles": ["清单/攻略"]}, {"title": "致每一位闪耀的“她” ，朝阳商圈宠爱指南来啦", "source": "朝阳区商务局", "category": "", "date": "2026-03-07", "month": "2026-03", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "北小河畔大象滑梯上新啦!", "source": "朝阳区水务局", "category": "", "date": "2026-03-07", "month": "2026-03", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "认准这12项！朝阳惠企政策体系持续提升，图解——", "source": "朝阳区发改委, 朝阳区投资促进服务中心", "category": "", "date": "2026-03-06", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "共朝美好！传承雷锋精神，TA们温暖了朝阳", "source": "朝阳区社会工作部", "category": "", "date": "2026-03-06", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "吴小杰在2026年朝阳区党建工作会上强调，切实把党建优势转化为发展优势，以高质量党建为“十五五”发展筑基赋能", "source": "", "category": "时政", "date": "2026-03-06", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "全国人大代表霍启刚专程前来“取经”的AIGC视听宝地！原来是——", "source": "国家文创实验区管委会", "category": "", "date": "2026-03-06", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤", "悬念/反转"]}, {"title": "二道沟河畔的山桃花开啦！", "source": "", "category": "", "date": "2026-03-06", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "看展、特色市集、现场大合唱……春天就来朝阳玩🤩", "source": "", "category": "活动综合", "date": "2026-03-06", "month": "2026-03", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "产业服务体系升级，北京朝阳发展有限公司揭牌成立", "source": "朝阳区发改委", "category": "", "date": "2026-03-03", "month": "2026-03", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "重磅！北京市首家产业技术转化院揭牌", "source": "朝阳区发改委", "category": "", "date": "2026-03-03", "month": "2026-03", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "在北京朝阳，见到未来引力场——", "source": "", "category": "海报统筹", "date": "2026-03-02", "month": "2026-03", "weekday": "周一", "year": 2026, "styles": ["行动召唤"]}, {"title": "还剩一周，速打卡！北京首条“熊猫街”续航指南", "source": "朝阳文旅集团", "category": "", "date": "2026-03-01", "month": "2026-03", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "金融总部地标+1！CBD核心区Z4项目最新进展——", "source": "商务中心区管委会", "category": "", "date": "2026-02-28", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "朝阳区妇幼保健院开通24小时儿科急诊", "source": "朝阳区卫健委", "category": "民生提示", "date": "2026-02-28", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "游庙会、逛商圈！朝阳元宵指南来啦——", "source": "朝阳区商务局", "category": "活动综合", "date": "2026-02-28", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "吴小杰调度朝阳区服务保障全国两会工作时强调，以最高标准最严要求最实举措为全国两会胜利召开营造良好环境", "source": "", "category": "时政", "date": "2026-02-28", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "朝阳区1月物业“红黑榜”来了！", "source": "朝阳区房屋管理局, 朝阳区城市管理指挥中心", "category": "物业红黑榜", "date": "2026-02-28", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "3月朝阳活动日历！演唱会、戏剧、市集全都有，还有福利送🤩", "source": "", "category": "活动综合, 抽奖", "date": "2026-02-27", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "清单/攻略"]}, {"title": "来朝外，寻找最潮的年味儿——", "source": "", "category": "", "date": "2026-02-21", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["行动召唤"]}, {"title": "这个春节，你______了吗？", "source": "", "category": "海报统筹", "date": "2026-02-21", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["疑问/设问"]}, {"title": "年味儿拉满！来奥园过“潮”年", "source": "", "category": "", "date": "2026-02-20", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "年味是什么？", "source": "", "category": "", "date": "2026-02-20", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["疑问/设问"]}, {"title": "来朝外过年！一站式解锁最“骏”马年新玩法🤩", "source": "", "category": "", "date": "2026-02-20", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "“听说在朝阳，有一种年味叫逛博物馆！”", "source": "", "category": "", "date": "2026-02-20", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "朝阳区发布大风黄色预警信号！这些时段请注意——", "source": "", "category": "民生提示", "date": "2026-02-20", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "“最近的朝外，可爱超标啦🤩”", "source": "", "category": "", "date": "2026-02-19", "month": "2026-02", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "年味+潮玩+福利！“潮庙会”超全攻略上线（文末有福利）→", "source": "", "category": "抽奖", "date": "2026-02-19", "month": "2026-02", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "走！去潘家园“淘”个红火年～", "source": "", "category": "", "date": "2026-02-19", "month": "2026-02", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "这个春节，朝“洋”群众正忙着……", "source": "", "category": "", "date": "2026-02-15", "month": "2026-02", "weekday": "周日", "year": 2026, "styles": ["信息直给"]}, {"title": "在朝阳，寻年味！", "source": "", "category": "", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "春节将至，尹力、殷勇、李秀领、魏小东、游钧看望慰问基层老党员、生活困难群众等，向他们送上关心与问候", "source": "", "category": "时政", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "以首善标准，为建设具有国际影响力的中国式现代化强区努力奋斗——习近平总书记在北京考察时的重要讲话激发奋进动力", "source": "", "category": "时政", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "走！去看最“朝”的年——", "source": "", "category": "", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "先降后升再降！春节天气预告来啦", "source": "", "category": "民生提示", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "聂杰英参加并指导麦子店街道领导班子2025年度民主生活会", "source": "", "category": "时政", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["数字/成果表达", "行动召唤"]}, {"title": "新春看新展！这份观展指南请收好～（文末有抽奖）", "source": "朝阳区文旅局", "category": "活动综合, 抽奖, 新展在朝阳", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "住熊猫“家”，吃熊猫“餐”，这个春节让你“熊”霸朋友圈", "source": "", "category": "", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "书记区长安全检查", "source": "", "category": "时政", "date": "2026-02-14", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "来了还想来！外国友人体验“朝”味马年", "source": "", "category": "", "date": "2026-02-13", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "过年看“神马”？朝阳商圈来打卡！", "source": "朝阳区商务局", "category": "", "date": "2026-02-13", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "疑问/设问"]}, {"title": "大风蓝警！阵风7级，这个时间段请注意——", "source": "", "category": "民生提示", "date": "2026-02-13", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "在家门口看国家大剧院精品音乐会！北京“超现场”来朝阳啦", "source": "", "category": "", "date": "2026-02-13", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "这份倡议，写给每一个奔赴团圆的你——", "source": "朝阳区精神文明建设委员会办公室", "category": "", "date": "2026-02-13", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "沿着总书记指明的方向坚定信心乘势而上 凝心聚力把北京这座伟大城市建设好、发展好、管理好", "source": "", "category": "时政", "date": "2026-02-13", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "跃马扬鞭 绘就朝阳高质量发展新图景——习近平总书记在北京考察并看望慰问基层干部群众时的重要讲话在朝阳引发热烈反响", "source": "", "category": "时政", "date": "2026-02-13", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "逛博物朝阳，享马上潮年！（文末有惊喜）", "source": "朝阳区文旅局", "category": "抽奖", "date": "2026-02-09", "month": "2026-02", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "当东岳遇上北顶，庙！庙！妙！", "source": "朝阳区文旅局", "category": "", "date": "2026-02-07", "month": "2026-02", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "再添新地标！科勒北京体验中心落地798艺术区", "source": "", "category": "", "date": "2026-02-06", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "抱盆年宵花回家！朝阳这5处宝藏花市超好逛", "source": "", "category": "", "date": "2026-02-06", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景"]}, {"title": "“春节倒计时，周末必须出门撒欢”", "source": "", "category": "活动综合", "date": "2026-02-06", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["生活方式场景"]}, {"title": "朝阳区召开2026年度安全和应急管理工作会议", "source": "", "category": "时政", "date": "2026-02-06", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "不出国门一站式购齐30国年货！就在——", "source": "", "category": "", "date": "2026-02-06", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "区政府党组召开2025年度民主生活会", "source": "", "category": "时政", "date": "2026-02-06", "month": "2026-02", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "打造潮流样本，三里屯太古里重构消费空间", "source": "", "category": "", "date": "2026-02-01", "month": "2026-02", "weekday": "周日", "year": 2026, "styles": ["信息直给"]}, {"title": "奥园新春文旅三大主题线路发布！来玩——", "source": "奥林匹克中心区管委会", "category": "", "date": "2026-01-31", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "798艺术区上新啦！泡泡玛特画廊等你来打卡——", "source": "朝阳区商务局", "category": "", "date": "2026-01-31", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤"]}, {"title": "这件“潮”阳礼物，让外国记者爱不释手🤩", "source": "朝阳区外办", "category": "", "date": "2026-01-31", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "“与世界共朝阳”国际合作雅集举办", "source": "", "category": "时政", "date": "2026-01-31", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "北京朝阳：高质量党建激活民营经济发展新动能", "source": "朝阳区委组织部", "category": "", "date": "2026-01-30", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "2026黑珍珠餐厅指南新鲜出炉，朝阳区上榜餐厅占全市近七成！", "source": "朝阳区商务局", "category": "", "date": "2026-01-30", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "清单/攻略"]}, {"title": "2026春节去哪玩？朝阳2月活动全攻略来啦！", "source": "", "category": "活动综合", "date": "2026-01-30", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "疑问/设问", "清单/攻略"]}, {"title": "朝阳区召开全区领导干部大会，传达学习市两会精神并就贯彻落实工作作出部署", "source": "", "category": "时政", "date": "2026-01-30", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "区委常委会召开会议，传达学习习近平总书记近期重要讲话精神及中央、市委有关会议精神", "source": "", "category": "时政", "date": "2026-01-30", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "区委理论学习中心组召开学习（扩大）会议", "source": "", "category": "时政", "date": "2026-01-30", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "从“屯儿”到世界，看三里屯的进化", "source": "朝阳区三里屯街道", "category": "", "date": "2026-01-22", "month": "2026-01", "weekday": "周四", "year": 2026, "styles": ["信息直给"]}, {"title": "全市第一，朝阳区9条街区被认定为北京市商业步行街", "source": "朝阳区商务局", "category": "", "date": "2026-01-21", "month": "2026-01", "weekday": "周三", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "今年，北京轨道交通22号线计划开通！加快改造10号线国贸换乘通道", "source": "", "category": "民生提示", "date": "2026-01-21", "month": "2026-01", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "朝阳区中小学数理教育中心成立", "source": "朝阳区教委", "category": "", "date": "2026-01-21", "month": "2026-01", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "路边的“野冰”你不要踩！这些正规冰场等你来→", "source": "", "category": "民生提示", "date": "2026-01-21", "month": "2026-01", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "朝阳区召开2025年度街乡和系统党（工）委书记抓基层党建述职评议考核工作会", "source": "", "category": "时政", "date": "2026-01-21", "month": "2026-01", "weekday": "周三", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "外交部发言人毛宁向全球推介“奥林匹克中心区”！", "source": "", "category": "", "date": "2026-01-21", "month": "2026-01", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "区委常委会召开会议，学习习近平总书记在二十届中央纪委五次全会上发表的重要讲话", "source": "", "category": "时政", "date": "2026-01-21", "month": "2026-01", "weekday": "周三", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "北京首个！面向年轻人的主题庙会来啦🤩", "source": "", "category": "", "date": "2026-01-18", "month": "2026-01", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "朝阳喊你看比赛：中网、中超、北马……一系列顶级赛事即将在今年火热开赛", "source": "朝阳区体育局", "category": "", "date": "2026-01-17", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "道路结冰+持续低温！这些时段，出行请注意——", "source": "", "category": "民生提示", "date": "2026-01-17", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "听说这趟“年货专列”，将年味直接停在你门口🥳", "source": "朝阳区安贞街道", "category": "", "date": "2026-01-17", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "宠粉“听劝”版，温榆河公园爆火的四驱车赛道上新“高架桥”啦！", "source": "温榆河", "category": "", "date": "2026-01-17", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "朝阳区12月物业“红黑榜”来了！", "source": "朝阳区房屋管理局, 朝阳区城市管理指挥中心", "category": "物业红黑榜", "date": "2026-01-17", "month": "2026-01", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "泡泡玛特乐园二期将落户亮马河、蓝岛大厦将迎升级！", "source": "朝阳文旅集团", "category": "", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "奥林匹克中心区今年实现“快进慢游”，奥林匹克塔将改造升级", "source": "奥林匹克中心区管委会", "category": "", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "北京朝阳今年计划完成12座桥下空间整治提升", "source": "朝阳区城管委", "category": "", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "本周末，北京将迎全市性降雪！", "source": "", "category": "", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "数智服务+精准帮扶！朝阳将全力推动高质量充分就业——", "source": "朝阳区人社局", "category": "", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "朝阳区今年将打造北京首条滨水马拉松赛道", "source": "朝阳区水务局", "category": "", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "你眼中的2026，是什么模样？", "source": "", "category": "海报统筹", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达", "疑问/设问"]}, {"title": "吴小杰、聂杰英、王旭参加区十七届人大七次会议代表团审议", "source": "", "category": "时政", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["行动召唤", "会议/政务表达"]}, {"title": "泡泡玛特画廊首展、美术馆里的音乐会、家门口的年货节……周末啦，来朝阳找乐子！", "source": "", "category": "活动综合", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "朝阳区第十七届人民代表大会第七次会议胜利闭幕", "source": "", "category": "时政", "date": "2026-01-16", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "新年的第一场告白，献给——", "source": "", "category": "", "date": "2026-01-02", "month": "2026-01", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "2025的这些第一次，你还记得吗?", "source": "", "category": "", "date": "2025-12-31", "month": "2025-12", "weekday": "周三", "year": 2025, "styles": ["数字/成果表达", "疑问/设问"]}, {"title": "新年，来北京朝阳逛街吧！（附实用指南）", "source": "", "category": "活动综合", "date": "2025-12-30", "month": "2025-12", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "中关村（朝阳）AI Space产业园揭牌！朝阳AI产业生态升级再提速", "source": "", "category": "", "date": "2025-12-30", "month": "2025-12", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "+10！北京朝阳跨国公司地区总部达177家", "source": "", "category": "", "date": "2025-12-30", "month": "2025-12", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "朝阳“十五五”：谋新篇 开新局", "source": "", "category": "", "date": "2025-12-29", "month": "2025-12", "weekday": "周一", "year": 2025, "styles": ["信息直给"]}, {"title": "速领！120本博物馆通票，让你的2026从博物馆开始——", "source": "朝阳区文旅局", "category": "活动综合, 抽奖, 新展在朝阳", "date": "2025-12-27", "month": "2025-12", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "新年攻略已备齐！市集、展览、演唱会……就等你啦🤩", "source": "", "category": "活动综合", "date": "2025-12-26", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "明起，地铁17号线中段开通试运营！朝阳段最全打卡攻略来了", "source": "", "category": "民生提示", "date": "2025-12-26", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "朝阳区11月物业“红黑榜”来了！", "source": "朝阳区房屋管理局, 朝阳区城市管理指挥中心", "category": "物业红黑榜", "date": "2025-12-22", "month": "2025-12", "weekday": "周一", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "冬至：愿你如梅傲立，愿你如松长青", "source": "", "category": "", "date": "2025-12-21", "month": "2025-12", "weekday": "周日", "year": 2025, "styles": ["信息直给"]}, {"title": "快来！北京朝阳喊你吃饺子啦～", "source": "", "category": "海报统筹", "date": "2025-12-21", "month": "2025-12", "weekday": "周日", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "北京朝阳成立未来创新教育中心", "source": "", "category": "", "date": "2025-12-20", "month": "2025-12", "weekday": "周六", "year": 2025, "styles": ["行动召唤"]}, {"title": "冬日甜蜜已上线，快来摘草莓啦！", "source": "", "category": "", "date": "2025-12-20", "month": "2025-12", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "朝阳这两条围炉煮茶路线，太好逛了吧！", "source": "", "category": "", "date": "2025-12-20", "month": "2025-12", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "33岁潘家园有何新韵？跟着淘宝地图，赴一场文化寻宝之旅", "source": "", "category": "", "date": "2025-12-19", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["数字/成果表达", "疑问/设问", "清单/攻略"]}, {"title": "明天阵风6、7级！出行请注意", "source": "", "category": "民生提示", "date": "2025-12-19", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "淘手串、品美食、逛市集……朝阳周末快乐清单已上新！", "source": "", "category": "活动综合", "date": "2025-12-19", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "1.5期要来了！泡泡玛特城市乐园明年焕新", "source": "", "category": "", "date": "2025-12-19", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "今晚空气一级优！下周一还有雪——", "source": "", "category": "民生提示", "date": "2025-12-19", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "骐骥驰骋！2026年总台马年春晚吉祥物发布", "source": "", "category": "", "date": "2025-12-18", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "大雾黄色预警继续发布，持续时间——", "source": "", "category": "民生提示", "date": "2025-12-18", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["信息直给"]}, {"title": "朝阳区10月物业“红黑榜”来了！", "source": "朝阳区房屋管理局, 朝阳区城市管理指挥中心", "category": "物业红黑榜", "date": "2025-12-13", "month": "2025-12", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "雪落朝阳，这一刻的身影最暖", "source": "", "category": "", "date": "2025-12-13", "month": "2025-12", "weekday": "周六", "year": 2025, "styles": ["信息直给"]}, {"title": "@朝阳群众，请开启这份扫雪铲冰倡议书——", "source": "", "category": "", "date": "2025-12-12", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["信息直给"]}, {"title": "今天17时至20时，北京社会车辆可借用公交专用车道", "source": "", "category": "民生提示", "date": "2025-12-12", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["数字/成果表达"]}, {"title": "建议转发！这才是冬日周末该有的样子～", "source": "", "category": "活动综合", "date": "2025-12-12", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "全球最佳！这株“小草”，把荒漠变绿洲", "source": "", "category": "", "date": "2025-12-12", "month": "2025-12", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "暴雪+结冰双预警！请注意防范！", "source": "", "category": "民生提示", "date": "2025-12-11", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "从方寸花笺到千年瓷器，这份“中式浪漫”值得收藏", "source": "", "category": "活动综合", "date": "2025-12-11", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["行动召唤"]}, {"title": "就在北京朝阳站旁！等车、看展、学AI，这里全包圆", "source": "", "category": "", "date": "2025-12-11", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "就在今夜！初雪提前“到货”，出行请注意", "source": "", "category": "民生提示", "date": "2025-12-11", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "当亮马河开始发光🤩", "source": "", "category": "", "date": "2025-12-11", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "本周五，北京将迎降雪，最厚羽绒服该出场了！", "source": "", "category": "民生提示", "date": "2025-12-10", "month": "2025-12", "weekday": "周三", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "当“国际范”遇上“烟火气”，悠唐有了新玩法", "source": "", "category": "", "date": "2025-12-10", "month": "2025-12", "weekday": "周三", "year": 2025, "styles": ["信息直给"]}, {"title": "“AI+科学教育”还能这么玩儿？", "source": "", "category": "", "date": "2025-12-04", "month": "2025-12", "weekday": "周四", "year": 2025, "styles": ["疑问/设问"]}, {"title": "国贸桥“城市客厅”上线！漫行廊道CityWalk走起 ——", "source": "", "category": "", "date": "2025-11-29", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "大风+寒潮双预警！明日出行请注意——", "source": "", "category": "民生提示", "date": "2025-11-29", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "冬天的第一束浪漫，就在——", "source": "", "category": "", "date": "2025-11-29", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["信息直给"]}, {"title": "12月活动日历上新！请查收——", "source": "", "category": "活动综合", "date": "2025-11-28", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "清单/攻略"]}, {"title": "北京朝阳：秋韵未消，冬暖已至", "source": "", "category": "海报统筹", "date": "2025-11-22", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["信息直给"]}, {"title": "周末来朝阳，开启冬日欢乐模式！文末还有福利🤩——", "source": "", "category": "活动综合, 抽奖", "date": "2025-11-21", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "坝河樱花冬日绽放？原来是——", "source": "", "category": "", "date": "2025-11-21", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["行动召唤", "疑问/设问", "悬念/反转"]}, {"title": "初冬来看展！朝阳博物馆指南来啦——", "source": "朝阳区文旅局", "category": "活动综合, 新展在朝阳", "date": "2025-11-20", "month": "2025-11", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "寒潮预警！日平均气温降幅可达10℃——", "source": "", "category": "民生提示", "date": "2025-11-15", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "全市首家！新时代文明实践“光明影院”落户朝阳——", "source": "", "category": "", "date": "2025-11-15", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "北京今起正式供暖！附供热单位服务电话——", "source": "", "category": "民生提示", "date": "2025-11-15", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "大风蓝警！阵风7、8级，具体时段——", "source": "", "category": "民生提示", "date": "2025-11-15", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "北京CBD全球排名提升1位，蝉联中国第一！", "source": "", "category": "", "date": "2025-11-15", "month": "2025-11", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "在北京朝阳，上课还能这么“玩”——", "source": "", "category": "", "date": "2025-11-14", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["信息直给"]}, {"title": "周六夜间起朝阳进入“速冻”模式！大风＋强降温——", "source": "", "category": "民生提示", "date": "2025-11-14", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "赏大师真迹、逛疯狂动物城、打卡玩具总动员……", "source": "", "category": "活动综合", "date": "2025-11-14", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["生活方式场景"]}, {"title": "北京首家共享琴房焕新升级！快来和音乐一见钟“琴”——", "source": "", "category": "", "date": "2025-11-14", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "王者荣耀决赛夜，这些餐厅将延长营业——", "source": "", "category": "民生提示", "date": "2025-11-07", "month": "2025-11", "weekday": "周五", "year": 2025, "styles": ["信息直给"]}, {"title": "今夜，一城团圆——", "source": "", "category": "海报统筹", "date": "2025-10-06", "month": "2025-10", "weekday": "周一", "year": 2025, "styles": ["信息直给"]}, {"title": "亮马河畔的跨次元商场，你逛过了吗——", "source": "", "category": "", "date": "2025-10-05", "month": "2025-10", "weekday": "周日", "year": 2025, "styles": ["生活方式场景", "疑问/设问"]}, {"title": "来朝阳，“花”点时间——", "source": "", "category": "", "date": "2025-09-30", "month": "2025-09", "weekday": "周二", "year": 2025, "styles": ["行动召唤"]}, {"title": "朝这看！朝阳双节最全指南来啦——", "source": "", "category": "活动综合", "date": "2025-09-29", "month": "2025-09", "weekday": "周一", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "短剧短片产业基地成立！就在——", "source": "", "category": "", "date": "2025-09-26", "month": "2025-09", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "来北京朝阳，一票通关", "source": "", "category": "", "date": "2025-09-24", "month": "2025-09", "weekday": "周三", "year": 2025, "styles": ["行动召唤"]}, {"title": "一年一度的北京“悬日”要来了！", "source": "", "category": "", "date": "2025-09-23", "month": "2025-09", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "AI+求职？朝阳助你一键“职”达——", "source": "", "category": "", "date": "2025-09-22", "month": "2025-09", "weekday": "周一", "year": 2025, "styles": ["疑问/设问"]}, {"title": "网球+市集+音乐！这场嘉年华实力“圈” 粉——", "source": "", "category": "", "date": "2025-09-20", "month": "2025-09", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "档案里的朝阳丨北京朝阳“两河一带”的时代记忆（下）", "source": "", "category": "", "date": "2025-09-20", "month": "2025-09", "weekday": "周六", "year": 2025, "styles": ["信息直给"]}, {"title": "当“新时代好少年”登上舞台", "source": "", "category": "", "date": "2025-09-20", "month": "2025-09", "weekday": "周六", "year": 2025, "styles": ["信息直给"]}, {"title": "叮！周末活动已上新——", "source": "", "category": "活动综合", "date": "2025-09-19", "month": "2025-09", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "又美又飒！朝阳女骑筑牢上学 “安全线”——", "source": "", "category": "", "date": "2025-09-18", "month": "2025-09", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "网球迷集合！中网主题酒店来啦——", "source": "", "category": "", "date": "2025-09-17", "month": "2025-09", "weekday": "周三", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "沉浸式体验科技场景，2025朝阳科技周，等您来打卡——", "source": "", "category": "", "date": "2025-09-17", "month": "2025-09", "weekday": "周三", "year": 2025, "styles": ["数字/成果表达", "生活方式场景", "行动召唤"]}, {"title": "从“难停”到“舒行”，朝阳这样做——", "source": "", "category": "", "date": "2025-09-17", "month": "2025-09", "weekday": "周三", "year": 2025, "styles": ["信息直给"]}, {"title": "让一台车，成就每一个“好故事”——", "source": "", "category": "", "date": "2025-09-16", "month": "2025-09", "weekday": "周二", "year": 2025, "styles": ["信息直给"]}, {"title": "是什么让外媒记者直呼：走不动，根本走不动！", "source": "", "category": "", "date": "2025-09-16", "month": "2025-09", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤", "疑问/设问"]}, {"title": "就是这个“范儿”——", "source": "", "category": "", "date": "2025-09-12", "month": "2025-09", "weekday": "周五", "year": 2025, "styles": ["信息直给"]}, {"title": "周末活动已上新！速速收藏——", "source": "", "category": "活动综合", "date": "2025-09-12", "month": "2025-09", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "日处理超8000吨！朝阳又一“AI科技”亮相服贸会——", "source": "", "category": "", "date": "2025-09-11", "month": "2025-09", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "Share Your Thoughts on Chaoyang——", "source": "", "category": "", "date": "2025-09-11", "month": "2025-09", "weekday": "周四", "year": 2025, "styles": ["信息直给"]}, {"title": "致全区广大教师的一封信", "source": "", "category": "", "date": "2025-09-10", "month": "2025-09", "weekday": "周三", "year": 2025, "styles": ["信息直给"]}, {"title": "最后一天，“码”上冲——", "source": "", "category": "", "date": "2025-09-08", "month": "2025-09", "weekday": "周一", "year": 2025, "styles": ["行动召唤"]}, {"title": "白露：人生如露，自洁则白", "source": "", "category": "", "date": "2025-09-07", "month": "2025-09", "weekday": "周日", "year": 2025, "styles": ["信息直给"]}, {"title": "当你说累了，各地人民安慰人的方式——", "source": "", "category": "", "date": "2025-09-07", "month": "2025-09", "weekday": "周日", "year": 2025, "styles": ["信息直给"]}, {"title": "网球+甜点=完美“ACE”！CYTA联名款来袭——", "source": "", "category": "", "date": "2025-09-06", "month": "2025-09", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "“绿”力全开！", "source": "", "category": "", "date": "2025-09-06", "month": "2025-09", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "爱过秋天的人，都在想什么？", "source": "", "category": "海报统筹", "date": "2025-09-06", "month": "2025-09", "weekday": "周六", "year": 2025, "styles": ["疑问/设问"]}, {"title": "周末活动上新啦！速来——", "source": "", "category": "活动综合", "date": "2025-09-05", "month": "2025-09", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "一台量子计算机，如何开启生命科学新纪元——", "source": "", "category": "", "date": "2025-09-05", "month": "2025-09", "weekday": "周五", "year": 2025, "styles": ["疑问/设问"]}, {"title": "“要把片场装车里，总共分几步？”", "source": "", "category": "", "date": "2025-09-02", "month": "2025-09", "weekday": "周二", "year": 2025, "styles": ["疑问/设问"]}, {"title": "从七夕到九月，朝阳持续浪漫！这份攻略请查收——", "source": "", "category": "活动综合", "date": "2025-08-28", "month": "2025-08", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "这个七夕，来北京朝阳遇见浪漫——", "source": "", "category": "", "date": "2025-08-28", "month": "2025-08", "weekday": "周四", "year": 2025, "styles": ["行动召唤"]}, {"title": "2000平方米小花园变身“音乐艺术客厅”，就在——", "source": "", "category": "", "date": "2025-08-27", "month": "2025-08", "weekday": "周三", "year": 2025, "styles": ["数字/成果表达"]}, {"title": "服贸会门票免费申领攻略来啦——", "source": "", "category": "", "date": "2025-08-26", "month": "2025-08", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "City（__）？在北京朝阳的N种组合——", "source": "", "category": "", "date": "2025-08-26", "month": "2025-08", "weekday": "周二", "year": 2025, "styles": ["疑问/设问"]}, {"title": "周末宝藏活动上新——", "source": "", "category": "活动综合", "date": "2025-08-22", "month": "2025-08", "weekday": "周五", "year": 2025, "styles": ["生活方式场景"]}, {"title": "门票已开售，9月来北京朝阳“哈”啤酒——", "source": "", "category": "", "date": "2025-08-21", "month": "2025-08", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "来朝阳，将快乐一“网”打尽——", "source": "", "category": "", "date": "2025-08-20", "month": "2025-08", "weekday": "周三", "year": 2025, "styles": ["行动召唤"]}, {"title": "小心！这颗网球可能会砸中你的周末计划……", "source": "", "category": "", "date": "2025-08-19", "month": "2025-08", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "曲终人不散，北京朝阳永远是你的MaydayLand🧡🤟", "source": "", "category": "", "date": "2025-08-17", "month": "2025-08", "weekday": "周日", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "官方推荐！“北京范儿”短视频大赛，朝阳推荐点位——", "source": "", "category": "", "date": "2025-08-17", "month": "2025-08", "weekday": "周日", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "周末去哪儿？这儿——", "source": "", "category": "活动综合", "date": "2025-08-16", "month": "2025-08", "weekday": "周六", "year": 2025, "styles": ["生活方式场景", "疑问/设问"]}, {"title": "新增停车位1.31万个！缓解停车难朝阳这样做——", "source": "", "category": "", "date": "2025-08-14", "month": "2025-08", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "从实验室迈进居民生活，朝阳科技满格输出——", "source": "", "category": "", "date": "2025-08-14", "month": "2025-08", "weekday": "周四", "year": 2025, "styles": ["信息直给"]}, {"title": "全国首个！彩色“熊猫眼”，亮了——", "source": "", "category": "", "date": "2025-08-11", "month": "2025-08", "weekday": "周一", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "一图读懂 | 未来三年，北京朝阳人工智能这样发展——", "source": "", "category": "", "date": "2025-08-09", "month": "2025-08", "weekday": "周六", "year": 2025, "styles": ["行动召唤"]}, {"title": "周末活动攻略上新！请查收——", "source": "", "category": "活动综合", "date": "2025-08-08", "month": "2025-08", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "运动+美食+音乐，“全民健身日”打卡不一样的奥园——", "source": "", "category": "", "date": "2025-08-08", "month": "2025-08", "weekday": "周五", "year": 2025, "styles": ["生活方式场景"]}, {"title": "北京朝阳区建AI创新应用之城，底气打哪来？", "source": "", "category": "", "date": "2025-08-08", "month": "2025-08", "weekday": "周五", "year": 2025, "styles": ["行动召唤", "疑问/设问"]}, {"title": "五年，我一直在这里🩷", "source": "", "category": "", "date": "2025-08-08", "month": "2025-08", "weekday": "周五", "year": 2025, "styles": ["信息直给"]}, {"title": "快来跟着古人一起瘦成“闪电”——（文末有福利呦~~）", "source": "", "category": "抽奖, 海报统筹", "date": "2025-07-13", "month": "2025-07", "weekday": "周日", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "今天，他们“声”情表白——", "source": "", "category": "", "date": "2025-05-30", "month": "2025-05", "weekday": "周五", "year": 2025, "styles": ["信息直给"]}, {"title": "连贝克汉姆和蕾哈娜都被Ta圈粉了？", "source": "", "category": "", "date": "2025-05-27", "month": "2025-05", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "疑问/设问"]}, {"title": "北京朝阳到底藏着多少“莫奈花园”？", "source": "", "category": "", "date": "2025-05-14", "month": "2025-05", "weekday": "周三", "year": 2025, "styles": ["疑问/设问", "悬念/反转"]}, {"title": "《大风车》北京朝阳散装英语版，你魔性了吗~🤪🤪", "source": "", "category": "", "date": "2025-05-04", "month": "2025-05", "weekday": "周日", "year": 2025, "styles": ["口语化/情绪表达", "疑问/设问"]}, {"title": "在朝阳逛商圈是种什么体验？唱给你听——", "source": "", "category": "", "date": "2025-05-04", "month": "2025-05", "weekday": "周日", "year": 2025, "styles": ["生活方式场景", "疑问/设问"]}, {"title": "友情提示！驾车东三环，将会邂逅——", "source": "", "category": "", "date": "2025-05-03", "month": "2025-05", "weekday": "周六", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "全世界都知道了？", "source": "", "category": "", "date": "2025-04-30", "month": "2025-04", "weekday": "周三", "year": 2025, "styles": ["疑问/设问"]}, {"title": "朝阳民企信心从何而来——", "source": "", "category": "海报统筹", "date": "2025-04-30", "month": "2025-04", "weekday": "周三", "year": 2025, "styles": ["行动召唤"]}, {"title": "超火碳水节来了！连吃5天，就在——", "source": "", "category": "", "date": "2025-04-29", "month": "2025-04", "weekday": "周二", "year": 2025, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "占地27000平方主题乐园，落户朝阳公园", "source": "", "category": "", "date": "2025-04-29", "month": "2025-04", "weekday": "周二", "year": 2025, "styles": ["数字/成果表达"]}, {"title": "全球顶级马术赛事朝阳开场，还有——", "source": "", "category": "", "date": "2025-04-28", "month": "2025-04", "weekday": "周一", "year": 2025, "styles": ["信息直给"]}, {"title": "速速码住！新一轮活动预告来袭——", "source": "", "category": "活动综合", "date": "2025-04-25", "month": "2025-04", "weekday": "周五", "year": 2025, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "春天的第一锄，开耕啦——", "source": "", "category": "", "date": "2025-04-24", "month": "2025-04", "weekday": "周四", "year": 2025, "styles": ["口语化/情绪表达"]}, {"title": "城市书屋+1，就在——", "source": "", "category": "", "date": "2025-04-22", "month": "2025-04", "weekday": "周二", "year": 2025, "styles": ["数字/成果表达"]}, {"title": "将府公园森林影像季来了，顶流玩法轻松拿捏——", "source": "", "category": "", "date": "2025-04-18", "month": "2025-04", "weekday": "周五", "year": 2025, "styles": ["行动召唤"]}, {"title": "在朝阳，遇见苏轼笔下的春天", "source": "", "category": "海报统筹", "date": "2025-03-15", "month": "2025-03", "weekday": "周六", "year": 2025, "styles": ["信息直给"]}, {"title": "朝阳的隐藏副本，居然藏在这里？🥕🥒🥬🥦🥔", "source": "朝阳区商务局", "category": "", "date": "2026-05-30", "month": "2026-05", "weekday": "周六", "year": 2026, "styles": ["疑问/设问", "悬念/反转"]}, {"title": "朝阳原创，这次“开”到了香港维港？🤔", "source": "", "category": "", "date": "2026-05-31", "month": "2026-05", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "疑问/设问"]}, {"title": "逛吃逛吃！朝阳东坝京蒙夜市，承包你的夏夜烟火气→", "source": "朝阳区东坝乡", "category": "", "date": "2026-05-31", "month": "2026-05", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "献给每一个努力长大的自己🧡", "source": "", "category": "", "date": "2026-06-01", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "6个方面、15项重点任务！朝阳区“两区”建设将——", "source": "", "category": "", "date": "2026-06-01", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "今天8时，全市上汛！北京防汛抗旱指挥部令", "source": "", "category": "", "date": "2026-06-01", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "明年上半年完工，新工体周边即将大变样→", "source": "", "category": "", "date": "2026-06-01", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["信息直给"]}, {"title": "@新同学，朝阳三所高中招生上新！", "source": "朝阳区教委", "category": "", "date": "2026-06-01", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "循“两纵四横”水脉，览万象更新朝阳", "source": "", "category": "", "date": "2026-06-02", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "南起东坝！北京又一条地铁快线开建——", "source": "", "category": "民生提示", "date": "2026-06-02", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "雷电+大风双预警！这些时段请注意→", "source": "", "category": "民生提示", "date": "2026-06-02", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "开营！", "source": "朝阳区委组织部", "category": "", "date": "2026-06-02", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "“六一”当天，尹力到中小学和幼儿园调研，要求树立“健康第一”教育理念，用心用情促进学生全面发展", "source": "", "category": "", "date": "2026-06-02", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "456名！北京朝阳公开招聘社区工作者——", "source": "朝阳区社会工作部", "category": "", "date": "2026-06-02", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "今年首都防汛形势复杂严峻、不容乐观，市防汛办呼吁——", "source": "", "category": "民生提示", "date": "2026-06-02", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "科技赋能银发经济！在朝阳，让晚年更幸福——", "source": "朝阳区民政局", "category": "", "date": "2026-06-03", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "养老已经进化成这样了？朝阳首家智慧康养体验中心亮相", "source": "朝阳区崔各庄乡", "category": "", "date": "2026-06-04", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["疑问/设问"]}, {"title": "最“6”的周末来了！朝阳这份周末快乐清单请收好→", "source": "朝阳区东坝乡", "category": "活动综合", "date": "2026-06-06", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "“6·18”必逛！第二届朝阳区汽车文化消费季要来啦——", "source": "朝阳区商务局", "category": "", "date": "2026-06-06", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤"]}, {"title": "为梦而战，加油吧朝阳少年！", "source": "", "category": "", "date": "2026-06-07", "month": "2026-06", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "全市第一！1至4月朝阳新设外资企业160家", "source": "", "category": "", "date": "2026-06-08", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "34290个！朝阳停车治理再升级，规模居全市首位", "source": "朝阳区城管委", "category": "", "date": "2026-06-08", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "雷电黄警+7级大风＋冰雹！这个时段出行请注意——", "source": "", "category": "民生提示", "date": "2026-06-08", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "从40到400，这群“蓝马甲”为何越聚越多？", "source": "", "category": "", "date": "2026-06-08", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["数字/成果表达", "疑问/设问"]}, {"title": "冰雹+大风，还有雷电！请注意安全——", "source": "", "category": "民生提示", "date": "2026-06-08", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "当养老遇见发展，朝阳以“融合”作答——", "source": "", "category": "", "date": "2026-06-09", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "超5亿！这家硬科技“独角兽”，如何在朝阳跑出加速度？", "source": "朝阳科技集团", "category": "", "date": "2026-06-09", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤", "疑问/设问"]}, {"title": "大风蓝警！阵风可达7级，这个时间段请注意——", "source": "", "category": "民生提示", "date": "2026-06-09", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "定了！北京最高摩天轮本月底开放运营", "source": "朝阳区南磨房乡", "category": "", "date": "2026-06-09", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "雷电黄警！伴有6级大风和冰雹，出行请注意！", "source": "", "category": "民生提示", "date": "2026-06-10", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "一场论坛为何值得世界倾听？", "source": "商务中心区管委会", "category": "", "date": "2026-06-10", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["疑问/设问"]}, {"title": "从“营商”到“赢商”！朝阳区将打造国际化法治营商环境标杆", "source": "朝阳区委政法委, 朝阳区司法局", "category": "", "date": "2026-06-10", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "首批应用场景清单、八类科技百园服务团将发布！", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-06-10", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "清单/攻略"]}, {"title": "2026北京国际图书博览会参观指南来啦！", "source": "", "category": "", "date": "2026-06-10", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "瞧，朝阳的天空是“治愈系”🧡", "source": "", "category": "", "date": "2026-06-10", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "好戏？就在身边！", "source": "朝阳区文旅局", "category": "", "date": "2026-06-11", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "疑问/设问"]}, {"title": "\"6.18\"就来北京朝阳，新车、市集、美食 ……逛不完🤩", "source": "朝阳区王四营乡", "category": "", "date": "2026-06-13", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤"]}, {"title": "第四届中国基础教育高质量发展•北京论坛举办", "source": "", "category": "时政", "date": "2026-06-13", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["信息直给"]}, {"title": "大风蓝警！短时阵风7级，出行请注意——", "source": "", "category": "民生提示", "date": "2026-06-13", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "未来已抵达CBD！闯入\"赛博世界\"只需一次下楼——", "source": "", "category": "", "date": "2026-06-13", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "冰雹+暴雨双预警！出行请注意防范——", "source": "", "category": "民生提示", "date": "2026-06-13", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "一封来自北京CBD的邀请函", "source": "商务中心区管委会", "category": "", "date": "2026-06-14", "month": "2026-06", "weekday": "周日", "year": 2026, "styles": ["行动召唤"]}, {"title": "雷电黄警！局地短时雨强伴大风，出行请注意——", "source": "", "category": "民生提示", "date": "2026-06-16", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "北京朝阳打造首都国际科创开放新高地", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-06-16", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "暴雨+大风！下班带伞，出行请注意——", "source": "", "category": "民生提示", "date": "2026-06-16", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "法商融合、共赴新程，2026年北京CBD国际法商融合论坛举办", "source": "", "category": "时政", "date": "2026-06-16", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "2026大宗商品创新发展大会召开", "source": "", "category": "时政", "date": "2026-06-16", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "2026北京CBD论坛年会驻华使节圆桌对话会举行", "source": "", "category": "时政", "date": "2026-06-16", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "以CBD之名，读懂朝阳的开放与发展", "source": "", "category": "", "date": "2026-06-17", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "北京CBD何以影响世界？", "source": "", "category": "时政", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["疑问/设问"]}, {"title": "北京CBD何以影响世界？", "source": "", "category": "时政", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["疑问/设问"]}, {"title": "小心雷阵雨！端午假期天气预报来啦——", "source": "", "category": "民生提示", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "来听听这YOUNG的声音", "source": "商务中心区管委会", "category": "", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["行动召唤"]}, {"title": "@朝阳少年，你身边的\"成长搭子\"已就位！", "source": "朝阳区精神文明建设委员会办公室", "category": "", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "购车、潮玩和演出！就在第二届朝阳区汽车文化消费季🤩", "source": "朝阳区王四营乡", "category": "", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "2026国家文化产业创新实验区发展大会暨文化产业集群创新发展交流活动举办", "source": "", "category": "时政", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "北京全市启动防汛四级响应，三预警齐发：暴雨+积水内涝+地质灾害气象风险", "source": "", "category": "民生提示", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["信息直给"]}, {"title": "暴雨蓝警+雷电黄警！并伴有大风和冰雹，假期出行请注意——", "source": "", "category": "民生提示", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "端午假期倒计时！这份朝阳游玩攻略快收好→", "source": "", "category": "活动综合", "date": "2026-06-18", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "一见\"粽\"情！跟着萌粽玩转朝阳——", "source": "", "category": "", "date": "2026-06-19", "month": "2026-06", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景"]}, {"title": "\"坝\"气十足！30余场活动陪你玩转东坝夏天——", "source": "朝阳区东坝乡", "category": "", "date": "2026-06-19", "month": "2026-06", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景"]}, {"title": "去哪儿打匹克球？这份指南请收好", "source": "朝阳区体育局", "category": "", "date": "2026-06-19", "month": "2026-06", "weekday": "周五", "year": 2026, "styles": ["生活方式场景", "疑问/设问", "清单/攻略"]}, {"title": "预计未来1-2小时，大兴、朝阳、顺义等区雨量较大", "source": "", "category": "民生提示", "date": "2026-06-19", "month": "2026-06", "weekday": "周五", "year": 2026, "styles": ["数字/成果表达", "行动召唤"]}, {"title": "入选首批美丽中国打卡点，这个公园究竟美在哪儿🤔", "source": "朝阳区园林绿化局, 朝阳区双井街道", "category": "", "date": "2026-06-20", "month": "2026-06", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "疑问/设问"]}, {"title": "谢谢你，我的\"超人\"！", "source": "", "category": "海报统筹", "date": "2026-06-21", "month": "2026-06", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "全国文化产业\"优等生\"齐聚朝阳，聊了什么？", "source": "国家文创实验区管委会", "category": "", "date": "2026-06-22", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["疑问/设问"]}, {"title": "雷电黄警！伴有大风+冰雹，注意防护——", "source": "", "category": "民生提示", "date": "2026-06-22", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "吴小杰在朝阳区\"两优一先\"表彰大会上强调，以初心使命为引领、以先进典型为榜样，奋力在\"十五五\"新征程上再创佳绩再立新功", "source": "", "category": "时政", "date": "2026-06-22", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "大风蓝警！这个时段将有7级以上短时大风——", "source": "", "category": "民生提示", "date": "2026-06-22", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "今年朝阳区已完成12处桥下空间升级，就在——", "source": "朝阳区城管委", "category": "", "date": "2026-06-22", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "40大标杆场景发布！看朝阳如何把未来搬进现实→", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-06-23", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤", "疑问/设问"]}, {"title": "数量全市第一！汽车销售企业集聚朝阳，不断解锁汽车消费新场景——", "source": "朝阳区商务局, 朝阳区王四营乡", "category": "", "date": "2026-06-23", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "行动召唤"]}, {"title": "中考首日！北京朝阳护你执笔逐光🧡", "source": "", "category": "", "date": "2026-06-24", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "周杰伦演唱会后天开唱！朝阳这份打卡攻略请查收🤩", "source": "朝阳区文旅局", "category": "", "date": "2026-06-24", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "2026年朝阳区村（社区）党组织书记培训班开班，吴小杰作专题辅导，744名书记\"同上一堂课\"", "source": "", "category": "时政", "date": "2026-06-24", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "朝阳区与国网北京市电力公司签署合作协议", "source": "", "category": "时政", "date": "2026-06-24", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "区委常委会召开会议，研究\"十五五\"产业发展及布局规划等事项", "source": "", "category": "时政", "date": "2026-06-24", "month": "2026-06", "weekday": "周三", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "七大专项行动齐发力！朝阳这样打造\"科技百园\"→", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-06-25", "month": "2026-06", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "在朝阳，过一种很\"夏天\"的生活", "source": "", "category": "", "date": "2026-06-28", "month": "2026-06", "weekday": "周日", "year": 2026, "styles": ["信息直给"]}, {"title": "机械臂做奶茶？朝阳这家新店就在——", "source": "朝阳文旅集团", "category": "", "date": "2026-06-28", "month": "2026-06", "weekday": "周日", "year": 2026, "styles": ["疑问/设问"]}, {"title": "雷电黄警！伴有7级左右阵风和冰雹，请注意防范——", "source": "", "category": "民生提示", "date": "2026-06-28", "month": "2026-06", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "24项改革、195项任务！朝阳营商环境再升级——", "source": "朝阳区发改委", "category": "", "date": "2026-06-29", "month": "2026-06", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "共享办公+资源对接！朝阳为\"一人公司\"搭好舞台啦", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-06-30", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "区领导开展\"七一\"走访慰问活动", "source": "", "category": "时政", "date": "2026-06-30", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["行动召唤"]}, {"title": "吴小杰在树立和践行正确政绩观学习教育专题党课上强调，以实干实绩践行正确政绩观 确保\"十五五\"各项战略部署落到实处取得实效", "source": "", "category": "时政", "date": "2026-06-30", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "朝阳少年，出发！", "source": "朝阳区精神文明建设委员会办公室", "category": "", "date": "2026-06-30", "month": "2026-06", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "坚守", "source": "", "category": "", "date": "2026-07-01", "month": "2026-07", "weekday": "周三", "year": 2026, "styles": ["信息直给"]}, {"title": "免申即享，直接到账！朝阳这波奖补超\"宠\"企", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-07-01", "month": "2026-07", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "一座产业园，如何让数据\"身价倍增\"？", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-07-02", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["疑问/设问"]}, {"title": "展览上新！来朝阳感受自然、穿越古今、徜徉文学→", "source": "朝阳区文旅局", "category": "新展在朝阳", "date": "2026-07-02", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "2026全球数字经济大会在京开幕，尹力、傅华致辞", "source": "", "category": "时政", "date": "2026-07-02", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "朝阳，不是说说而已", "source": "", "category": "", "date": "2026-07-03", "month": "2026-07", "weekday": "周五", "year": 2026, "styles": ["信息直给"]}, {"title": "朝阳跨国公司地区总部+3，累计180家！", "source": "朝阳区商务局", "category": "", "date": "2026-07-06", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "雷电黄警！局地伴有7级左右阵风和冰雹，请注意防范——", "source": "", "category": "民生提示", "date": "2026-07-06", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "全球青年人才实习基地上线！", "source": "朝阳团区委", "category": "", "date": "2026-07-06", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "大风蓝警！这个时段将出现7级左右短时大风→", "source": "", "category": "民生提示", "date": "2026-07-06", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "雷电+大风+冰雹+暴雨四警齐发！下班赶紧回家！", "source": "", "category": "民生提示", "date": "2026-07-06", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "北京朝阳，正让医疗健康\"数\"造未来！", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-07-06", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "Hi，北京朝阳的朋友", "source": "朝阳区外办", "category": "", "date": "2026-07-07", "month": "2026-07", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "温风携暑至，朝阳纳清欢", "source": "", "category": "", "date": "2026-07-07", "month": "2026-07", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "雷电黄警+大风蓝警！这一时段请注意防范——", "source": "", "category": "民生提示", "date": "2026-07-07", "month": "2026-07", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "天气预警四件套又来了！出行请注意——", "source": "", "category": "民生提示", "date": "2026-07-07", "month": "2026-07", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "聂杰英在树立和践行正确政绩观学习教育专题党课上强调，埋头苦干真抓实干，奋力谱写中国式现代化朝阳篇章", "source": "", "category": "时政", "date": "2026-07-07", "month": "2026-07", "weekday": "周二", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "汛期来临别大意，安全“锦囊”助平安——", "source": "", "category": "海报统筹", "date": "2026-07-11", "month": "2026-07", "weekday": "周六", "year": 2026, "styles": ["行动召唤"]}, {"title": "“风雨不退，我们不撤！”", "source": "", "category": "", "date": "2026-07-11", "month": "2026-07", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "朝阳区6月物业“红黑榜”来了！", "source": "", "category": "", "date": "2026-07-11", "month": "2026-07", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "尹力、殷勇调度部署全市防汛和强降雨应对工作，要求尽心尽责守护人民群众生命安全", "source": "", "category": "时政", "date": "2026-07-11", "month": "2026-07", "weekday": "周六", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "全区防汛工作调度会召开", "source": "", "category": "时政", "date": "2026-07-11", "month": "2026-07", "weekday": "周六", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "这个街道，还有多少种“上场”方式？", "source": "朝阳区八里庄街道", "category": "", "date": "2026-07-12", "month": "2026-07", "weekday": "周日", "year": 2026, "styles": ["疑问/设问"]}, {"title": "再添一“群”！朝阳获批全市首个“AI+视听”特色产业集群", "source": "中关村朝阳园管委会（区科信局）", "category": "", "date": "2026-07-13", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "北京市2026年积分落户名单公示", "source": "", "category": "", "date": "2026-07-13", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["数字/成果表达", "会议/政务表达"]}, {"title": "吴小杰在调研防汛风险点整治工作时强调，全面排查各类风险隐患，立行立改筑牢防汛堤坝", "source": "", "category": "时政", "date": "2026-07-13", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "高温黄警来了！即将35度！", "source": "", "category": "民生提示", "date": "2026-07-13", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "行动召唤"]}, {"title": "朝阳东部这两条路通车啦！就在——", "source": "朝阳区东坝乡", "category": "", "date": "2026-07-13", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "在北京朝阳，看见澎湃科技创新动能", "source": "", "category": "", "date": "2026-07-14", "month": "2026-07", "weekday": "周二", "year": 2026, "styles": ["信息直给"]}, {"title": "环奥森骑行！最新最全路线来了——", "source": "", "category": "", "date": "2026-07-14", "month": "2026-07", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤", "清单/攻略"]}, {"title": "4天交易破3200万，这场汽车文化消费季凭啥破圈？", "source": "朝阳区农业农村局", "category": "", "date": "2026-07-16", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["数字/成果表达", "疑问/设问"]}, {"title": "全年超65场！2026年“鸟巢”赛演活动精彩不断", "source": "", "category": "", "date": "2026-07-16", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "开街！8000平方米的POLPARK北辰萃里都有啥？", "source": "朝阳区商务局", "category": "", "date": "2026-07-16", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "疑问/设问"]}, {"title": "出发！", "source": "", "category": "", "date": "2026-07-17", "month": "2026-07", "weekday": "周五", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "@朝阳家长，暑期托管“宝藏清单”请收藏", "source": "朝阳区委组织部", "category": "", "date": "2026-07-19", "month": "2026-07", "weekday": "周日", "year": 2026, "styles": ["行动召唤", "清单/攻略"]}, {"title": "北京人的浪漫，已升至99米高空🧡", "source": "", "category": "", "date": "2026-07-19", "month": "2026-07", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "这个夏天，所有人都在往望京赶！", "source": "朝阳区望京街道", "category": "", "date": "2026-07-19", "month": "2026-07", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "雷电黄警！这个时段请注意——", "source": "", "category": "民生提示", "date": "2026-07-19", "month": "2026-07", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "我们，千里同风——", "source": "朝阳区发改委", "category": "", "date": "2026-07-20", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["信息直给"]}, {"title": "入选北京首批未来产业育新基地！老厂房蝶变光电融合产业新标杆", "source": "", "category": "", "date": "2026-07-20", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}, {"title": "AIGC从业者们有了个“同心家园”？就在——", "source": "", "category": "", "date": "2026-07-22", "month": "2026-07", "weekday": "周三", "year": 2026, "styles": ["疑问/设问"]}, {"title": "潮玩、市集、音乐节！22场活动邀你“磨”力全开🤩", "source": "朝阳区南磨房乡", "category": "", "date": "2026-07-22", "month": "2026-07", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "继续发布雷电黄警！后半夜至明日上午，出行请注意——", "source": "", "category": "民生提示", "date": "2026-07-22", "month": "2026-07", "weekday": "周三", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "未来，正在朝阳发生", "source": "", "category": "", "date": "2026-07-23", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["行动召唤"]}, {"title": "积极探索可持续的更新模式，高质量推进城市更新！殷勇在西城区、朝阳区、海淀区调研城市更新工作", "source": "", "category": "", "date": "2026-07-23", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "会议/政务表达"]}, {"title": "暮色流萤，荷风盛暑", "source": "", "category": "", "date": "2026-07-23", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["信息直给"]}, {"title": "182家，全市首位！", "source": "朝阳区商务局", "category": "", "date": "2026-07-23", "month": "2026-07", "weekday": "周四", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "雷电黄警！并伴有短时大风，这个时段请注意→", "source": "", "category": "民生提示", "date": "2026-07-25", "month": "2026-07", "weekday": "周六", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "一图读懂 | 2026年下半年北京朝阳这么干→", "source": "", "category": "", "date": "2026-07-26", "month": "2026-07", "weekday": "周日", "year": 2026, "styles": ["数字/成果表达"]}, {"title": "中共北京市朝阳区委十三届十二次全体会议召开", "source": "", "category": "时政", "date": "2026-07-25", "month": "2026-07", "weekday": "周六", "year": 2026, "styles": ["会议/政务表达"]}, {"title": "北京夏夜新去处！温榆河公园荷塘光影、市集、音乐全攻略——", "source": "朝阳文旅集团", "category": "", "date": "2026-07-26", "month": "2026-07", "weekday": "周日", "year": 2026, "styles": ["口语化/情绪表达", "生活方式场景", "清单/攻略"]}, {"title": "4858.7亿元！", "source": "朝阳区统计局", "category": "", "date": "2026-07-27", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "从“一楼通办”到“一楼通养”，老龄友好街区如此打造——", "source": "朝阳区香河园街道", "category": "", "date": "2026-07-27", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["信息直给"]}, {"title": "2869套（间）房源！朝阳给年轻人的“安居礼包”上新啦", "source": "朝阳区房屋管理局", "category": "", "date": "2026-07-27", "month": "2026-07", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "两项入选！朝阳营商环境改革创新经验获全市推广🤩", "source": "朝阳区发改委", "category": "", "date": "2026-08-03", "month": "2026-08", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "泡泡玛特城市乐园全面开放！", "source": "", "category": "", "date": "2026-08-03", "month": "2026-08", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达"]}, {"title": "继续发布暴雨蓝警+雷电黄警，请注意防范——", "source": "", "category": "民生提示", "date": "2026-08-03", "month": "2026-08", "weekday": "周一", "year": 2026, "styles": ["信息直给"]}, {"title": "后天开票！2026中网公开赛观赛指南来了——", "source": "", "category": "", "date": "2026-08-03", "month": "2026-08", "weekday": "周一", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达", "生活方式场景", "行动召唤", "清单/攻略"]}, {"title": "温暖近20万人次，朝阳把关爱送给“奔跑的人”🧡", "source": "朝阳区社会工作部", "category": "", "date": "2026-08-04", "month": "2026-08", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "数字/成果表达"]}, {"title": "一大批首店来了！就在→", "source": "朝阳区商务局", "category": "", "date": "2026-08-04", "month": "2026-08", "weekday": "周二", "year": 2026, "styles": ["口语化/情绪表达", "行动召唤"]}], "peakDays": [{"date": "2026-01-16", "count": 10}, {"date": "2026-06-18", "count": 10}, {"date": "2026-02-14", "count": 9}, {"date": "2026-04-29", "count": 8}], "months_2025": 122, "months_2026": 376};
+
+// ── Auditable data normalization ──
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+function classifyTitleStyles(title) {
+  var t = String(title || '');
+  var styles = [];
+  var add = function(name) { if (styles.indexOf(name) === -1) styles.push(name); };
+  var withoutDates = t
+    .replace(/\d{4}年/g, '')
+    .replace(/\d{1,2}月\d{1,2}日/g, '')
+    .replace(/\d{1,2}月/g, '')
+    .replace(/\d{1,2}日/g, '');
+
+  if (/[!！~～]|[🤩🥳🧡🔥👏🎉😍😊]/.test(t) || /来啦|上线|宠粉|听劝|嗨翻|浪漫|惊喜|撒个欢|太好|爆火|暖心|上新啦|齐发|出发/.test(t)) add('口语化/情绪表达');
+  if (/\d+(?:\.\d+)?\s*(?:%|％|万|亿|家|项|个|场|套|间|人次|平方米|公里|米|度|级|天)/.test(withoutDates) || /(?:最高|累计|新增|入选|获|斩获|突破|超过|超|再添|达|交易|奖补|首批|首个|首位|第一).{0,12}(?:\d|[一二三四五六七八九十百千万亿两])/.test(withoutDates) || /(?:\d|[一二三四五六七八九十百千万亿两]).{0,10}(?:项入选|家上线|全市首位|大奖|改革|任务)/.test(withoutDates)) add('数字/量化表达');
+  if (/周末|逛|吃|喝|玩|展览|市集|公园|演出|骑行|夜游|夏夜|夏日|浪漫|咖啡|打卡|美食|亲子|露营|野餐|赛事|观赛|旅行|花园节|生活方式/.test(t)) add('生活方式场景');
+  if (/请注意|注意防范|注意安全|请收藏|快来|来吧|别错过|赶紧|报名|参与|邀你|一起|看这里|收好|速看|出行请|下班赶紧|@/.test(t)) add('行动召唤');
+  if (/[?？]/.test(t) || /为何|为什么|怎么|如何|多少|哪儿|哪里|什么/.test(t)) add('疑问/设问');
+  if (/到底|凭啥|藏着|就在[—→…-]*$|是这样的[—→…-]*$|没想到|竟然|原来|揭秘|你知道吗|答案|悬念/.test(t)) add('悬念/反转');
+  if (/攻略|指南|清单|一图读懂|地图|路线|手册|锦囊|盘点|全名单|请收藏|最全/.test(t)) add('清单/攻略');
+  if (/召开|会议|调研|强调|部署|学习贯彻|座谈|工作会|党课|全会|动员|慰问活动/.test(t)) add('会议/政务表达');
+  if (styles.length === 0) add('信息直给');
+  return styles;
+}
+
+D.records.forEach(function(record) { record.styles = classifyTitleStyles(record.title); });
+var styleOrder = ['口语化/情绪表达', '数字/量化表达', '生活方式场景', '行动召唤', '疑问/设问', '悬念/反转', '清单/攻略', '会议/政务表达', '信息直给'];
+D.styleData = styleOrder.map(function(name) {
+  var count = D.records.filter(function(record) { return record.styles.indexOf(name) >= 0; }).length;
+  return {name: name, count: count, pct: Math.round(count / D.records.length * 1000) / 10};
+});
+
+// “温榆河”是项目/公园运营来源，不归入区级机关。
+D.sourceTypes['区级机关/专业部门'] = {count: 104, sources: 26};
+D.sourceTypes['区属企业/项目机构'] = {count: 9, sources: 3};
+if (D.sourceTypeSources) {
+  D.sourceTypeSources['区级机关/专业部门'] = D.sourceTypeSources['区级机关/专业部门'].filter(function(source) { return source !== '温榆河'; });
+  if (D.sourceTypeSources['区属企业/项目机构'].indexOf('温榆河') === -1) D.sourceTypeSources['区属企业/项目机构'].push('温榆河');
+}
+
+var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+var embeddedFlatMode = document.documentElement.classList.contains('is-embedded-flat');
+
+// ── Letter Cascade ──
+function initLetterCascade() {
+  var root = document.querySelector('[data-letter-cascade]');
+  var textHost = root && root.querySelector('[data-cascade-text]');
+  if (!root || !textHost) return;
+
+  var textValue = textHost.dataset.cascadeText || textHost.textContent || '';
+  textHost.innerHTML = '';
+  Array.from(textValue).forEach(function(character) {
+    var letter = document.createElement('span');
+    var front = document.createElement('span');
+    var echo = document.createElement('span');
+    letter.className = 'cascade-letter';
+    front.className = 'cascade-front';
+    echo.className = 'cascade-echo';
+    front.textContent = character;
+    echo.textContent = character;
+    letter.appendChild(front);
+    letter.appendChild(echo);
+    textHost.appendChild(letter);
+  });
+
+  var running = false;
+  function setRestingState() {
+    textHost.querySelectorAll('.cascade-front').forEach(function(front) {
+      front.style.opacity = '1';
+      front.style.filter = 'blur(0px)';
+      front.style.transform = 'translateY(0) rotateX(0deg)';
+    });
+    textHost.querySelectorAll('.cascade-echo').forEach(function(echo) {
+      echo.style.opacity = '0';
+      echo.style.filter = 'blur(4px)';
+      echo.style.transform = 'translateY(7px) rotateX(-90deg) scale(.82)';
+    });
+  }
+  function triggerCascade() {
+    if (running || reduceMotionQuery.matches || typeof textHost.animate !== 'function') return;
+    running = true;
+    var fronts = Array.from(textHost.querySelectorAll('.cascade-front'));
+    var echoes = Array.from(textHost.querySelectorAll('.cascade-echo'));
+    var animations = [];
+    fronts.forEach(function(front, index) {
+      var delay = index * 54;
+      animations.push(front.animate([
+        {transform: 'translateY(0) rotateX(0deg)', opacity: 1, filter: 'blur(0px)'},
+        {transform: 'translateY(-7px) rotateX(94deg)', opacity: 0, filter: 'blur(4px)'}
+      ], {duration: 520, delay: delay, easing: 'cubic-bezier(.2,.82,.24,1)', fill: 'forwards'}).finished);
+      animations.push(echoes[index].animate([
+        {transform: 'translateY(7px) rotateX(-90deg) scale(.82)', opacity: 0, filter: 'blur(4px)'},
+        {offset: .76, transform: 'translateY(-1px) rotateX(5deg) scale(1.015)', opacity: 1, filter: 'blur(0px)'},
+        {transform: 'translateY(0) rotateX(0deg) scale(1)', opacity: 1, filter: 'blur(0px)'}
+      ], {duration: 620, delay: delay, easing: 'cubic-bezier(.16,.9,.22,1)', fill: 'forwards'}).finished);
+    });
+    Promise.all(animations).then(function() {
+      setRestingState();
+      running = false;
+    }).catch(function() {
+      setRestingState();
+      running = false;
+    });
+  }
+
+  textHost.addEventListener('mouseenter', triggerCascade);
+  textHost.addEventListener('focus', triggerCascade);
+  textHost.addEventListener('keydown', function(event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    triggerCascade();
+  });
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      if (!entries[0].isIntersecting) return;
+      observer.disconnect();
+      triggerCascade();
+    }, {threshold: .35});
+    observer.observe(root);
+  } else {
+    requestAnimationFrame(triggerCascade);
+  }
+}
+
+// ── Grid overlay (G key) ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'g' || e.key === 'G') {
+    document.getElementById('grid-overlay').classList.toggle('show');
+  }
+});
+
+// ── Calendar ──
+function buildCalendar(year) {
+  var grid = document.getElementById('calendar-grid');
+  var yearSummary = document.getElementById('calendar-year-summary');
+  var calData = D.calendarData[String(year)] || {};
+  var months = Array.from({length: 12}, function(_, i) { return String(i+1); });
+  var maxCount = D.peakCount;
+  var peakDays = D.peakDays.map(function(d) { return d.date; });
+  var monNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  var weekNames = ['日','一','二','三','四','五','六'];
+  var availableMonths = months.filter(function(m) { return calData[m]; });
+  var defaultMonth = availableMonths.reduce(function(best, m) {
+    var total = Object.values(calData[m]).reduce(function(sum, count) { return sum + count; }, 0);
+    var bestTotal = best ? Object.values(calData[best]).reduce(function(sum, count) { return sum + count; }, 0) : -1;
+    return total > bestTotal ? m : best;
+  }, availableMonths[0]);
+
+  var monthSelect = document.getElementById('cal-month-select');
+  monthSelect.innerHTML = '<option value="all">全部月份</option>';
+  availableMonths.forEach(function(m) {
+    monthSelect.innerHTML += '<option value="' + m + '">' + monNames[parseInt(m)-1] + '</option>';
+  });
+
+  var summaryHtml = '';
+  months.forEach(function(m) {
+    var total = calData[m] ? Object.values(calData[m]).reduce(function(sum, count) { return sum + count; }, 0) : 0;
+    summaryHtml += '<button class="year-month' + (total === 0 ? ' no-record' : '') + '" data-month="' + m + '" type="button" aria-label="' + monNames[parseInt(m)-1] + '，' + total + '条记录">' +
+      '<span class="ym-label">' + String(m).padStart(2, '0') + '</span><span class="ym-count">' + (total || '—') + '</span></button>';
+  });
+  yearSummary.innerHTML = summaryHtml;
+
+  var html = '';
+  availableMonths.forEach(function(m) {
+    if (!calData[m]) return;
+    var days = calData[m];
+    var yyyy = String(year);
+    var mm = m.padStart(2, '0');
+    var firstDay = new Date(parseInt(yyyy), parseInt(m)-1, 1).getDay();
+    var daysInMonth = new Date(parseInt(yyyy), parseInt(m), 0).getDate();
+    var monthTotal = Object.values(days).reduce(function(sum, count) { return sum + count; }, 0);
+    var activeDays = Object.keys(days).length;
+
+    html += '<section class="cal-month" data-month="' + m + '"><div class="cal-month-header">' +
+      '<h3 class="cal-month-title">' + year + ' · ' + monNames[parseInt(m)-1] + '</h3>' +
+      '<span class="cal-month-stat">' + monthTotal + '条 / ' + activeDays + '日</span></div><div class="cal-month-grid">';
+    weekNames.forEach(function(weekName) { html += '<div class="cal-weekday">' + weekName + '</div>'; });
+    // Empty cells for alignment
+    for (var d = 0; d < firstDay; d++) {
+      html += '<div class="cal-day placeholder" aria-hidden="true"></div>';
+    }
+    for (var d = 1; d <= daysInMonth; d++) {
+      var dateStr = yyyy + '-' + mm + '-' + String(d).padStart(2, '0');
+      var count = days[String(d)] || 0;
+      var isPeak = peakDays.indexOf(dateStr) >= 0;
+      var intensity = count / maxCount;
+      var bg = count > 0 
+        ? 'rgba(17,19,21,' + (0.12 + intensity * 0.82) + ')'
+        : '#f4f4f4';
+      html += '<button type="button" class="cal-day' + (isPeak ? ' peak' : '') + (count === 0 ? ' no-record' : '') + (count >= 5 ? ' dark' : '') + '" ' +
+        'style="background:' + bg + '" ' +
+        'data-date="' + dateStr + '" ' +
+        'data-count="' + count + '" ' +
+        'onclick="showDayDetail(\'' + dateStr + '\')" ' +
+        'aria-label="' + dateStr + '，' + count + '条记录" title="' + dateStr + ': ' + count + '条">' +
+        '<span class="cal-date-num">' + d + '</span><span class="cal-count">' + (count || '') + '</span></button>';
+    }
+    html += '</div></section>';
+  });
+  grid.innerHTML = html;
+
+  function selectMonth(selected) {
+    var monthCards = grid.querySelectorAll('.cal-month');
+    monthCards.forEach(function(card) { card.hidden = selected !== 'all' && card.dataset.month !== selected; });
+    grid.classList.toggle('single-month', selected !== 'all');
+    monthSelect.value = selected;
+    yearSummary.querySelectorAll('.year-month').forEach(function(button) {
+      button.classList.toggle('active', selected !== 'all' && button.dataset.month === selected);
+    });
+  }
+
+  monthSelect.onchange = function() { selectMonth(this.value); };
+  yearSummary.querySelectorAll('.year-month').forEach(function(button) {
+    button.addEventListener('click', function() {
+      if (!calData[this.dataset.month]) return;
+      selectMonth(this.dataset.month);
+    });
+  });
+
+  selectMonth(defaultMonth || 'all');
+  var yearDates = Object.keys(D.dailyCounts).filter(function(date) { return date.indexOf(String(year) + '-') === 0; });
+  if (yearDates.length) {
+    var peakDate = yearDates.reduce(function(best, date) { return D.dailyCounts[date] > D.dailyCounts[best] ? date : best; }, yearDates[0]);
+    showDayDetail(peakDate);
+  }
+}
+
+function showDayDetail(dateStr) {
+  var detail = document.getElementById('day-detail');
+  var records = D.records.filter(function(r) { return r.date === dateStr; });
+  var count = records.length;
+  var html = '<h3>' + dateStr + ' · <span class="num" style="color:var(--red)">' + count + '</span> 条已记录</h3>';
+  records.forEach(function(r) {
+    html += '<div class="day-item"><span style="flex:1">' + escapeHtml(r.title) + '</span>';
+    if (r.source) html += '<span class="item-source">' + escapeHtml(r.source) + '</span>';
+    if (r.category) html += '<span class="item-source">' + escapeHtml(r.category) + '</span>';
+    html += '</div>';
+  });
+  if (!records.length) html += '<p class="aux-text">该日期没有已记录内容。</p>';
+  detail.innerHTML = html;
+}
+
+// Year switching
+document.querySelectorAll('#cal-controls button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#cal-controls button').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    buildCalendar(parseInt(this.dataset.year));
+  });
+});
+
+// ── Monthly chart ──
+function buildMonthlyChart() {
+  var container = document.getElementById('monthly-chart');
+  var maxVal = Math.max.apply(null, D.monthlyData.map(function(d) { return d.count; }));
+  var byMonth = {};
+  D.monthlyData.forEach(function(d) { byMonth[d.month] = d.count; });
+  var html = '';
+  [2025, 2026].forEach(function(year) {
+    var start = year === 2025 ? 3 : 1;
+    var end = year === 2026 ? 8 : 12;
+    var total = 0;
+    var bars = '';
+    for (var month = start; month <= end; month++) {
+      var key = year + '-' + String(month).padStart(2, '0');
+      var count = byMonth[key] || 0;
+      var h = count === 0 ? 2 : Math.max(4, (count / maxVal) * 108);
+      var isRed = count === maxVal;
+      total += count;
+      bars += '<div class="col-item"><div class="col-val">' + count + '</div>' +
+        '<div class="col-bar' + (isRed ? ' red' : '') + '" style="height:' + h + 'px" title="' + key + ': ' + count + '条"></div>' +
+        '<div class="col-label">' + String(month).padStart(2, '0') + '</div></div>';
+    }
+    html += '<div class="month-year-group"><div class="month-year-head"><span class="month-year-name">' + year + '</span>' +
+      '<span class="month-year-total">' + total + '条</span></div><div class="month-bars" style="grid-template-columns:repeat(' + (end - start + 1) + ',minmax(0,1fr))">' + bars + '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+// ── Weekday chart ──
+function buildWeekdayChart() {
+  var container = document.getElementById('weekday-chart');
+  var maxVal = Math.max.apply(null, D.weekdayData.map(function(d) { return d.count; }));
+  var total = D.weekdayData.reduce(function(s, d) { return s + d.count; }, 0);
+  var html = '';
+  D.weekdayData.forEach(function(d) {
+    var pct = (d.count / maxVal) * 100;
+    var isRed = d.count === maxVal;
+    html += '<div class="bar-row"><div class="bar-label">' + d.name + '</div>' +
+      '<div class="bar-track"><div class="bar-fill' + (isRed ? ' red' : ' gray') + '" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-val">' + d.count + '条</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+// ── Title style chart ──
+function buildStyleChart() {
+  var container = document.getElementById('style-chart');
+  var maxVal = Math.max.apply(null, D.styleData.map(function(d) { return d.count; }));
+  var html = '';
+  D.styleData.sort(function(a, b) { return b.count - a.count; }).forEach(function(d) {
+    if (d.count === 0) return;
+    var pct = (d.count / maxVal) * 100;
+    var isRed = d.name === '口语化/情绪表达';
+    html += '<div class="bar-row"><div class="bar-label">' + d.name + '</div>' +
+      '<div class="bar-track"><div class="bar-fill' + (isRed ? ' red' : ' gray') + '" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-val">' + d.count + '条 (' + d.pct + '%)</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+// ── Category chart ──
+function buildCategoryChart() {
+  var container = document.getElementById('category-chart');
+  var maxVal = Math.max.apply(null, D.categoryData.map(function(d) { return d.count; }));
+  var colorPalette = ['#e4002b', '#d0d0d0', '#b0b0b0', '#909090', '#707070', '#606060', '#585858', '#505050'];
+  var html = '';
+  D.categoryData.forEach(function(d, i) {
+    var pct = (d.count / maxVal) * 100;
+    html += '<div class="bar-row"><div class="bar-label">' + d.name + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:' + (colorPalette[i] || '#909090') + '"></div></div>' +
+      '<div class="bar-val">' + d.count + '条</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+// ── Source type chart ──
+function buildSourceTypeChart() {
+  var container = document.getElementById('source-type-chart');
+  var types = D.sourceTypes;
+  var maxVal = Math.max.apply(null, Object.values(types).map(function(t) { return t.count; }));
+  var html = '';
+  var order = ['区级机关/专业部门', '街乡/基层', '跨部门/联合来源', '区属企业/项目机构'];
+  order.forEach(function(key) {
+    var t = types[key];
+    if (!t) return;
+    var pct = (t.count / maxVal) * 100;
+    var isRed = t.count === maxVal;
+    html += '<div class="bar-row"><div class="bar-label">' + key + '</div>' +
+      '<div class="bar-track"><div class="bar-fill ' + (isRed ? 'red' : 'gray') + '" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-val">' + t.count + '条</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+// ── Source list ──
+function buildSourceList() {
+  var container = document.getElementById('source-list');
+  var html = '';
+  D.topSources.slice(0, 12).forEach(function(s) {
+    html += '<div class="source-item"><span>' + escapeHtml(s.name) + '</span><span class="count">' + s.count + '</span></div>';
+  });
+  container.innerHTML = html;
+}
+
+// ── Style examples ──
+function buildStyleExamples() {
+  var examples = {
+    '信息直给': [
+      '垂杨柳医院潘家园院区开诊试运行',
+      '朝阳医院常营院区周边交通优化升级',
+      '北京市2026年积分落户名单公示'
+    ],
+    '口语化/情绪表达': [
+      '逛完这个逛那个，别急都有份！接下来的朝阳太好逛啦🤩',
+      '免申即享，直接到账！朝阳这波奖补超“宠”企',
+      '朝阳少年，出发！'
+    ],
+    '数字/量化表达': [
+      '朝阳跨国公司地区总部+3，累计180家！',
+      '4858.7亿元！',
+      '4天交易破3200万，这场汽车文化消费季凭啥破圈？'
+    ],
+    '生活方式场景': [
+      '马术+卡丁车+网球+桨板！这个周末来温榆河撒个欢～',
+      '北京夏夜新去处！温榆河公园荷塘光影、市集、音乐全攻略——',
+      '最后两天！来“潮”有趣野餐派对，把非遗美食吃个够'
+    ],
+    '行动召唤': [
+      '@朝阳家长，暑期托管“宝藏清单”请收藏',
+      '雷电黄警！伴有7级左右阵风和冰雹，请注意防范——',
+      '天气预警四件套又来了！出行请注意——'
+    ],
+    '疑问/设问': [
+      '获37项大奖！它为何能让联合国点赞？',
+      '一座产业园，如何让数据“身价倍增”？',
+      '开街！8000平方米的POLPARK北辰萃里都有啥？'
+    ],
+    '清单/攻略': [
+      '环奥森骑行！最新最全路线来了——',
+      '后天开票！2026中网公开赛观赛指南来了——',
+      '汛期来临别大意，安全“锦囊”助平安——'
+    ]
+  };
+
+  var container = document.getElementById('style-examples');
+  var html = '';
+  Object.keys(examples).forEach(function(style) {
+    var titles = examples[style] || [];
+    if (titles.length === 0) return;
+    html += '<div class="fw-card"><h4>' + style + '</h4>';
+    titles.forEach(function(t) {
+      html += '<p style="font-size:13px;color:var(--aux);margin-top:4px">“' + escapeHtml(t) + '”</p>';
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+// ── Data table ──
+function buildDataTable() {
+  var tbody = document.querySelector('#data-table tbody');
+  // Populate filter dropdowns
+  var sources = new Set();
+  var categories = new Set();
+  var styles = new Set();
+  var years = new Set();
+  D.records.forEach(function(r) {
+    if (r.source) sources.add(r.source);
+    if (r.category) categories.add(r.category);
+    if (r.styles) r.styles.forEach(function(s) { styles.add(s); });
+    if (r.year) years.add(r.year);
+  });
+  
+  // Source filter
+  var srcSelect = document.getElementById('table-source-filter');
+  Array.from(sources).sort().forEach(function(s) {
+    srcSelect.innerHTML += '<option value="' + s + '">' + s + '</option>';
+  });
+  // Category filter
+  var catSelect = document.getElementById('table-category-filter');
+  Array.from(categories).sort().forEach(function(c) {
+    catSelect.innerHTML += '<option value="' + c + '">' + c + '</option>';
+  });
+  // Style filter
+  var styleSelect = document.getElementById('table-style-filter');
+  Array.from(styles).sort().forEach(function(s) {
+    styleSelect.innerHTML += '<option value="' + s + '">' + s + '</option>';
+  });
+  // Year filter
+  var yearSelect = document.getElementById('table-year-filter');
+  Array.from(years).sort().forEach(function(y) {
+    yearSelect.innerHTML += '<option value="' + y + '">' + y + '</option>';
+  });
+  
+  renderTable();
+}
+
+function renderTable() {
+  var tbody = document.querySelector('#data-table tbody');
+  var search = (document.getElementById('table-search').value || '').toLowerCase();
+  var srcFilter = document.getElementById('table-source-filter').value;
+  var catFilter = document.getElementById('table-category-filter').value;
+  var styleFilter = document.getElementById('table-style-filter').value;
+  var yearFilter = document.getElementById('table-year-filter').value;
+  
+  var filtered = D.records.filter(function(r) {
+    if (search && r.title.toLowerCase().indexOf(search) === -1) return false;
+    if (srcFilter && r.source !== srcFilter) return false;
+    if (catFilter && r.category !== catFilter) return false;
+    if (styleFilter && (!r.styles || r.styles.indexOf(styleFilter) === -1)) return false;
+    if (yearFilter && String(r.year) !== yearFilter) return false;
+    return true;
+  });
+  
+  var html = '';
+  filtered.forEach(function(r, i) {
+    html += '<tr><td>' + (i + 1) + '</td><td>' + escapeHtml(r.date || '') + '</td><td>' + escapeHtml(r.title) + '</td>' +
+      '<td>' + escapeHtml(r.source || '') + '</td><td>' + escapeHtml(r.category || '') + '</td>' +
+      '<td><span class="aux-text">' + escapeHtml((r.styles || []).join(', ')) + '</span></td></tr>';
+  });
+  tbody.innerHTML = html;
+  document.getElementById('table-stats').textContent = '显示 ' + filtered.length + ' / ' + D.records.length + ' 条记录';
+}
+
+function filterTable() { renderTable(); }
+document.getElementById('table-search').addEventListener('input', filterTable);
+
+// ── Scroll-driven portfolio stories ──
+var motionEngine = null;
+function motionClamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+function motionSegment(value, start, end) { return motionClamp((value - start) / (end - start), 0, 1); }
+function motionLerp(start, end, t) { return start + (end - start) * t; }
+function motionEase(t) { return 1 - Math.pow(1 - t, 3); }
+function motionSmooth(t) { return t * t * (3 - 2 * t); }
+
+function buildMotionData() {
+  var yearHost = document.querySelector('[data-workload-year]');
+  var calendarHost = document.querySelector('[data-workload-calendar]');
+  var listHost = document.querySelector('[data-workload-list]');
+  if (!yearHost || !calendarHost || !listHost) return;
+
+  var monthMap = {};
+  D.monthlyData.forEach(function(item) { monthMap[item.month] = item.count; });
+  var monthValues = [];
+  for (var month = 1; month <= 8; month++) {
+    var key = '2026-' + String(month).padStart(2, '0');
+    monthValues.push({month: month, count: monthMap[key] || 0});
+  }
+  var maxMonth = Math.max.apply(null, monthValues.map(function(item) { return item.count; }));
+  yearHost.innerHTML = monthValues.map(function(item) {
+    var peak = item.count === maxMonth;
+    return '<div class="year-row' + (peak ? ' is-peak' : '') + '"><label>' + String(item.month).padStart(2, '0') + '</label>' +
+      '<div class="year-row-track"><i style="--value:' + (item.count / maxMonth * 100) + '%"></i></div><output>' + item.count + '</output></div>';
+  }).join('');
+
+  var june = (D.calendarData['2026'] || {})['6'] || {};
+  var firstMondayIndex = (new Date(2026, 5, 1).getDay() + 6) % 7;
+  var calendarHtml = '';
+  for (var empty = 0; empty < firstMondayIndex; empty++) calendarHtml += '<div class="story-day" aria-hidden="true"></div>';
+  for (var day = 1; day <= 30; day++) {
+    var count = june[String(day)] || 0;
+    var peak = day === 18;
+    calendarHtml += '<div class="story-day' + (count ? ' has-record' : '') + (peak ? ' is-peak' : '') + '"><span>' + day + '</span>' +
+      (count ? '<b style="float:right">' + count + '</b>' : '') + '</div>';
+  }
+  calendarHost.innerHTML = calendarHtml;
+
+  var peakRecords = D.records.filter(function(record) { return record.date === '2026-06-18'; });
+  listHost.innerHTML = peakRecords.map(function(record, index) {
+    var type = record.source || record.category || '未标注';
+    var alert = /预警|防汛|暴雨|雷雨/.test(record.title);
+    return '<div class="peak-list-item' + (alert ? ' is-alert' : '') + '"><span>' + String(index + 1).padStart(2, '0') + '</span><span>' + escapeHtml(type.slice(0, 6)) + '</span><b>' + escapeHtml(record.title) + '</b></div>';
+  }).join('');
+}
+
+function updateStoryFoot(scene, activeIndex) {
+  var items = scene.querySelectorAll('.story-foot > span');
+  items.forEach(function(item, index) { item.classList.toggle('is-active', index === activeIndex); });
+}
+
+function makeMotionScene(root) {
+  var scene = {
+    root: root,
+    sticky: root.querySelector('.story-sticky'),
+    kind: root.dataset.motionScene,
+    progress: -1,
+    start: 0,
+    travel: 1,
+    geometry: {}
+  };
+  scene.measure = function() {
+    var rect = scene.root.getBoundingClientRect();
+    scene.start = rect.top + window.scrollY;
+    scene.travel = Math.max(1, scene.root.offsetHeight - scene.sticky.offsetHeight);
+    if (scene.kind === 'dispatch') {
+      var stage = scene.root.querySelector('.dispatch-stage');
+      var target = scene.root.querySelector('[data-dispatch-target]');
+      var card = scene.root.querySelector('[data-dispatch-card]');
+      if (stage && target && card) {
+        var stageRect = stage.getBoundingClientRect();
+        var targetRect = target.getBoundingClientRect();
+        scene.geometry.flyX = targetRect.left - stageRect.left + 8 - card.offsetLeft;
+        scene.geometry.flyY = targetRect.top - stageRect.top + 8 - card.offsetTop;
+      }
+    }
+  };
+  scene.render = function(progress) {
+    scene.root.style.setProperty('--progress', progress.toFixed(4));
+    if (scene.kind === 'dispatch') renderDispatchStory(scene, progress);
+    if (scene.kind === 'workload') renderPhaseStory(scene, progress, [0.30, 0.65]);
+    if (scene.kind === 'title') renderPhaseStory(scene, progress, [0.34, 0.67]);
+    if (scene.kind === 'source') renderPhaseStory(scene, progress, [0.28, 0.60]);
+  };
+  return scene;
+}
+
+function renderDispatchStory(scene, progress) {
+  var card = scene.root.querySelector('[data-dispatch-card]');
+  var origin = scene.root.querySelector('[data-dispatch-origin]');
+  var target = scene.root.querySelector('[data-dispatch-target]');
+  var percent = scene.root.querySelector('[data-motion-percent]');
+  if (!card || !origin || !target) return;
+  var travel = motionSmooth(motionSegment(progress, .08, .88));
+  var shrink = motionSmooth(motionSegment(progress, .64, .94));
+  var x = motionLerp(0, scene.geometry.flyX || 0, travel);
+  var y = motionLerp(0, scene.geometry.flyY || 0, travel) - Math.sin(travel * Math.PI) * 26;
+  var scale = motionLerp(1, .42, shrink);
+  card.style.setProperty('--fly-x', x.toFixed(2) + 'px');
+  card.style.setProperty('--fly-y', y.toFixed(2) + 'px');
+  card.style.setProperty('--fly-scale', scale.toFixed(3));
+  card.style.opacity = String(1 - motionSegment(progress, .91, .98));
+  origin.style.opacity = String(1 - motionSegment(progress, .04, .18) * .68);
+  target.classList.toggle('is-ready', progress > .54);
+  target.classList.toggle('is-landed', progress > .92);
+  if (percent) percent.textContent = String(Math.round(progress * 100)).padStart(2, '0');
+  scene.root.querySelectorAll('.judgment-row').forEach(function(row, index) {
+    row.style.opacity = progress > .20 + index * .075 ? '1' : '.28';
+  });
+  updateStoryFoot(scene.root, Math.min(4, Math.floor(progress * 5)));
+}
+
+function renderPhaseStory(scene, progress, thresholds) {
+  var phase = progress < thresholds[0] ? 0 : progress < thresholds[1] ? 1 : 2;
+  scene.root.dataset.phase = String(phase);
+  var board = scene.root.querySelector('[data-phase]');
+  if (board) board.dataset.phase = String(phase);
+  updateStoryFoot(scene.root, Math.min(4, Math.floor(progress * 5)));
+}
+
+function caseFieldValue(item, label) {
+  var fields = item.querySelectorAll('.case-field');
+  for (var i = 0; i < fields.length; i++) {
+    var fieldLabel = fields[i].querySelector('.cf-label');
+    if (fieldLabel && fieldLabel.textContent.trim() === label) {
+      return fields[i].textContent.replace(fieldLabel.textContent, '').trim();
+    }
+  }
+  return '';
+}
+
+function initCaseReview() {
+  var items = Array.from(document.querySelectorAll('#p7 .case-item'));
+  var summary = document.querySelector('[data-case-summary]');
+  if (!items.length || !summary) return {updateFallback: function(){}};
+  var active = -1;
+  function activate(index) {
+    if (index < 0 || index >= items.length || active === index) return;
+    active = index;
+    var item = items[index];
+    items.forEach(function(candidate, candidateIndex) {
+      candidate.classList.toggle('is-active', candidateIndex === index);
+      if (candidateIndex === index) candidate.setAttribute('aria-current', 'true');
+      else candidate.removeAttribute('aria-current');
+    });
+    var heading = item.querySelector('h4').textContent.replace(/^记录[一二三四五六七八九十]+：/, '');
+    summary.querySelector('.case-count').textContent = 'CASE ' + String(index + 1).padStart(2, '0') + ' / ' + String(items.length).padStart(2, '0');
+    summary.querySelector('[data-case-heading]').textContent = heading;
+    summary.querySelector('[data-case-evidence]').textContent = caseFieldValue(item, '记录证据');
+    summary.querySelector('[data-case-title]').textContent = caseFieldValue(item, '标题样本') || '本案为工作量峰值记录，不对应单一标题。';
+    summary.querySelector('[data-case-judgment]').textContent = caseFieldValue(item, '判断重点');
+    summary.querySelector('[data-case-process]').textContent = caseFieldValue(item, '处理原则');
+    summary.querySelector('[data-case-transfer]').textContent = caseFieldValue(item, '岗位迁移');
+  }
+  activate(0);
+  return {
+    updateFallback: function() {
+      var targetY = window.innerHeight * .42;
+      var nearest = 0, distance = Infinity;
+      items.forEach(function(item, index) {
+        var itemRect = item.getBoundingClientRect();
+        var nextDistance = Math.abs(itemRect.top + itemRect.height * .5 - targetY);
+        if (nextDistance < distance) { distance = nextDistance; nearest = index; }
+      });
+      activate(nearest);
+    }
+  };
+}
+
+function initMotionStories() {
+  buildMotionData();
+  var scenes = Array.from(document.querySelectorAll('[data-motion-scene]')).map(makeMotionScene);
+  var framePending = false;
+  var measurePending = true;
+  var caseReview = initCaseReview();
+  var readingProgress = document.getElementById('reading-progress');
+
+  function requestMeasure() { measurePending = true; scheduleFrame(); }
+  function scheduleFrame() {
+    if (framePending) return;
+    framePending = true;
+    requestAnimationFrame(renderFrame);
+  }
+  function renderFrame() {
+    framePending = false;
+    if (measurePending) {
+      scenes.forEach(function(scene) { scene.measure(); });
+      measurePending = false;
+    }
+    var maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    var documentProgress = motionClamp(window.scrollY / maxScroll, 0, 1);
+    if (readingProgress) readingProgress.style.width = (documentProgress * 100).toFixed(2) + '%';
+    if (!embeddedFlatMode && !reduceMotionQuery.matches && window.innerWidth > 980) {
+      var scrollY = window.scrollY;
+      scenes.forEach(function(scene) {
+        var progress = motionClamp((scrollY - scene.start) / scene.travel, 0, 1);
+        if (Math.abs(progress - scene.progress) < .001) return;
+        scene.progress = progress;
+        scene.render(progress);
+      });
+    } else {
+      scenes.forEach(function(scene) { if (scene.progress !== 1) { scene.progress = 1; scene.render(1); } });
+    }
+    if (!embeddedFlatMode) caseReview.updateFallback();
+  }
+  window.addEventListener('scroll', scheduleFrame, {passive: true});
+  window.addEventListener('resize', requestMeasure, {passive: true});
+  if (window.ResizeObserver) {
+    var resizeObserver = new ResizeObserver(requestMeasure);
+    resizeObserver.observe(document.body);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(requestMeasure);
+  if (reduceMotionQuery.addEventListener) reduceMotionQuery.addEventListener('change', requestMeasure);
+  else if (reduceMotionQuery.addListener) reduceMotionQuery.addListener(requestMeasure);
+  requestMeasure();
+  return {refresh: requestMeasure};
+}
+
+// ── Initialize ──
+initLetterCascade();
+buildCalendar(2026);
+buildMonthlyChart();
+buildWeekdayChart();
+buildStyleChart();
+buildCategoryChart();
+buildSourceTypeChart();
+buildSourceList();
+buildStyleExamples();
+buildDataTable();
+motionEngine = initMotionStories();
+
+/* 子页将完整内容高度上报给主页面；postMessage 兼容直接以 file:// 打开。 */
+(function initEmbeddedHeightReporter() {
+  if (!embeddedFlatMode || window.parent === window) return;
+
+  var framePending = false;
+  var lastHeight = 0;
+  function reportHeight() {
+    framePending = false;
+    var height = Math.ceil(Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    ));
+    if (!height || Math.abs(height - lastHeight) < 2) return;
+    lastHeight = height;
+    window.parent.postMessage({type: 'portfolio:p3-height', height: height}, '*');
+  }
+  function queueReport() {
+    if (framePending) return;
+    framePending = true;
+    requestAnimationFrame(reportHeight);
+  }
+
+  window.addEventListener('load', queueReport, {once: true});
+  window.addEventListener('resize', queueReport, {passive: true});
+  if (window.ResizeObserver) {
+    var heightObserver = new ResizeObserver(queueReport);
+    heightObserver.observe(document.body);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueReport);
+  queueReport();
+})();
+</script>
+</body>
+</html>

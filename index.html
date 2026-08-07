@@ -3,406 +3,356 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>郭悦洋 · Felix Guo — Resume</title>
-<meta name="description" content="郭悦洋 — 中英双语传播 · 内容策略 · 新媒体运营">
+<title>Yueyang Guo</title>
+<meta name="description" content="Yueyang Guo">
+<meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--o:#D4492C;--bg:#000;--w:#f0f0f0;--t:rgba(255,255,255,.7);--d:rgba(255,255,255,.35);--b:rgba(255,255,255,.04)}
-html{scroll-behavior:auto}
-body{background:var(--bg);color:var(--t);font-family:"Jost","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:400;line-height:1.6}
-a{color:inherit;text-decoration:none}
-::selection{background:var(--o);color:#fff}
+  :root {
+    --white: #ffffff;
+    --near-black: #111315;
+    --aux: #5b6066;
+    --red: #e4002b;
+    --red-light: #ffebef;
+    --border: #e5e5e5;
+    --bg-light: #f8f8f8;
+    --page-margin: clamp(20px, 5vw, 72px);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    font-family: 'Noto Sans SC', 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--white);
+    color: var(--near-black);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
 
-/* Vanta canvas z-index */
-body>.vanta-canvas,body>canvas:first-of-type{position:fixed!important;inset:0;z-index:0;pointer-events:none;opacity:.5}
+  /* ── 第一屏（空舞台，提供起始视口） ───────────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    background-color: var(--white);
+    background-image:
+      linear-gradient(rgba(17, 19, 21, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(17, 19, 21, 0.022) 1px, transparent 1px),
+      repeating-linear-gradient(0deg, rgba(17, 19, 21, 0.012) 0, rgba(17, 19, 21, 0.012) 1px, transparent 1px, transparent 4px);
+    background-size: 72px 72px, 72px 72px, 100% 4px;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--aux);
+  }
+  .scroll-hint .line {
+    width: 2px;
+    height: 34px;
+    background: var(--red);
+    animation: hint 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  @keyframes hint {
+    0%   { transform: scaleY(0); transform-origin: top;    opacity: 0; }
+    35%  { transform: scaleY(1); transform-origin: top;    opacity: 1; }
+    65%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint .line { animation: none; opacity: 0.4; }
+  }
 
-/* Preloader */
-.pl-wrap{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.pl-wrap.exit{transition:transform .5s cubic-bezier(.77,0,.175,1),opacity .5s ease;transform-origin:right center;transform:scaleX(1);opacity:0;pointer-events:none}
-.pl-line{position:fixed;top:0;left:0;z-index:10000;width:100%;height:1px;background:rgba(255,255,255,.06);transform-origin:left}
-.pl-line-inner{width:100%;height:100%;background:#fff;transform-origin:left;transform:scaleX(0)}
-.pl-counter{font-size:clamp(80px,22vw,280px);font-weight:600;color:#fff;letter-spacing:-.05em;display:flex;gap:0;line-height:1}
-.pl-counter span{display:inline-block}
+  /* ── 开屏形变文字：固定在首屏 Hero 正中间 ── */
+  .morph-float {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+    z-index: 1;
+    animation: fade 0.9s ease both;
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .morph {
+    font-size: clamp(32px, 9.5vw, 140px);
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.0;
+    color: var(--near-black);
+  }
 
-/* Header */
-.hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;opacity:0;transition:opacity .6s ease,background .4s ease,padding .3s ease;pointer-events:none}
-.hdr.show{opacity:1;pointer-events:auto}
-.hdr.scrolled{background:rgba(0,0,0,.88);backdrop-filter:blur(14px);padding:14px 40px}
-.hdr-l{display:flex;align-items:center;gap:40px}
-.hdr-name{font-size:15px;color:#fff;font-weight:400;letter-spacing:-.01em}
-.hdr-nav{display:flex;gap:24px;list-style:none}
-.hdr-nav a{font-size:13px;color:var(--d);transition:color .25s}
-.hdr-nav a:hover{color:var(--o)}
-.hdr-social{display:flex;gap:16px}
-.hdr-social a{font-size:11px;color:var(--d);text-transform:uppercase;letter-spacing:.08em;transition:color .25s}
-.hdr-social a:hover{color:var(--o)}
+  /* ── Text Morph 舞台 ─────────────────────────── */
+  .tm {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: baseline;
+  }
+  .tm-svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .tm-stage {
+    position: relative;
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .tm-layer {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    display: block;
+    width: max-content;
+    white-space: pre;
+    transform: translateX(-50%);
+    transform-origin: center;
+  }
 
-/* Hero */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 40px 40px;position:relative;z-index:1}
-.hero-title{line-height:1;margin-top:.4em}
-.hero-title .line{overflow:hidden;clip-path:inset(.12em 0 0 0)}
-.hero-title .line:first-child{margin-bottom:-.01em}
-.hero-title .item{position:relative;display:inline-flex;line-height:1.04;margin-top:-.8em;margin-bottom:0}
-.hero-title .line:first-child .item{margin-top:-.08em;line-height:1.35}
-.heading-main{font-size:clamp(48px,10vw,120px);font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:-.03em;line-height:.99}
-.heading-main .orange{color:var(--o)}
-.hero-meta{display:grid;grid-template-columns:1fr 2fr 1.5fr 1fr;gap:40px;margin-top:40px;max-width:1000px;opacity:0}
-.hero-meta.show{opacity:1}
-.hero-meta-item{display:flex;flex-direction:column;gap:6px}
-.hero-meta-label{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.2)}
-.hero-meta-value{font-size:14px;line-height:1.4;color:rgba(255,255,255,.5);font-weight:300}
-.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-.hero-tags span{font-size:11px;color:rgba(255,255,255,.3);padding:3px 10px;border:1px solid var(--b);border-radius:100px;letter-spacing:.04em}
+  /* ── 作品集分屏：iframe 嵌入，独立 CSS 不冲突 ── */
+  .folio-section {
+    position: relative;
+    isolation: isolate;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--white);
+    border-top: 2px solid var(--red);
+  }
+  .folio-section iframe {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
 
-/* Content */
-.content{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 40px}
+  @media (max-width: 640px) {
+    .scroll-hint { font-size: 8px; }
+  }
 
-/* Horizontal Gallery */
-.hori-wrap{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-top:10px;margin-bottom:30px;overflow:hidden;cursor:grab}
-.hori-wrap:active{cursor:grabbing}
-.hori-header{padding:0 60px 24px}
-.hori-header .num{font-size:12px;color:var(--o);letter-spacing:.1em;opacity:.5;margin-bottom:8px}
-.hori-header .title{font-size:clamp(24px,3vw,40px);font-weight:300;color:rgba(255,255,255,.6)}
-.hori-header .title strong{color:#fff;font-weight:400}
-.hori-track{display:flex;gap:20px;padding:0 60px;width:max-content;will-change:transform}
-.hori-card{flex-shrink:0;width:clamp(280px,28vw,420px);aspect-ratio:3/4;border-radius:12px;overflow:hidden;position:relative;background:rgba(255,255,255,.02);border:1px solid var(--b);transition:border-color .4s}
-.hori-card:hover{border-color:rgba(212,73,44,.3)}
-.hori-card-img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
-.hori-card:hover .hori-card-img{transform:scale(1.08)}
-.hori-card-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 50%);pointer-events:none}
-.hori-card-info{position:absolute;bottom:0;left:0;right:0;padding:24px 20px 20px;z-index:2;pointer-events:none}
-.hori-card-info .cat{font-size:10px;letter-spacing:.2em;color:var(--o);opacity:.6;text-transform:uppercase;margin-bottom:4px}
-.hori-card-info .name{font-size:clamp(16px,1.4vw,22px);font-weight:300;color:#fff;margin-bottom:2px}
-.hori-card-info .desc{font-size:12px;color:rgba(255,255,255,.4);font-weight:300;line-height:1.4}
-.hori-indicator{display:flex;justify-content:center;gap:6px;padding:16px 0 8px}
-.hori-indicator span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.1);transition:background .3s,width .3s}
-.hori-indicator span.active{background:var(--o);width:20px;border-radius:3px}
-.hori-hint{text-align:center;font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.1);padding-bottom:10px;text-transform:uppercase}
-
-/* Sections */
-.sec{padding:36px 0;border-top:1px solid var(--b)}
-.sec:first-of-type{border-top:none}
-.sec:last-of-type{padding-bottom:0}
-.sec-header{display:flex;align-items:baseline;gap:16px;margin-bottom:20px}
-.sec-num{font-size:13px;color:var(--o);letter-spacing:.1em;font-weight:400;opacity:.7}
-.sec-title{font-size:22px;font-weight:300;letter-spacing:-.01em;color:rgba(255,255,255,.5)}
-.sec-title strong{color:#fff;font-weight:400}
-
-/* Experience */
-.exp-item{padding:20px 0;border-bottom:1px solid rgba(255,255,255,.03)}
-.exp-item:last-child{border-bottom:none}
-.exp-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:4px}
-.exp-company{font-size:clamp(16px,1.5vw,20px);font-weight:400;color:#fff;letter-spacing:-.01em}
-.exp-company .role{color:rgba(255,255,255,.4);font-weight:300;font-size:.85em}
-.exp-date{font-size:13px;color:rgba(255,255,255,.2);letter-spacing:.02em}
-.exp-desc{margin-top:8px;font-size:14px;line-height:1.6;color:rgba(255,255,255,.45);font-weight:300}
-.exp-desc p{margin-bottom:4px}
-.exp-desc .orange{color:var(--o);font-weight:400}
-
-/* Edu */
-.edu-item{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.03)}
-.edu-item:last-child{border-bottom:none}
-.edu-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
-.edu-school{font-size:18px;font-weight:400;color:#fff}
-.edu-major{font-size:14px;color:rgba(255,255,255,.5);margin-top:2px}
-.edu-gpa{font-size:13px;color:var(--o);opacity:.7}
-
-/* Skills */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
-.skills-cat{padding:12px 0}
-.skills-cat h3{font-size:11px;letter-spacing:.2em;color:var(--o);opacity:.6;text-transform:uppercase;margin-bottom:8px;font-weight:400}
-.skills-cat p{font-size:14px;line-height:1.6;color:rgba(255,255,255,.5);font-weight:300}
-
-/* Honors */
-.honors-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 32px}
-.honor-item{font-size:13px;line-height:1.5;color:rgba(255,255,255,.45);padding:3px 0}
-.honor-item .tier{font-size:10px;letter-spacing:.15em;color:var(--o);opacity:.5;display:inline-block;margin-right:8px}
-
-/* Contact */
-.contact-wrap{position:relative;padding-top:0;margin-top:0;overflow:hidden}
-.contact-sticky{position:sticky;bottom:0;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 16px}
-.contact-heading{font-size:clamp(60px,min(16vw,200px),280px);line-height:1;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:-.03em;margin-left:-.03em;user-select:none;transform-origin:left bottom;will-change:transform,opacity}
-.contact-info{display:flex;gap:16px;margin-top:4px;flex-wrap:wrap}
-.contact-info a{font-size:13px;color:rgba(255,255,255,.3);transition:color .25s;font-weight:300}
-.contact-info a:hover{color:var(--o)}
-
-/* Marquee */
-.marquee{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-top:10px;padding:14px 0;background:rgba(255,255,255,.02);border-top:1px solid var(--b);border-bottom:1px solid var(--b);overflow:hidden}
-.marquee-track{display:flex;width:max-content;animation:marq 30s linear infinite;will-change:transform}
-.marquee.paused .marquee-track{animation-play-state:paused}
-.marquee-item{display:flex;align-items:center;gap:32px;padding:0 16px;white-space:nowrap;font-size:13px;letter-spacing:.06em;color:rgba(255,255,255,.3);text-transform:uppercase;font-weight:300}
-.marquee-item .star{color:var(--o);opacity:.4;font-size:10px}
-.marquee-item strong{color:rgba(255,255,255,.6);font-weight:400}
-@keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* Reveal classes for GSAP */
-.reveal{visibility:hidden}
-
-@media(max-width:768px){
-  .hdr{padding:14px 20px}
-  .hdr-nav,.hdr-social{display:none}
-  .hero{padding:80px 20px 20px}
-  .hero-meta{grid-template-columns:1fr;gap:16px}
-  .content{padding:0 24px}
-  .hori-header{padding:0 24px 16px}
-  .hori-track{padding:0 24px}
-  .honors-grid{grid-template-columns:1fr}
-  .skills-grid{grid-template-columns:1fr}
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
 </style>
 </head>
 <body>
 
-<div class="pl-wrap" id="plWrap">
-  <div class="pl-line"><div class="pl-line-inner" id="plLine"></div></div>
-  <div class="pl-counter" id="plCounter"><span>0</span></div>
-</div>
-
-<header class="hdr" id="hdr">
-  <div class="hdr-l">
-    <span class="hdr-name">Felix Guo</span>
-    <nav><ul class="hdr-nav">
-      <li><a href="#works">Works</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-    </ul></nav>
-  </div>
-  <div class="hdr-social">
-    <a href="mailto:chad.seeself@gmail.com">MAIL</a>
-    <a href="#">LI</a>
-    <a href="#">IG</a>
-    <a href="#">GH</a>
-  </div>
-</header>
-
+<!-- 第一屏：开屏形变文字 + 滚动提示 -->
 <section class="hero">
-  <div class="hero-title" id="heroTitle">
-    <div class="line">
-      <span class="item heading-main">
-        <span class="char"><span class="char-inner"><span>Felix</span><span>Felix</span></span></span>
-      </span>
-      <span class="item heading-main" style="margin-left:.25em">
-        <span class="char"><span class="char-inner"><span>Guo</span><span>Guo</span></span></span>
-      </span>
-    </div>
-    <div class="line" style="text-align:right">
-      <span class="item heading-main">
-        <span class="char"><span class="char-inner"><span>Content</span><span>Content</span></span></span>
-      </span>
-      <span class="item heading-main orange" style="margin-left:.2em">
-        <span class="char"><span class="char-inner"><span>Strategy</span><span>Strategy</span></span></span>
-      </span>
-    </div>
-    <div class="line" style="text-align:right">
-      <span class="item heading-main">
-        <span class="char"><span class="char-inner"><span>Brand</span><span>Brand</span></span></span>
-      </span>
-      <span class="item heading-main" style="margin-left:.2em">
-        <span class="char"><span class="char-inner"><span>&amp;</span><span>&amp;</span></span></span>
-      </span>
-      <span class="item heading-main orange" style="margin-left:.2em">
-        <span class="char"><span class="char-inner"><span>Comms</span><span>Comms</span></span></span>
+  <!-- 固定形变文字：始终屏幕居中 -->
+  <div id="morphFloat" class="morph-float">
+    <div class="morph">
+      <span id="textMorph" class="tm" aria-live="off" aria-label="Yueyang Guo">
+        <svg aria-hidden="true" focusable="false" class="tm-svg">
+          <defs>
+            <filter id="tm-threshold" x="-50%" y="-50%" width="200%" height="200%" colorInterpolationFilters="sRGB">
+              <feColorMatrix
+                in="SourceGraphic"
+                type="matrix"
+                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8.28"
+                result="thresholded"
+              />
+              <feComposite in="SourceGraphic" in2="thresholded" operator="atop" />
+            </filter>
+          </defs>
+        </svg>
+        <span id="tmStage" class="tm-stage" aria-hidden="true">
+          <span id="tmCurrent" class="tm-layer">Yueyang Guo</span>
+          <span id="tmNext" class="tm-layer">Portfolio</span>
+        </span>
       </span>
     </div>
   </div>
-  <div class="hero-meta" id="heroMeta">
-    <div class="hero-meta-item"><span class="hero-meta-label">Since</span><span class="hero-meta-value">2024</span></div>
-    <div class="hero-meta-item"><span class="hero-meta-label">Role</span><span class="hero-meta-value">中英双语传播 · 内容策略 · 新媒体运营</span></div>
-    <div class="hero-meta-item"><span class="hero-meta-label">Stack</span><div class="hero-tags"><span>Weibo</span><span>WeChat</span><span>Video</span><span>Python</span><span>AI Tools</span></div></div>
-    <div class="hero-meta-item"><span class="hero-meta-label">Based</span><span class="hero-meta-value">Beijing, China</span></div>
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="line"></span>
   </div>
 </section>
 
-<div class="content" id="works">
+<!-- 作品集板块一：我制作的视频 -->
+<section class="folio-section" id="p1-video">
+  <iframe src="./p1-video/index.html" title="P1 · 视频作品集" allowfullscreen></iframe>
+</section>
 
-  <div class="hori-wrap" id="horiWrap">
-    <div class="hori-header"><div class="num">✦ PORTFOLIO</div><div class="title"><strong>精选作品</strong></div></div>
-    <div class="hori-hint">← 拖动或滚轮浏览 →</div>
-    <div class="hori-track" id="horiTrack">
-      <div class="hori-card"><img class="hori-card-img" src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&q=85" alt="" loading="lazy"><div class="hori-card-overlay"></div><div class="hori-card-info"><div class="cat">短视频制作</div><div class="name">2025 世界人形机器人运动会</div><div class="desc">全流程独立：脚本→拍摄→剪辑</div></div></div>
-      <div class="hori-card"><img class="hori-card-img" src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=85" alt="" loading="lazy"><div class="hori-card-overlay"></div><div class="hori-card-info"><div class="cat">微博话题策略</div><div class="name">单条最高阅读 22.6 万</div><div class="desc">区域政务 × 网络热点</div></div></div>
-      <div class="hori-card"><img class="hori-card-img" src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&q=85" alt="" loading="lazy"><div class="hori-card-overlay"></div><div class="hori-card-info"><div class="cat">微信文章编辑</div><div class="name">2025 全年 118 篇</div><div class="desc">政策内容大众化叙事</div></div></div>
-      <div class="hori-card"><img class="hori-card-img" src="https://images.unsplash.com/photo-1432889821006-3149402b3c42?w=600&q=85" alt="" loading="lazy"><div class="hori-card-overlay"></div><div class="hori-card-info"><div class="cat">创意设计</div><div class="name">海报 &amp; 视觉系统</div><div class="desc">8 组系列 · AI 辅助</div></div></div>
-      <div class="hori-card"><img class="hori-card-img" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=85" alt="" loading="lazy"><div class="hori-card-overlay"></div><div class="hori-card-info"><div class="cat">线下活动策划</div><div class="name">读者互动 &amp; 社区连接</div><div class="desc">2 场活动 · 连接数字受众</div></div></div>
-      <div class="hori-card"><img class="hori-card-img" src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=600&q=85" alt="" loading="lazy"><div class="hori-card-overlay"></div><div class="hori-card-info"><div class="cat">舆情监测</div><div class="name">实时风控 &amp; 危机管理</div><div class="desc">评论区监测 · 内容安全</div></div></div>
-    </div>
-    <div class="hori-indicator" id="horiIndicator"></div>
-  </div>
-
-  <div class="sec" id="experience">
-    <div class="sec-header reveal"><span class="sec-num">01</span><span class="sec-title"><strong>Experience</strong> 工作经历</span></div>
-    <div class="exp-item reveal"><div class="exp-head"><span class="exp-company">北京朝阳区融媒体中心 <span class="role">· 新媒体编辑</span></span><span class="exp-date">2024.08 – 至今</span></div><div class="exp-desc"><p>全媒体矩阵运营，单条最高阅读 <span class="orange">22.6 万</span></p><p>全年独立编辑微信文章 <span class="orange">118 篇</span>，完成 <span class="orange">8</span> 条原创短视频全流程</p><p>承担舆情监测，策划 2 场线下读者活动</p></div></div>
-    <div class="exp-item reveal"><div class="exp-head"><span class="exp-company">Bayer Crop Science <span class="role">· 客户市场部实习生</span></span><span class="exp-date">2024.07 – 2024.12</span></div><div class="exp-desc"><p>跨部门产品标签审核，主导部门知识库迁移至 SharePoint</p></div></div>
-    <div class="exp-item reveal"><div class="exp-head"><span class="exp-company">北京莱佛士医院 <span class="role">· 企业服务部实习生</span></span><span class="exp-date">2023.12 – 2024.02</span></div><div class="exp-desc"><p>对北京 <span class="orange">10+</span> 家高端医疗机构竞品调研，中英双语院内参观接待</p></div></div>
-    <div class="exp-item reveal"><div class="exp-head"><span class="exp-company">中唐方德 IVD 社媒运营 <span class="role">· 社媒运营专员</span></span><span class="exp-date">2022.12 – 2023.03</span></div><div class="exp-desc"><p>Facebook 自然流量 <span class="orange">20,000+</span> 覆盖，阅读量 <span class="orange">50,000+</span></p></div></div>
-    <div class="exp-item reveal"><div class="exp-head"><span class="exp-company">Bayer HealthCare <span class="role">· 市场准入部实习生</span></span><span class="exp-date">2022.07 – 2022.09</span></div><div class="exp-desc"><p>客户触达与关系维护，行业会议情报收集</p></div></div>
-  </div>
-
-  <div class="sec reveal">
-    <div class="sec-header"><span class="sec-num">02</span><span class="sec-title"><strong>Education</strong> 教育背景</span></div>
-    <div class="edu-item"><div class="edu-head"><span class="edu-school">北京印刷学院</span><span class="edu-gpa">GPA 3.7/5.0 · Top 15%</span></div><div class="edu-major">网络与新媒体 本科 · 2021 – 2025 · 北京</div></div>
-  </div>
-
-  <div class="sec reveal" id="skills">
-    <div class="sec-header"><span class="sec-num">03</span><span class="sec-title"><strong>Skills</strong> 技能与证书</span></div>
-    <div class="skills-grid">
-      <div class="skills-cat"><h3>Languages</h3><p>英语（CET-6, 口语 B+）· 普通话（一乙）</p></div>
-      <div class="skills-cat"><h3>Digital Tools</h3><p>微信公众号 · 微博 · Facebook Ads · Photoshop · Premiere Pro · Python · SharePoint · 飞书</p></div>
-      <div class="skills-cat"><h3>Core</h3><p>内容策略 · 多平台运营 · 舆情监控 · 中英双语文案 · 市场调研 · 短视频制作</p></div>
-      <div class="skills-cat"><h3>Certifications</h3><p>普通话一级乙等 · 大学英语六级 · 跨文化英语全国三等奖</p></div>
-    </div>
-  </div>
-
-  <div class="sec reveal">
-    <div class="sec-header"><span class="sec-num">04</span><span class="sec-title"><strong>Honors</strong> 荣誉奖励</span></div>
-    <div class="honors-grid">
-      <div class="honor-item"><span class="tier">NATIONAL</span>跨文化英语大赛 · 全国三等奖</div>
-      <div class="honor-item"><span class="tier">BEIJING</span>跨文化英语大赛 · 北京市特等奖（第<span class="orange">1</span>名）</div>
-      <div class="honor-item"><span class="tier">BEIJING</span>外研社演讲比赛 · 北京市银奖</div>
-      <div class="honor-item"><span class="tier">BEIJING</span>北京市大学生英语演讲比赛 · 二等奖</div>
-      <div class="honor-item"><span class="tier">UNIV</span>跨文化英语大赛 · 校内第一名</div>
-      <div class="honor-item"><span class="tier">UNIV</span>外研社演讲 · 校内第一名</div>
-      <div class="honor-item"><span class="tier">UNIV</span>国际胜任力英语大赛 · 第一名</div>
-      <div class="honor-item"><span class="tier">UNIV</span>优秀学生干部 · 优秀团员</div>
-    </div>
-  </div>
-
-  <div class="contact-wrap">
-    <div class="contact-sticky" id="contactSticky">
-      <div class="contact-heading" id="contactHeading">CONTACT</div>
-      <div class="contact-info">
-        <a href="tel:+8617718355095">+86 177 1835 5095</a>
-        <a href="mailto:chad.seeself@gmail.com">chad.seeself@gmail.com</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">WeChat</a>
-        <a href="#">Instagram</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="marquee" id="marqueeBanner">
-  <div class="marquee-track" id="marqueeTrack"></div>
-</div>
+<!-- 作品集板块二：我制作的海报 -->
+<section class="folio-section" id="p2-poster">
+  <iframe src="./p2-poster/index.html" title="P2 · 海报作品集" allowfullscreen></iframe>
+</section>
 
 <script>
-// === PRELOADER ===
-(function(){
-  const wrap=document.getElementById('plWrap'),line=document.getElementById('plLine'),ctr=document.getElementById('plCounter');
-  let n=0;const D=1800,I=36,T=D/I,inc=100/T;
-  requestAnimationFrame(()=>{line.style.transition='transform 1.8s cubic-bezier(.22,.61,.36,1)';line.style.transform='scaleX(1)'});
-  const tick=()=>{
-    n+=inc;
-    if(n>=100){n=100;ctr.innerHTML='<span>1</span><span>0</span><span>0</span>';
-      setTimeout(()=>{wrap.classList.add('exit');setTimeout(()=>{wrap.style.display='none';initAll()},500)},500);return}
-    ctr.innerHTML='<span>'+Math.round(n)+'</span>';setTimeout(tick,I)};
-  setTimeout(tick,50)
+/* ═══════════════ Part 1 · Text Morph ═══════════════ */
+(function () {
+  "use strict";
+
+  /* ── 配置：改这里即可 ─────────────────────────── */
+  var WORDS = ["Yueyang Guo", "Portfolio"]; // 轮播词语：进画面先显示第一个
+  var INTERVAL = 1300;      // 每个词停留时间（毫秒）
+  var MORPH_DURATION = 680; // 形变动画时长（毫秒）
+
+  var MORPH_BLUR = 12;
+  var MORPH_THRESHOLD = 18;
+  var FILTER_ID = "tm-threshold";
+  var thresholdOffset = -MORPH_THRESHOLD * 0.46;
+
+  var values = WORDS.filter(function (w) { return w.trim().length > 0; });
+  if (values.length === 0) values = ["IMAGINE", "REFINE", "RELEASE"];
+
+  var root = document.getElementById("textMorph");
+  var stage = document.getElementById("tmStage");
+  var currentLayer = document.getElementById("tmCurrent");
+  var nextLayer = document.getElementById("tmNext");
+
+  var currentIndex = 0;
+  var holdTimer = null;
+  var frame = null;
+  var morphing = false;
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function clamp(v, min, max) {
+    if (min === undefined) min = 0;
+    if (max === undefined) max = 1;
+    return Math.min(max, Math.max(min, v));
+  }
+  function smoothstep(v) {
+    var p = clamp(v, 0, 1);
+    return p * p * (3 - 2 * p);
+  }
+  function setLayerStyles(el, opacity, blur, scale) {
+    el.style.opacity = opacity.toFixed(4);
+    el.style.filter = blur > 0.01 ? "blur(" + blur.toFixed(2) + "px)" : "none";
+    el.style.transform = "translateX(-50%) scale(" + scale.toFixed(4) + ")";
+  }
+  function setWords() {
+    currentLayer.textContent = values[currentIndex];
+    nextLayer.textContent = values[(currentIndex + 1) % values.length];
+    root.setAttribute("aria-label", values[currentIndex]);
+  }
+  /* offsetWidth/offsetHeight 不受 transform 影响，两层围绕同一视觉中心测量 */
+  function measureStage(target, immediate) {
+    var layer = target === "current" ? currentLayer : nextLayer;
+    if (!stage || !layer) return;
+    var width = layer.offsetWidth;
+    var height = layer.offsetHeight;
+    if (immediate || reducedMotion) {
+      var previousTransition = stage.style.transition;
+      stage.style.transition = "none";
+      stage.style.width = width + "px";
+      stage.style.height = height + "px";
+      void stage.offsetWidth; /* 强制回流 */
+      stage.style.transition = previousTransition;
+      return;
+    }
+    stage.style.width = width + "px";
+    stage.style.height = height + "px";
+  }
+  function initLayout() {
+    setLayerStyles(currentLayer, 1, 0, 1);
+    setLayerStyles(nextLayer, 0, reducedMotion ? 0 : MORPH_BLUR, 0.992);
+    currentLayer.style.willChange = "auto";
+    nextLayer.style.willChange = "auto";
+    stage.style.filter = "none";
+    stage.style.transition = reducedMotion
+      ? "none"
+      : "width " + Math.max(160, MORPH_DURATION) + "ms cubic-bezier(0.22, 1, 0.36, 1), height " + Math.max(160, MORPH_DURATION) + "ms cubic-bezier(0.22, 1, 0.36, 1)";
+    measureStage("current", true);
+  }
+  function beginMorph() {
+    if (morphing || values.length < 2) return;
+    morphing = true;
+    currentLayer.style.willChange = "opacity, filter, transform";
+    nextLayer.style.willChange = "opacity, filter, transform";
+    stage.style.filter = reducedMotion ? "none" : "url(#" + FILTER_ID + ")";
+    measureStage("next");
+
+    var startedAt = performance.now();
+    var resolvedDuration = reducedMotion ? 140 : Math.max(240, MORPH_DURATION);
+
+    function renderFrame(now) {
+      var progress = clamp((now - startedAt) / resolvedDuration, 0, 1);
+      var eased = smoothstep(progress);
+
+      if (reducedMotion) {
+        setLayerStyles(currentLayer, 1 - eased, 0, 1);
+        setLayerStyles(nextLayer, eased, 0, 1);
+      } else {
+        /* 新词提前进场、旧词延迟退场，重叠部分给阈值滤镜足够的共享透明度，过渡才够流体 */
+        var incoming = smoothstep(clamp(progress / 0.82, 0, 1));
+        var outgoing = smoothstep(clamp((progress - 0.18) / 0.82, 0, 1));
+
+        setLayerStyles(
+          currentLayer,
+          Math.pow(1 - outgoing, 0.55),
+          MORPH_BLUR * outgoing,
+          1 - outgoing * 0.012
+        );
+        setLayerStyles(
+          nextLayer,
+          Math.pow(incoming, 0.55),
+          MORPH_BLUR * (1 - incoming),
+          0.988 + incoming * 0.012
+        );
+      }
+
+      if (progress < 1) {
+        frame = window.requestAnimationFrame(renderFrame);
+        return;
+      }
+
+      stage.style.filter = "none";
+      currentLayer.style.willChange = "auto";
+      nextLayer.style.willChange = "auto";
+      morphing = false;
+      currentIndex = (currentIndex + 1) % values.length;
+      setWords();
+      initLayout();
+      scheduleNext();
+    }
+
+    frame = window.requestAnimationFrame(renderFrame);
+  }
+  function scheduleNext() {
+    if (holdTimer !== null) window.clearTimeout(holdTimer);
+    holdTimer = window.setTimeout(beginMorph, Math.max(400, INTERVAL));
+  }
+
+  /* 空闲时跟随词宽变化（缩放窗口等），形变中不干预动画 */
+  var ro = new ResizeObserver(function () {
+    if (!morphing) measureStage("current", true);
+  });
+  ro.observe(currentLayer);
+  ro.observe(nextLayer);
+
+  setWords();
+  initLayout();
+  scheduleNext();
+
+  /* 等字体就绪后重新测量 */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      measureStage("current", true);
+    });
+  }
 })();
-
-// === INIT ALL ===
-function initAll(){
-  initVanta();initLenis();initGSAP();initHero();initHeader();initGallery();initMarquee();initContact();
-}
-
-// === VANTA.NET ===
-let vanta=null;
-function initVanta(){if(typeof VANTA==='undefined')return;
-  vanta=VANTA.NET({el:'body',mouseControls:false,touchControls:false,gyroControls:false,
-    minHeight:200,minWidth:200,scale:1,scaleMobile:1,color:0xd4492c,backgroundColor:0x000000,
-    points:8,maxDistance:18,spacing:20,showDots:true})}
-
-// === LENIS ===
-let lenis=null;
-function initLenis(){if(typeof Lenis==='undefined')return;
-  lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});
-  function raf(t){lenis.raf(t);requestAnimationFrame(raf)}requestAnimationFrame(raf);
-  gsap.ticker.add(t=>{lenis&&lenis.raf(t*1000)});gsap.ticker.lagSmoothing(0)}
-
-// === GSAP SCROLLTRIGGER ===
-function initGSAP(){if(typeof gsap==='undefined')return;gsap.registerPlugin(ScrollTrigger);
-  document.querySelectorAll('.reveal').forEach(el=>{
-    gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:.8,ease:'power3.out',
-      scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}})});
-  gsap.fromTo('.hero-meta-item',{opacity:0,y:20},{opacity:1,y:0,duration:.6,stagger:.1,ease:'power2.out',
-    scrollTrigger:{trigger:'.hero-meta',start:'top 92%'}});
-  document.querySelectorAll('.hori-card').forEach((el,i)=>{
-    gsap.fromTo(el,{opacity:0,y:50},{opacity:1,y:0,duration:.7,delay:i*.06,ease:'power3.out',
-      scrollTrigger:{trigger:'.hori-wrap',start:'top 82%'}})})
-}
-
-// === HERO TITLE ===
-function initHero(){
-  document.querySelectorAll('.hero-title .char').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(40px)'});
-  document.querySelectorAll('.hero-title .char-inner').forEach(el=>{
-    const t=el.textContent.trim();let h='';
-    for(let i=0;i<t.length;i++)h+='<span style="display:inline-block">'+(t[i]===' '?'&nbsp;':t[i])+'</span>';
-    el.innerHTML=h});
-  setTimeout(()=>{
-    document.querySelectorAll('.hero-title .char').forEach(el=>{el.style.transition='opacity .6s ease,transform .6s ease';el.style.opacity='1';el.style.transform='translateY(0)'});
-    document.getElementById('hdr').classList.add('show');document.getElementById('heroMeta').classList.add('show')
-  },100)
-}
-
-// === HEADER SCROLL ===
-function initHeader(){
-  const hdr=document.getElementById('hdr');
-  if(lenis){lenis.on('scroll',({scroll})=>{hdr.classList.toggle('scrolled',scroll>50)})
-  }else{window.addEventListener('scroll',()=>{hdr.classList.toggle('scrolled',window.scrollY>50)},{passive:true})}
-}
-
-// === CONTACT STRETCH ===
-function initContact(){
-  const h=document.getElementById('contactHeading'),w=document.querySelector('.contact-wrap');if(!w||!h)return;
-  function update(){
-    const r=w.getBoundingClientRect(),wh=window.innerHeight,tot=w.offsetHeight;
-    const s=wh-r.top,p=Math.max(0,Math.min(1,s/(tot+wh)));
-    const sy=.08+p*2.321541;h.style.transform='scaleY('+sy+')';h.style.opacity=.08+p*.92}
-  if(lenis){lenis.on('scroll',update)}else{window.addEventListener('scroll',update,{passive:true})}
-  setTimeout(update,200)
-}
-
-// === HORIZONTAL GALLERY ===
-function initGallery(){
-  const wrap=document.getElementById('horiWrap'),track=document.getElementById('horiTrack'),ind=document.getElementById('horiIndicator');
-  if(!wrap||!track)return;
-  const cards=track.querySelectorAll('.hori-card');
-  cards.forEach((_,i)=>{const d=document.createElement('span');if(i===0)d.classList.add('active');ind.appendChild(d)});
-  let drag=false,sx=0,sl=0,mom=0,mid=null;
-  function upd(){let ci=0,cd=Infinity;cards.forEach((c,i)=>{const cc=c.getBoundingClientRect().left+c.offsetWidth/2,wc=wrap.getBoundingClientRect().left+wrap.clientWidth/2;if(Math.abs(cc-wc)<cd){cd=Math.abs(cc-wc);ci=i}});ind.querySelectorAll('span').forEach((d,i)=>d.classList.toggle('active',i===ci))}
-  function getX(){return new DOMMatrix(getComputedStyle(track).transform).m41||0}
-  wrap.addEventListener('mousedown',e=>{drag=true;sx=e.pageX-wrap.offsetLeft;sl=getX();wrap.style.cursor='grabbing';if(mid){cancelAnimationFrame(mid);mid=null;mom=0}});
-  document.addEventListener('mousemove',e=>{if(!drag)return;e.preventDefault();const w=(e.pageX-wrap.offsetLeft-sx)*1.2;mom=w*.6;track.style.transform='translateX('+(sl+w)+'px)';upd()});
-  document.addEventListener('mouseup',()=>{if(!drag)return;drag=false;wrap.style.cursor='grab';if(Math.abs(mom)>1)mid=requestAnimationFrame(ms)});
-  function ms(){mom*=.95;if(Math.abs(mom)<.5){mid=null;return}const c=getX(),max=-(track.scrollWidth-wrap.clientWidth);let n=c+mom;if(n>20)n=20;if(n<max-20)n=max-20;if(n>0)n*=.6;if(n<max)n=max+(n-max)*.6;track.style.transform='translateX('+n+'px)';upd();mid=requestAnimationFrame(ms)}
-  wrap.addEventListener('wheel',e=>{const c=getX(),max=-(track.scrollWidth-wrap.clientWidth);if((c>=0&&e.deltaY<0)||(c<=max&&e.deltaY>0))return;e.preventDefault();let n=c-e.deltaY*2;if(n>30)n+=(30-n)*.5;if(n<max-30)n=max-30+(n-(max-30))*.5;track.style.transform='translateX('+n+'px)';upd()},{passive:false});
-  let tx=0,ty=0,tl=0,ti=false;
-  wrap.addEventListener('touchstart',e=>{ti=true;tx=e.touches[0].pageX;ty=e.touches[0].pageY;tl=getX();if(mid){cancelAnimationFrame(mid);mid=null;mom=0}},{passive:true});
-  wrap.addEventListener('touchmove',e=>{if(!ti)return;const dx=e.touches[0].pageX-tx;if(Math.abs(dx)>Math.abs(e.touches[0].pageY-ty)){e.preventDefault();mom=dx*.8;track.style.transform='translateX('+(tl+dx)+'px)';upd()}},{passive:false});
-  wrap.addEventListener('touchend',()=>{ti=false;if(Math.abs(mom)>3)mid=requestAnimationFrame(ms)});
-  upd()
-}
-
-// === MARQUEE ===
-function initMarquee(){
-  const b=document.getElementById('marqueeBanner'),t=document.getElementById('marqueeTrack');
-  if(!b||!t)return;
-  const items=['Content Strategy','Social Media','Video Production','Bilingual EN/CN','Crisis Monitoring','Brand Communication','WeChat · Weibo','Data-Driven','AI Tools','Public Relations','Integrated Marketing','Audience Growth'];
-  let h='';for(let c=0;c<2;c++)for(const i of items)h+='<div class="marquee-item"><span class="star">✦</span> <strong>'+i+'</strong></div>';
-  t.innerHTML=h;
-  b.addEventListener('mouseenter',()=>b.classList.add('paused'));
-  b.addEventListener('mouseleave',()=>b.classList.remove('paused'))
-}
 </script>
 </body>
 </html>

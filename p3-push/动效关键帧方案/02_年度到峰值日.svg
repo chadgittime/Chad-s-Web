@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <rect width="1600" height="1000" fill="#ffffff"/>
+  <style>
+  .sans{font-family:Inter,"Noto Sans SC","Source Han Sans SC","PingFang SC",sans-serif}
+  .mono{font-family:"Space Mono","SFMono-Regular",monospace}
+  .ink{fill:#111315}.muted{fill:#5b6066}.light{fill:#9aa0a6}.red{fill:#e4002b}.blue{fill:#1f77b4}
+  .body{font-size:16px}.small{font-size:12px}.micro{font-size:10px;letter-spacing:1.6px}
+  .hair{stroke:#d9dcdf;stroke-width:1}.rule{stroke:#111315;stroke-width:1.5}.redrule{stroke:#e4002b;stroke-width:2}
+</style>
+  <rect x="72" y="52" width="1456" height="4" fill="#e4002b"/>
+  <text x="72" y="92" class="mono red" font-size="12" letter-spacing="2">WORKLOAD DRILL-DOWN / FRAME 02</text>
+  <text x="72" y="164" class="sans ink" font-size="54" font-weight="800">峰值不是一个数字，是十条同时抵达的决定。</text>
+  <text x="76" y="205" class="sans muted body">滚动把年度总览逐层放大到峰值月份，再落到一天之内的十条具体内容。</text>
+  <text x="1290" y="92" class="mono muted small">SCROLL-DRIVEN</text>
+  <text x="1290" y="116" class="mono ink small">FRAME 068 / 100</text>
+  <line x1="1290" y1="132" x2="1528" y2="132" class="hair"/>
+  <line x1="1290" y1="132" x2="1451.84" y2="132" class="redrule"/>
+  <line x1="72" y1="264" x2="1528" y2="264" class="rule"/>
+  
+  <g>
+    <text x="72" y="304" class="mono muted micro">01 / YEAR OVERVIEW</text>
+    <text x="72" y="335" class="sans ink" font-size="24" font-weight="750">2026 · 已记录内容</text>
+    <text x="82" y="369" class="mono muted small">01</text>
+      <rect x="122" y="352" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="352" width="105" height="24" fill="#c9cccf"/>
+      <text x="219" y="369" class="mono" fill="#ffffff" font-size="10" text-anchor="end">35</text><text x="82" y="414" class="mono muted small">02</text>
+      <rect x="122" y="397" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="397" width="127" height="24" fill="#c9cccf"/>
+      <text x="241" y="414" class="mono" fill="#ffffff" font-size="10" text-anchor="end">42</text><text x="82" y="459" class="mono muted small">03</text>
+      <rect x="122" y="442" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="442" width="102" height="24" fill="#c9cccf"/>
+      <text x="216" y="459" class="mono" fill="#ffffff" font-size="10" text-anchor="end">34</text><text x="82" y="504" class="mono muted small">04</text>
+      <rect x="122" y="487" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="487" width="130" height="24" fill="#c9cccf"/>
+      <text x="244" y="504" class="mono" fill="#ffffff" font-size="10" text-anchor="end">43</text><text x="82" y="549" class="mono muted small">05</text>
+      <rect x="122" y="532" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="532" width="238" height="24" fill="#c9cccf"/>
+      <text x="352" y="549" class="mono" fill="#ffffff" font-size="10" text-anchor="end">79</text><text x="82" y="594" class="mono red small">06</text>
+      <rect x="122" y="577" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="577" width="250" height="24" fill="#e4002b"/>
+      <text x="364" y="594" class="mono" fill="#ffffff" font-size="10" text-anchor="end">83</text><text x="82" y="639" class="mono muted small">07</text>
+      <rect x="122" y="622" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="622" width="163" height="24" fill="#c9cccf"/>
+      <text x="277" y="639" class="mono" fill="#ffffff" font-size="10" text-anchor="end">54</text><text x="82" y="684" class="mono muted small">08</text>
+      <rect x="122" y="667" width="250" height="24" fill="#f1f2f3"/>
+      <rect x="122" y="667" width="18" height="24" fill="#c9cccf"/>
+      <text x="134" y="684" class="mono" fill="#5b6066" font-size="10" text-anchor="end">6</text>
+    <text x="72" y="745" class="mono muted small">JAN—AUG / TOTAL 376</text>
+  </g>
+  <line x1="410" y1="264" x2="410" y2="770" class="hair"/>
+  <g>
+    <text x="448" y="304" class="mono red micro">02 / PEAK MONTH</text>
+    <text x="448" y="335" class="sans ink" font-size="24" font-weight="750">六月 · 83条</text>
+    <text x="485" y="350" class="mono muted" font-size="9" text-anchor="middle">MON</text><text x="559" y="350" class="mono muted" font-size="9" text-anchor="middle">TUE</text><text x="633" y="350" class="mono muted" font-size="9" text-anchor="middle">WED</text><text x="707" y="350" class="mono muted" font-size="9" text-anchor="middle">THU</text><text x="781" y="350" class="mono muted" font-size="9" text-anchor="middle">FRI</text><text x="855" y="350" class="mono muted" font-size="9" text-anchor="middle">SAT</text><text x="929" y="350" class="mono muted" font-size="9" text-anchor="middle">SUN</text><rect x="448" y="376" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="456" y="394" class="mono" fill="#ffffff" font-size="10">1</text>
+      <text x="508" y="419" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">5</text><rect x="522" y="376" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="530" y="394" class="mono" fill="#ffffff" font-size="10">2</text>
+      <text x="582" y="419" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">7</text><rect x="596" y="376" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="604" y="394" class="mono" fill="#111315" font-size="10">3</text>
+      <text x="656" y="419" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="670" y="376" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="678" y="394" class="mono" fill="#111315" font-size="10">4</text>
+      <text x="730" y="419" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="744" y="376" width="70" height="55" fill="#fafafa" stroke="#e4e5e6"/>
+      <text x="752" y="394" class="mono" fill="#111315" font-size="10">5</text>
+      <rect x="818" y="376" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="826" y="394" class="mono" fill="#111315" font-size="10">6</text>
+      <text x="878" y="419" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">2</text><rect x="892" y="376" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="900" y="394" class="mono" fill="#111315" font-size="10">7</text>
+      <text x="952" y="419" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="448" y="435" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="456" y="453" class="mono" fill="#ffffff" font-size="10">8</text>
+      <text x="508" y="478" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">5</text><rect x="522" y="435" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="530" y="453" class="mono" fill="#111315" font-size="10">9</text>
+      <text x="582" y="478" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">4</text><rect x="596" y="435" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="604" y="453" class="mono" fill="#ffffff" font-size="10">10</text>
+      <text x="656" y="478" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">6</text><rect x="670" y="435" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="678" y="453" class="mono" fill="#111315" font-size="10">11</text>
+      <text x="730" y="478" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="744" y="435" width="70" height="55" fill="#fafafa" stroke="#e4e5e6"/>
+      <text x="752" y="453" class="mono" fill="#111315" font-size="10">12</text>
+      <rect x="818" y="435" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="826" y="453" class="mono" fill="#ffffff" font-size="10">13</text>
+      <text x="878" y="478" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">5</text><rect x="892" y="435" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="900" y="453" class="mono" fill="#111315" font-size="10">14</text>
+      <text x="952" y="478" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="448" y="494" width="70" height="55" fill="#fafafa" stroke="#e4e5e6"/>
+      <text x="456" y="512" class="mono" fill="#111315" font-size="10">15</text>
+      <rect x="522" y="494" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="530" y="512" class="mono" fill="#ffffff" font-size="10">16</text>
+      <text x="582" y="537" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">6</text><rect x="596" y="494" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="604" y="512" class="mono" fill="#111315" font-size="10">17</text>
+      <text x="656" y="537" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="670" y="494" width="70" height="55" fill="#5b6066" stroke="#e4002b" stroke-width="3"/>
+      <text x="678" y="512" class="mono" fill="#ffffff" font-size="10">18</text>
+      <text x="730" y="537" class="mono" fill="#e4002b" font-size="18" font-weight="700" text-anchor="end">10</text><rect x="744" y="494" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="752" y="512" class="mono" fill="#111315" font-size="10">19</text>
+      <text x="804" y="537" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">4</text><rect x="818" y="494" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="826" y="512" class="mono" fill="#111315" font-size="10">20</text>
+      <text x="878" y="537" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="892" y="494" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="900" y="512" class="mono" fill="#111315" font-size="10">21</text>
+      <text x="952" y="537" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="448" y="553" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="456" y="571" class="mono" fill="#ffffff" font-size="10">22</text>
+      <text x="508" y="596" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">5</text><rect x="522" y="553" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="530" y="571" class="mono" fill="#111315" font-size="10">23</text>
+      <text x="582" y="596" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">2</text><rect x="596" y="553" width="70" height="55" fill="#5b6066" stroke="#e4e5e6"/>
+      <text x="604" y="571" class="mono" fill="#ffffff" font-size="10">24</text>
+      <text x="656" y="596" class="mono" fill="#ffffff" font-size="11" font-weight="700" text-anchor="end">5</text><rect x="670" y="553" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="678" y="571" class="mono" fill="#111315" font-size="10">25</text>
+      <text x="730" y="596" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="744" y="553" width="70" height="55" fill="#fafafa" stroke="#e4e5e6"/>
+      <text x="752" y="571" class="mono" fill="#111315" font-size="10">26</text>
+      <rect x="818" y="553" width="70" height="55" fill="#fafafa" stroke="#e4e5e6"/>
+      <text x="826" y="571" class="mono" fill="#111315" font-size="10">27</text>
+      <rect x="892" y="553" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="900" y="571" class="mono" fill="#111315" font-size="10">28</text>
+      <text x="952" y="596" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">3</text><rect x="448" y="612" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="456" y="630" class="mono" fill="#111315" font-size="10">29</text>
+      <text x="508" y="655" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">1</text><rect x="522" y="612" width="70" height="55" fill="#e6e8ea" stroke="#e4e5e6"/>
+      <text x="530" y="630" class="mono" fill="#111315" font-size="10">30</text>
+      <text x="582" y="655" class="mono" fill="#111315" font-size="11" font-weight="700" text-anchor="end">4</text>
+    <path d="M350 600 C410 580 420 520 446 510" fill="none" stroke="#e4002b" stroke-width="2" stroke-dasharray="5 6"/>
+    <text x="448" y="745" class="mono muted small">RED OUTLINE = PEAK DAY</text>
+  </g>
+  <line x1="1000" y1="264" x2="1000" y2="770" class="hair"/>
+  <g>
+    <text x="1036" y="304" class="mono red micro">03 / PEAK DAY</text>
+    <text x="1036" y="344" class="sans ink" font-size="32" font-weight="800">06.18</text>
+    <text x="1450" y="344" class="mono red" font-size="44" font-weight="700" text-anchor="end">10</text>
+    <text x="1456" y="366" class="mono muted small" text-anchor="end">ITEMS / ONE DAY</text>
+    <line x1="1036" y1="409" x2="1528" y2="409" class="hair"/><text x="1036" y="395" class="mono muted" font-size="9">01 · 时政</text><text x="1110" y="395" class="sans ink" font-size="12" font-weight="500">北京CBD何以影响世界？</text><line x1="1036" y1="443" x2="1528" y2="443" class="hair"/><text x="1036" y="429" class="mono muted" font-size="9">02 · 时政</text><text x="1110" y="429" class="sans ink" font-size="12" font-weight="500">北京CBD何以影响世界？</text><line x1="1036" y1="477" x2="1528" y2="477" class="hair"/><text x="1036" y="463" class="mono muted" font-size="9">03 · 民生</text><text x="1110" y="463" class="sans ink" font-size="12" font-weight="500">小心雷阵雨！端午假期天气预报来啦</text><line x1="1036" y1="511" x2="1528" y2="511" class="hair"/><text x="1036" y="497" class="mono muted" font-size="9">04 · CBD</text><text x="1110" y="497" class="sans ink" font-size="12" font-weight="500">来听听这YOUNG的声音</text><line x1="1036" y1="545" x2="1528" y2="545" class="hair"/><text x="1036" y="531" class="mono muted" font-size="9">05 · 文明办</text><text x="1110" y="531" class="sans ink" font-size="12" font-weight="500">@朝阳少年，“成长搭子”已就位</text><line x1="1036" y1="579" x2="1528" y2="579" class="hair"/><text x="1036" y="565" class="mono muted" font-size="9">06 · 王四营</text><text x="1110" y="565" class="sans ink" font-size="12" font-weight="500">购车、潮玩和演出！就在汽车消费季</text><line x1="1036" y1="613" x2="1528" y2="613" class="hair"/><text x="1036" y="599" class="mono muted" font-size="9">07 · 时政</text><text x="1110" y="599" class="sans ink" font-size="12" font-weight="500">国家文化产业创新实验区发展大会</text><line x1="1036" y1="647" x2="1528" y2="647" class="hair"/><text x="1036" y="633" class="mono muted" font-size="9">08 · 民生</text><text x="1110" y="633" class="sans ink" font-size="12" font-weight="500">全市启动防汛四级响应，三预警齐发</text><line x1="1036" y1="681" x2="1528" y2="681" class="hair"/><text x="1036" y="667" class="mono red" font-size="9">09 · 民生</text><text x="1110" y="667" class="sans ink" font-size="12" font-weight="700">暴雨蓝警+雷电黄警！假期出行请注意</text><line x1="1036" y1="715" x2="1528" y2="715" class="hair"/><text x="1036" y="701" class="mono muted" font-size="9">10 · 活动</text><text x="1110" y="701" class="sans ink" font-size="12" font-weight="500">端午倒计时！这份朝阳攻略快收好</text>
+    <path d="M965 500 C1010 490 1015 458 1032 440" fill="none" stroke="#e4002b" stroke-width="2" stroke-dasharray="5 6"/>
+  </g>
+  
+    <g transform="translate(0,0)">
+      <text x="72" y="812" class="mono muted micro">SCROLL PROTOCOL / 075%</text>
+      <line x1="72" y1="842" x2="1528" y2="842" class="hair"/>
+      <line x1="72" y1="842" x2="1164" y2="842" class="redrule"/>
+      <circle cx="72" cy="842" r="5" fill="#111315" stroke="#111315" stroke-width="2"/><circle cx="436" cy="842" r="5" fill="#111315" stroke="#111315" stroke-width="2"/><circle cx="800" cy="842" r="5" fill="#111315" stroke="#111315" stroke-width="2"/><circle cx="1164" cy="842" r="7" fill="#111315" stroke="#111315" stroke-width="2"/><circle cx="1528" cy="842" r="5" fill="#ffffff" stroke="#111315" stroke-width="2"/>
+      <text x="72" y="880" class="mono muted small" >00</text><text x="72" y="908" class="sans ink" font-size="15" font-weight="700" >年度总览</text><text x="436" y="880" class="mono muted small" >01</text><text x="436" y="908" class="sans ink" font-size="15" font-weight="700" >锁定峰值月</text><text x="800" y="880" class="mono muted small" >02</text><text x="800" y="908" class="sans ink" font-size="15" font-weight="700" >展开日期格</text><text x="1164" y="880" class="mono red small" >03</text><text x="1164" y="908" class="sans ink" font-size="15" font-weight="700" >列出十条内容</text><text x="1528" y="880" class="mono muted small" text-anchor="end">04</text><text x="1528" y="908" class="sans ink" font-size="15" font-weight="700" text-anchor="end">恢复可交互日历</text>
+      <line x1="72" y1="950" x2="1528" y2="950" class="rule"/>
+      <text x="72" y="978" class="mono muted small">MOTION NOTE</text>
+      <text x="210" y="978" class="sans muted" font-size="13">由滚动进度切换三层尺度；完成后释放固定画面，日历恢复点击与筛选。</text>
+      <text x="1528" y="978" class="mono red small" text-anchor="end">CONTINUE ↓</text>
+    </g>
+  </svg>

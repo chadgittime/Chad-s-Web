@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <rect width="1600" height="1000" fill="#ffffff"/>
+  <style>
+  .sans{font-family:Inter,"Noto Sans SC","Source Han Sans SC","PingFang SC",sans-serif}
+  .mono{font-family:"Space Mono","SFMono-Regular",monospace}
+  .ink{fill:#111315}.muted{fill:#5b6066}.light{fill:#9aa0a6}.red{fill:#e4002b}.blue{fill:#1f77b4}
+  .body{font-size:16px}.small{font-size:12px}.micro{font-size:10px;letter-spacing:1.6px}
+  .hair{stroke:#d9dcdf;stroke-width:1}.rule{stroke:#111315;stroke-width:1.5}.redrule{stroke:#e4002b;stroke-width:2}
+</style>
+  <rect x="72" y="52" width="1456" height="4" fill="#e4002b"/>
+  <text x="72" y="92" class="mono red" font-size="12" letter-spacing="2">TITLE TRANSFORMATION / FRAME 03</text>
+  <text x="72" y="164" class="sans ink" font-size="54" font-weight="800">同一条信息，需要换一种语言抵达用户。</text>
+  <text x="76" y="205" class="sans muted body">事实保持不变；滚动只展示编辑如何提炼数字、对象和用户价值。</text>
+  <text x="1290" y="92" class="mono muted small">SCROLL-DRIVEN</text>
+  <text x="1290" y="116" class="mono ink small">FRAME 056 / 100</text>
+  <line x1="1290" y1="132" x2="1528" y2="132" class="hair"/>
+  <line x1="1290" y1="132" x2="1423.28" y2="132" class="redrule"/>
+  <line x1="72" y1="264" x2="1528" y2="264" class="rule"/>
+  
+  <g>
+    <text x="72" y="304" class="mono muted micro">01 / RAW MATERIAL</text>
+    <text x="72" y="340" class="sans ink" font-size="24" font-weight="750">原始来稿</text>
+    <rect x="72" y="370" width="418" height="248" fill="#f4f5f6"/>
+    <text x="96" y="405" class="mono muted small">朝阳区商务局 / 待编辑</text>
+    <text x="96" y="454" class="sans ink" font-size="19" font-weight="700">关于进一步支持“一人公司”</text>
+    <text x="96" y="484" class="sans ink" font-size="19" font-weight="700">高质量发展的若干政策措施发布</text>
+    <text x="96" y="536" class="sans muted body">政策覆盖办公空间、资金奖补、</text>
+    <text x="96" y="564" class="sans muted body">资源对接与创业服务等内容。</text>
+    <line x1="96" y1="586" x2="278" y2="586" class="hair"/>
+    <text x="96" y="607" class="mono muted" font-size="9">SOURCE COPY / 86 CHARS</text>
+  </g>
+  <path d="M490 494 C530 494 536 494 568 494" fill="none" stroke="#e4002b" stroke-width="2" stroke-dasharray="5 6"/>
+  <polygon points="568,494 555,487 555,501" fill="#e4002b"/>
+  <g>
+    <text x="582" y="304" class="mono muted micro">02 / EDITORIAL CUT</text>
+    <text x="582" y="340" class="sans ink" font-size="24" font-weight="750">编辑切口</text>
+    <line x1="582" y1="370" x2="898" y2="370" class="rule"/>
+    <circle cx="588" cy="404" r="4" fill="#1f77b4"/><text x="602" y="409" class="mono blue small">事实核验通过</text>
+    <text x="582" y="452" class="sans ink body" font-weight="700">用户最关心什么？</text><text x="898" y="452" class="mono red small" text-anchor="end">最高奖励500万</text><line x1="582" y1="474" x2="898" y2="474" class="hair"/><text x="582" y="524" class="sans ink body" font-weight="700">谁能获得？</text><text x="898" y="524" class="mono muted small" text-anchor="end">一人公司</text><line x1="582" y1="546" x2="898" y2="546" class="hair"/><text x="582" y="596" class="sans ink body" font-weight="700">背景是否进标题？</text><text x="898" y="596" class="mono muted small" text-anchor="end">不进入</text><line x1="582" y1="618" x2="898" y2="618" class="hair"/><text x="582" y="668" class="sans ink body" font-weight="700">阅读动作是什么？</text><text x="898" y="668" class="mono muted small" text-anchor="end">快速理解政策价值</text><line x1="582" y1="690" x2="898" y2="690" class="hair"/>
+    <text x="582" y="741" class="mono muted small">REMOVE BACKGROUND · KEEP VALUE</text>
+  </g>
+  <path d="M898 494 C930 494 940 494 972 494" fill="none" stroke="#e4002b" stroke-width="2" stroke-dasharray="5 6"/>
+  <polygon points="972,494 959,487 959,501" fill="#e4002b"/>
+  <g>
+    <text x="986" y="304" class="mono red micro">03 / USER-FACING TITLE</text>
+    <text x="986" y="340" class="sans ink" font-size="24" font-weight="750">面向用户的表达</text>
+    <rect x="986" y="370" width="542" height="248" fill="#ffffff" stroke="#111315" stroke-width="2"/>
+    <rect x="986" y="370" width="542" height="5" fill="#e4002b"/>
+    <text x="1014" y="413" class="mono red small">WECHAT PUSH / FINAL</text>
+    <text x="1014" y="477" class="sans ink" font-size="33" font-weight="800">最高奖励500万！</text>
+    <text x="1014" y="525" class="sans ink" font-size="33" font-weight="800">朝阳支持“一人公司”</text>
+    <line x1="1014" y1="545" x2="1265" y2="545" class="redrule"/>
+    <text x="1014" y="587" class="mono muted small">数字重点 / 信息直给 / 用户价值</text>
+    <text x="1510" y="597" class="mono red" font-size="20" text-anchor="end">48%</text>
+  </g>
+  <text x="72" y="750" class="mono muted small">THE TITLE CHANGES; THE FACTS DO NOT.</text>
+  
+    <g transform="translate(0,0)">
+      <text x="72" y="812" class="mono muted micro">SCROLL PROTOCOL / 050%</text>
+      <line x1="72" y1="842" x2="1528" y2="842" class="hair"/>
+      <line x1="72" y1="842" x2="800" y2="842" class="redrule"/>
+      <circle cx="72" cy="842" r="5" fill="#111315" stroke="#111315" stroke-width="2"/><circle cx="436" cy="842" r="5" fill="#111315" stroke="#111315" stroke-width="2"/><circle cx="800" cy="842" r="7" fill="#111315" stroke="#111315" stroke-width="2"/><circle cx="1164" cy="842" r="5" fill="#ffffff" stroke="#111315" stroke-width="2"/><circle cx="1528" cy="842" r="5" fill="#ffffff" stroke="#111315" stroke-width="2"/>
+      <text x="72" y="880" class="mono muted small" >00</text><text x="72" y="908" class="sans ink" font-size="15" font-weight="700" >原始来稿</text><text x="436" y="880" class="mono muted small" >01</text><text x="436" y="908" class="sans ink" font-size="15" font-weight="700" >识别事实</text><text x="800" y="880" class="mono red small" >02</text><text x="800" y="908" class="sans ink" font-size="15" font-weight="700" >寻找用户切口</text><text x="1164" y="880" class="mono muted small" >03</text><text x="1164" y="908" class="sans ink" font-size="15" font-weight="700" >生成标题</text><text x="1528" y="880" class="mono muted small" text-anchor="end">04</text><text x="1528" y="908" class="sans ink" font-size="15" font-weight="700" text-anchor="end">进入风格数据</text>
+      <line x1="72" y1="950" x2="1528" y2="950" class="rule"/>
+      <text x="72" y="978" class="mono muted small">MOTION NOTE</text>
+      <text x="210" y="978" class="sans muted" font-size="13">文字在8px范围内交叉淡入；不使用逐字打字机效果，避免把编辑判断变成装饰。</text>
+      <text x="1528" y="978" class="mono red small" text-anchor="end">CONTINUE ↓</text>
+    </g>
+  </svg>
